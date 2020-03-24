@@ -35,3 +35,10 @@ pie(
   init.angle = -50, border = NA
 )
 ```
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(mpg, disp)) + geom_point()
+```
+
+
