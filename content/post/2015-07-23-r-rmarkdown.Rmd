@@ -22,7 +22,7 @@ If you were to increase the set of observations collected each time from 20 to, 
 
 The scenario above gives the impression that through *repeatedly* gathering sets of 20 (or 25 or more) observations we can say the distribution of the sample means is approximately normal. Reference Boston University 
 
-But what happens when you're given only *one* sample of data?  This is usually the case in most textbook applications.  How come we can invoke the CLT here?  I'm not the only one who's who's add this issue (reference https://stats.stackexchange.com/questions/223214/why-are-all-clt-problems-using-a-single-random-sample-when-the-clt-requires-rep?noredirect=1&lq=1)
+But what happens when you're given only *one* sample of data?  This is usually the case in most textbook applications.  How come we can invoke the CLT here?  I'm not the only one who's had this issue (reference https://stats.stackexchange.com/questions/223214/why-are-all-clt-problems-using-a-single-random-sample-when-the-clt-requires-rep?noredirect=1&lq=1)
 
 
 
