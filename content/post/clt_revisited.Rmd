@@ -109,7 +109,7 @@ pnorm(31, mean = 29, sd = sqrt(25/50), lower.tail = F)
 
 ### Conclusion
 
-The main takeaway is the CLT enables us to derive the distribution of the sample mean from a just a single sample.  You can use simulation to show that *repeatedly* obtaining samples will produce a distribution of the sample mean like the one shown for m&m's above.  Repeated sampling itself, though, has nothing to do with the CLT or its application. 
+The main takeaway is the CLT enables us to derive the distribution of a sample mean from a just a single sample.  You can use simulation to show that *repeatedly* obtaining samples will produce a distribution of the sample mean like the one shown for m&m's above.  Repeated sampling itself, though, has nothing to do with the CLT or its application. 
 
 
 
