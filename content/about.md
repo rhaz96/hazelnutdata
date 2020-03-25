@@ -2,8 +2,6 @@
 title: About
 ---
 
-![](/about_files/hzphoto_b2-removebg.png)
-
 Hello and welcome to my blog!  My inspiration for this comes from my work as a teaching assistant to a graduate-level applied statistics course at [SMU](https://datascience.smu.edu/), where I'm currently completing my Masters degree in data science.
 
 If you wondering where the name Hazelnut Data comes from, it's because my name is Robert Hazell...and I like hazelnuts too.
