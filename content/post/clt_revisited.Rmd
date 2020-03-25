@@ -99,6 +99,8 @@ plot(xseq, densities, col="darkgreen",xlab="",
 Distribution of the Sample Mean number of m&m's in Share Size bags
 </p>
 
+</center>
+
 This can tell us a lot of things!  For example, there's only a 0.23% chance of finding 31 or more m&m's in a share bag.
 
 ```{r}
