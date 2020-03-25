@@ -72,9 +72,9 @@ The CLT first and foremost tells us about the **distribution of a sample average
 
 So what can we say about the distribution of the sample average (or mean) of m&m's we found?  The CLT tells us:
 
+* the shape of the distribution is approximately normal so long as the sample size $({n})$ is at least 30
 * the mean of the distribution is equal to the mean of the population distribution
 * the variance of the distribution is smaller than the variance of the population distribution by a factor of ${1/n}$
-* the shape of the distribution is approximately normal so long as the sample size is at least 30
 
 We can demonstrate this the hard way by working through the proof of the CLT, or by using simulation - which is much more intuitive and understandable.  A great walk-through of such a simulation can be found in [this Khan Academy video](https://www.khanacademy.org/math/ap-statistics/sampling-distribution-ap/sampling-distribution-mean/v/sampling-distribution-of-the-sample-mean). 
 
@@ -109,7 +109,7 @@ pnorm(31, mean = 29, sd = sqrt(25/50), lower.tail = F)
 
 ### Conclusion
 
-The main takeaway is the CLT enables us to derive the distribution of the sample mean from a just a single sample.  You can use simulation to show that *repeatedly* obtaining samples will produce a distribution of the sample mean like the one shown for m&m's above.  Repeated sampling has nothing to do with the CLT or its application. 
+The main takeaway is the CLT enables us to derive the distribution of the sample mean from a just a single sample.  You can use simulation to show that *repeatedly* obtaining samples will produce a distribution of the sample mean like the one shown for m&m's above.  Repeated sampling itself, though, has nothing to do with the CLT or its application. 
 
 
 
