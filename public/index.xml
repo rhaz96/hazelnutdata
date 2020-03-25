@@ -6,7 +6,7 @@
     <description>Recent content on hazelnut data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 May 2016 21:48:51 -0700</lastBuildDate>
+    <lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
@@ -24,10 +24,12 @@
     <item>
       <title>About</title>
       <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/about/</guid>
-      <description>This is a &amp;ldquo;hello world&amp;rdquo; example website for the blogdown package. The theme was forked from @jrutheiser/hugo-lithium-theme and modified by Yihui Xie.</description>
+      <description>Hello and welcome to my blog! My inspiration for this comes from my work as a teaching assistant to a graduate-level applied statistics course at SMU, where I&amp;rsquo;m currently completing my Masters degree in data science.
+If you wondering where the name Hazelnut Data comes from, it&amp;rsquo;s because my name is Robert Hazell&amp;hellip;and I like hazelnuts too.
+This blog is designed to capture my statistics and data science musings that I hope illuminates concepts in those fields.</description>
     </item>
     
   </channel>
