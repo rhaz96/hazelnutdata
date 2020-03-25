@@ -104,8 +104,7 @@ Distribution of the Sample Mean number of m&m's in Share Size bags
 This can tell us a lot of things!  For example, there's only a 0.23% chance of finding 31 or more m&m's in a share bag.
 
 ```{r}
-z_score = (31-29)/(5/sqrt(50))
-pnorm(z_score, lower.tail = F)
+pnorm(31, mean = 29, sd = sqrt(25/50), lower.tail = F)
 ```
 
 ### Conclusion
