@@ -60,7 +60,7 @@ This has proved confusing for a number of people, myself included, as is evidenc
 
 Suppose you want to find the average amount of m&m's in share size bags. Obviously you can't get all share size bags on the market, so instead you buy 50 bags and meticulously count the number of m&m's in each bag, which inevitably differs from bag to bag.  
 
-From the thousands (if not millions) of share bags on the market (the population of m&m share bags), you obtained one sample of 50 bags.  You then meticulously count the number of m&m's in each bag, which inevitably differs from bag to bag.  Suppose the mean amount of m&m's in your sample turns out to be 29 and the standard deviation 5.  
+From the thousands (if not millions) of share bags on the market (the population of m&m share bags), you obtained one sample of 50 bags. Suppose the mean amount of m&m's in your sample turns out to be 29 and the standard deviation 5.  
 
 The sample mean (29) and sample variance ($5^{2} = 25$) of m&m's are fantastic estimates (a.k.a *unbiased estimators*) of the population mean and population variance.  So how can we use the sample we obtained to make inferences about the population mean of m&m's in share bags?  This is where the CLT comes in.  
 
