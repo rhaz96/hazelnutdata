@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.67.1" />
+
+
+<title>Clearing Some Confusion about the Central Limit Theorem - hazelnut data</title>
+<meta property="og:title" content="Clearing Some Confusion about the Central Limit Theorem - hazelnut data">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rhaz96/hazelnutdata">GitHub</a></li>
+    
+    <li><a href="www.linkedin.com/in/robertmhazell">LinkedIn</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">Clearing Some Confusion about the Central Limit Theorem</h1>
+
+    
+    <span class="article-date">2020-03-24</span>
+    
+
+    <div class="article-content">
+      
+
+
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+<center>
+<img src="/post/2015-07-23-r-rmarkdown_files/normal%20dist.png" />
+</center>
+<center>
+<p class="caption">
+<a href="https://thoughtsinsidewords.wordpress.com/2017/02/02/gaussian-distribution-a-universal-phenomenon/">A Normal Distribution</a>
+</p>
+</center>
+<div id="whats-the-problem" class="section level3">
+<h3>What’s the Problem?</h3>
+<p>For quite awhile I was wondering about a potential disconnect in the way the Central Limit Theorem (a.k.a CLT) is taught and how it’s applied. Usually in statistics textbooks and online tutorials the reasoning goes like this:</p>
+<ul>
+<li>Step 1: Collect a set of observations (say, 20) and calculate the mean of that one sample of data</li>
+<li>Step 2: Collect another set of 20 observations and calculate the mean of that second sample of data</li>
+<li>Step 3: Repeat this process many, many times (say 10,000 times)</li>
+<li>Step 4: You now have 10,000 sample means. Plot a histogram of those sample means. (This is known as a <em>distribution of sample means</em>)</li>
+<li>Shazam! That distribution you plotted looks something like a normal distribution! That’s the CLT!</li>
+</ul>
+<p>If you were to increase the set of observations collected each time from 20 to, say 25, then the resulting histogram would look even closer to a normal distribution.</p>
+<p>This gives the impression it’s through <em>repeatedly</em> gathering sets of 20 (or 25 or more) observations we can say the distribution of the sample means is approximately normal. Boston University’s School of Public Health makes <a href="http://sphweb.bumc.bu.edu/otlt/MPH-Modules/BS/BS704_Probability/BS704_Probability12.html">similar remarks</a>:</p>
+<blockquote>
+<p><em>The central limit theorem states that if you…take sufficiently large random samples from the population…then the
+distribution of the sample means will be approximately normally distributed</em></p>
+</blockquote>
+<p>But what happens when you’re given only <em>one</em> sample of data? How come we can invoke the CLT here? An example Boston University provides does just that, remarking</p>
+<blockquote>
+<p><em>probability questions about a <strong>sample mean</strong> can be addressed with the
+Central Limit Theorem, as long as the sample size is sufficiently large</em></p>
+</blockquote>
+<p>I bolded “sample mean” because we shifted from talking about a distribution of sample <em>means</em> (plural) to just a sample <em>mean</em> (singular)</p>
+<p>This has proved confusing for a number of people, myself included, as is evidenced in <a href="https://stats.stackexchange.com/questions/223214/why-are-all-clt-problems-using-a-single-random-sample-when-the-clt-requires-rep?noredirect=1&amp;lq=1">this</a> and <a href="https://stats.stackexchange.com/questions/211499/why-does-the-central-limit-theorem-work-with-a-single-sample?noredirect=1&amp;lq=1">this</a> post from CrossValidated.</p>
+</div>
+<div id="a-sweet-diversion" class="section level3">
+<h3>A Sweet Diversion</h3>
+<center>
+<img src="/post/2015-07-23-r-rmarkdown_files/Screenshot%20at%20Mar%2024%2018-06-52.png" />
+</center>
+<p>Suppose you want to find the average amount of m&amp;m’s in share size bags. Obviously you can’t get all share size bags on the market, so instead you buy 50 bags and meticulously count the number of m&amp;m’s in each bag, which inevitably differs from bag to bag.</p>
+<p>From the thousands (if not millions) of share bags on the market (the population of m&amp;m share bags), you obtained one sample of 50 bags. Suppose the mean amount of m&amp;m’s in your sample turns out to be 29 and the standard deviation 5.</p>
+<p>The sample mean (29) and sample variance (<span class="math inline">\(5^{2} = 25\)</span>) of m&amp;m’s are fantastic estimates (a.k.a <em>unbiased estimators</em>) of the population mean and population variance. So how can we use the sample we obtained to make inferences about the population mean of m&amp;m’s in share bags? This is where the CLT comes in.</p>
+</div>
+<div id="what-the-clt-really-says" class="section level3">
+<h3>What the CLT really says</h3>
+<p>I believe it’s erroneous to teach the CLT the way Boston University’s tutorial does. My graduate stats class textbook<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> better illuminates the CLT.</p>
+<p>The CLT first and foremost tells us about the <strong>distribution of a sample average</strong>. We don’t need to know anything about the population itself. This is great since first, we only care about inferences on the mean, and second it can be painstakingly difficult or impossible to know everything about the entire population. Remember, we can’t buy all the m&amp;m’s on the market!</p>
+<p>So what can we say about the distribution of the sample average (or mean) of m&amp;m’s we found? The CLT tells us:</p>
+<ul>
+<li>the shape of the distribution is approximately normal so long as the sample size <span class="math inline">\(({n})\)</span> is at least 30</li>
+<li>the mean of the distribution is equal to the mean of the population distribution</li>
+<li>the variance of the distribution is smaller than the variance of the population distribution by a factor of <span class="math inline">\({1/n}\)</span></li>
+</ul>
+<p>We can demonstrate this the hard way by working through the proof of the CLT, or by using simulation - which is much more intuitive and understandable. A great walk-through of such a simulation can be found in <a href="https://www.khanacademy.org/math/ap-statistics/sampling-distribution-ap/sampling-distribution-mean/v/sampling-distribution-of-the-sample-mean">this Khan Academy video</a>.</p>
+<p>However, the CLT <strong>does not</strong> require having multiple samples. Rather, drawing multiple samples through simulation is a way to see that the CLT makes sense. This is why I think the Boston University tutorial mentioned earlier is misleading.</p>
+</div>
+<div id="back-to-mms" class="section level3">
+<h3>Back to m&amp;m’s</h3>
+<p>With these facts let’s return to the m&amp;m’s example. Our sample size is 50, clearly greater than the requirement of 30, so we can apply the CLT. Our sample mean is 29 and our sample variance is 5. The distribution of the sample mean of share bag m&amp;m’s enables us to make inferences about the population mean of share bag m&amp;m’s.</p>
+<p>What does the distribution of the sample mean look like? It’ll look normally distributed with a mean of <span class="math inline">\(29\)</span> and a variance of <span class="math inline">\(25/50 = 1/2\)</span></p>
+<pre class="r"><code>set.seed(3000)
+xseq &lt;-seq(26,32,.01)
+densities&lt;-dnorm(xseq, mean=29, sd=sqrt(25/50))
+plot(xseq, densities, col=&quot;darkgreen&quot;,xlab=&quot;&quot;, 
+     ylab=&quot;Density&quot;, type=&quot;l&quot;,lwd=2, cex=2, main=&quot;&quot;, cex.axis=.8)</code></pre>
+<p><img src="/post/clt_revisited_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<center>
+<p class="caption">
+Distribution of the Sample Mean number of m&amp;m’s in Share Size bags
+</p>
+</center>
+<p>This can tell us a lot of things! For example, there’s only a 0.23% chance of finding 31 or more m&amp;m’s in a share bag.</p>
+<pre class="r"><code>pnorm(31, mean = 29, sd = sqrt(25/50), lower.tail = F)
+## [1] 0.002338867</code></pre>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>The main takeaway is the CLT enables us to derive the distribution of a sample mean from a just a single sample. You can use simulation to show that <em>repeatedly</em> obtaining samples will produce a distribution of the sample mean like the one shown for m&amp;m’s above. Repeated sampling itself, though, has nothing to do with the CLT or its application.</p>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="http://statisticalsleuth.com/"><em>The Statistical Sleuth</em></a> (2013)<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+
