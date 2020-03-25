@@ -105,7 +105,7 @@ This can tell us a lot of things!  For example, there's only a 0.23% chance of f
 
 ```{r}
 z_score = (31-29)/(5/sqrt(50))
-pnorm(2.828427, lower.tail = F)
+pnorm(z_score, lower.tail = F)
 ```
 
 ### Conclusion
