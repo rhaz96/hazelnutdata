@@ -66,8 +66,6 @@ The sample mean (29) and sample variance ($5^{2} = 25$) of m&m's are fantastic e
 
 ### What the CLT really says
 
-I believe it's erroneous to teach the CLT the way Boston University's tutorial does.  My graduate stats class textbook^[[*The Statistical Sleuth*](http://statisticalsleuth.com/) (2013)] better illuminates the CLT.
-
 The CLT first and foremost tells us about the **distribution of a sample average**.  We don't need to know anything about the population itself.  This is great since first, we only care about inferences on the mean, and second it can be painstakingly difficult or impossible to know everything about the entire population.  Remember, we can't buy all the m&m's on the market!  
 
 So what can we say about the distribution of the sample average (or mean) of m&m's we found?  The CLT tells us:
@@ -78,7 +76,7 @@ So what can we say about the distribution of the sample average (or mean) of m&m
 
 We can demonstrate this the hard way by working through the proof of the CLT, or by using simulation - which is much more intuitive and understandable.  A great walk-through of such a simulation can be found in [this Khan Academy video](https://www.khanacademy.org/math/ap-statistics/sampling-distribution-ap/sampling-distribution-mean/v/sampling-distribution-of-the-sample-mean). 
 
-However, the CLT **does not** require having multiple samples.  Rather, drawing multiple samples through simulation is a way to see that the CLT makes sense.  This is why I think the Boston University tutorial mentioned earlier is misleading.  
+The CLT **does not** require having *multiple samples*, as these two notable statisitics textbooks demonstrate^[*The Statistical Sleuth, 3rd Edition* (2013), Fred Ramsey and Daniel Schafer, pp.32-33] ^[*Probabilty and Statistics for Engineering and the Sciences, 9th Edition* (2016), Jay Devore, p.230].  Rather, drawing multiple samples through simulation is a way to see that the CLT makes sense.  
 
 ### Back to m&m's
 
