@@ -44,7 +44,7 @@ This gives the impression it's through *repeatedly* gathering sets of 20 (or 25 
 > *The central limit theorem states that if you...take sufficiently large random samples from the population...then the 
 > distribution of the sample means will be approximately normally distributed*
 
-But what happens when you're given only *one* sample of data? How come we can invoke the CLT here?  An example Boston University provides does just that, remarking 
+But what happens when you're given only *one* sample of data? This is ordinarily the case in textbook examples and in real life, as there isn't often enough money or time to collect more than one sample.  How come we can invoke the CLT here? An example Boston University provides does just that, remarking 
 
 > *probability questions about a __sample mean__ can be addressed with the 
 > Central Limit Theorem, as long as the sample size is sufficiently large*
