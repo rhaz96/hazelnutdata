@@ -60,9 +60,9 @@ Hopefully this sheds insight on why the technical definition of a p-value is:
 
 > the probability of observing our sample result, or results more extreme, if we assume the null hypothesis is true
 
-In our example, m&m's claim of 42 is the *null hypothesis* since it describes the default claim assumed to be true.  Our claim that the number of m&m's is less than 42 is considered the *alternative hypothesis* since it challenges the default claim.  
+In our example, m&m's claim of 42 is the *null hypothesis* since it describes the default claim assumed to be true.  Our claim that the number of m&m's is less than 42 is considered the *alternative hypothesis* since it challenges the default claim.
 
-The "results more extreme" points back to the fact that in our m&m's example, we didn't consider 29 to be the only result to challenge the null hypothesis.  Values more extreme than 29 (like 28 or 27, or 14) would also in our minds count as evidence challenging the null hypothesis.  Therefore, p-values must take such values into account.
+The "results more extreme" points back to the fact that in our m&m's example, we didn't consider 29 to be the only result to challenge the null hypothesis.  Values more extreme than 29 (like 28 or 27, or 14) would also in our minds count as evidence challenging the null hypothesis of 42.  Therefore, p-values must take such values into account.
 
 ### A Final Word
 
