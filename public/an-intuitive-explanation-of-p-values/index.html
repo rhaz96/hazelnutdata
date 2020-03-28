@@ -98,7 +98,7 @@
 <p><em>How likely is it to get an average of 29 m&amp;m’s <strong>or less</strong>, if the company’s claim of 42 were true?</em></p>
 </blockquote>
 <p>We have two competing claims: the mean number m&amp;m’s is 42 and the mean number of m&amp;m’s is less than 42.</p>
-<p>It turns out the likelihood of seeing an average of 29 m&amp;m’s or less, under the assumption the company is telling the truth, is <span class="math inline">\(8.69*10^{-76}\)</span>, which is a 0 followed by a decimal with 75 zeroes! That’s soooo close to 0.</p>
+<p>It turns out the likelihood of seeing an average of 29 m&amp;m’s or less, under the assumption the company is telling the truth, is <span class="math inline">\(8.69*10^{-76}\)</span>, which is a 0 followed by a decimal with 75 zeroes! That’s soooo close to 0 (the way the p-value was calculated isn’t essential to understanding p-values).</p>
 <pre class="r"><code>z_score &lt;- (29-42)/sqrt(25/50)
 pnorm(z_score)</code></pre>
 <pre><code>## [1] 8.697787e-76</code></pre>

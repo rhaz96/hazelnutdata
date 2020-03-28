@@ -33,7 +33,7 @@ Notice that if you think 29 m&m's is evidence that the company is packaging less
 
 We have two competing claims: the mean number m&m's is 42 and the mean number of m&m's is less than 42.  
 
-It turns out the likelihood of seeing an average of 29 m&m's or less, under the assumption the company is telling the truth, is $8.69*10^{-76}$, which is a 0 followed by a decimal with 75 zeroes!  That's soooo close to 0.
+It turns out the likelihood of seeing an average of 29 m&m's or less, under the assumption the company is telling the truth, is $8.69*10^{-76}$, which is a 0 followed by a decimal with 75 zeroes!  That's soooo close to 0 (the way the p-value was calculated isn't essential to understanding p-values).
 
 ```{r}
 z_score <- (29-42)/sqrt(25/50)
