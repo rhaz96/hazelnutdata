@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.67.1" />
+
+
+<title>An Intuitive Explanation of p-values - hazelnut data</title>
+<meta property="og:title" content="An Intuitive Explanation of p-values - hazelnut data">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rhaz96/hazelnutdata">GitHub</a></li>
+    
+    <li><a href="http://linkedin.com/in/robertmhazell/">LinkedIn</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">4 min read</span>
+    
+
+    <h1 class="article-title">An Intuitive Explanation of p-values</h1>
+
+    
+    <span class="article-date">2020-03-28</span>
+    
+
+    <div class="article-content">
+      
+
+
+<div id="striving-for-p-value-enlightenment" class="section level3">
+<h3>Striving for p-value enlightenment</h3>
+<p>Trying to describe p-values is notoriously difficult, even for seasoned statistics professionals. This <a href="https://fivethirtyeight.com/features/not-even-scientists-can-easily-explain-p-values/">article</a> from FiveThirtyEight has been at the back of my head for the longest time. The author Christie Aschwanden is basically fishing around for a basic, intuitive definition of a p-value. Her conclusion?</p>
+<blockquote>
+<p>“What I learned by asking all these very smart people to explain p-values is that I was on a fool’s errand.”</p>
+</blockquote>
+<p>That’s disappointing! Any attempt to distill p-values to a pithy phrase or single sentence is bound to leave some wrong impressions, and this is a problem for educators trying to reach a general audience. However, I don’t think all hope is lost. Appealing to analogies or anecdotes often does a sufficient job. That is what I attempt to do here while minimizing the number of (statistical) spare parts left over. I’ll leave that for you to judge…</p>
+</div>
+<div id="mms-again" class="section level3">
+<h3>m&amp;m’s (again)</h3>
+<center>
+<img src="/post/pvalues_intuitive_files/m&amp;m.png" />
+</center>
+<p>Suppose m&amp;m’s claimed that their Share Size bags (3.27 oz) contain around 42 m&amp;m’s. In my <a href="https://hazelnutdata.netlify.com/clearing-some-confusion-about-the-central-limit-theorem/">first blog post</a> we supposed you went out and bought fifty such share bags and found the average number of m&amp;m’s to be 29. Each package had a slightly different amount of m&amp;m’s per bag, and this difference was 5.</p>
+<p>You’d be justified in feeling suspicious about m&amp;m’s claim of 42 since 29 seems quite far off. To investigate this, you’d ask the following question:</p>
+<blockquote>
+<p><em>How likely is it to get an average of 29 m&amp;m’s if the company’s claim of 42 were true?</em></p>
+</blockquote>
+<p>Notice that if you think 29 m&amp;m’s is evidence that the company is packaging less m&amp;m’s than it claims, then so is 28, or 27, or 26…in fact, anything less than 29 would <em>also</em> count as evidence to you against m&amp;m’s claim of 42. Because of this, you’d revise your question to be:</p>
+<blockquote>
+<p><em>How likely is it to get an average of 29 m&amp;m’s <strong>or less</strong>, if the company’s claim of 42 were true?</em></p>
+</blockquote>
+<p>We have two competing claims: the mean number m&amp;m’s is 42 and the mean number of m&amp;m’s is less than 42.</p>
+<p>It turns out the likelihood of seeing an average of 29 m&amp;m’s or less, under the assumption the company is telling the truth, is <span class="math inline">\(8.69*10^{-76}\)</span>, which is a 0 followed by a decimal with 75 zeroes! That’s soooo close to 0.</p>
+<pre class="r"><code>z_score &lt;- (29-42)/sqrt(25/50)
+pnorm(z_score)</code></pre>
+<pre><code>## [1] 8.697787e-76</code></pre>
+<p>That right there is your p-value!</p>
+</div>
+<div id="what-should-we-say" class="section level3">
+<h3>What should we say?</h3>
+<p>At this point you have two possibilities. You can say</p>
+<ul>
+<li>We were incredibly (un)lucky and just so happened to buy fifty packages of m&amp;m’s that had far less than 42 m&amp;m’s.</li>
+</ul>
+<p>Or you can say</p>
+<ul>
+<li>This is strong evidence that m&amp;m’s claim of 42 is fishy!</li>
+</ul>
+<p>Given how small the p-value is, I think the second possibility makes more sense.</p>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>Hopefully this sheds insight on why the technical definition of a p-value is:</p>
+<blockquote>
+<p>the probability of observing our sample result, or results more extreme, if we assume the null hypothesis is true</p>
+</blockquote>
+<p>In our example, m&amp;m’s claim of 42 is the <em>null hypothesis</em> since it describes the default claim assumed to be true. Our claim that the number of m&amp;m’s is less than 42 is considered the <em>alternative hypothesis</em> since it challenges the default claim.</p>
+<p>The “results more extreme” points back to the fact that in our m&amp;m’s example, we didn’t consider 29 to be the only result to challenge the null hypothesis. Values more extreme than 29 (like 28 or 27, or 14) would also in our minds count as evidence challenging the null hypothesis. Therefore, p-values must take such values into account.</p>
+</div>
+<div id="a-final-word" class="section level3">
+<h3>A Final Word</h3>
+<p>Here’s an important point: <strong>we did not prove that m&amp;m’s is lying</strong>. It entirely possible that all fifty bags we bought just so happened to have far less than 42 m&amp;m’s. Maybe all those m&amp;m’s packages came from a single production line that happened to be faulty. The only way to better test m&amp;m’s claim is to gather more data…which means buying more m&amp;m’s.</p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

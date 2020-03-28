@@ -6,10 +6,20 @@
     <description>Recent content on hazelnut data</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 24 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>An Intuitive Explanation of p-values</title>
+      <link>/an-intuitive-explanation-of-p-values/</link>
+      <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/an-intuitive-explanation-of-p-values/</guid>
+      <description>Striving for p-value enlightenment Trying to describe p-values is notoriously difficult, even for seasoned statistics professionals. This article from FiveThirtyEight has been at the back of my head for the longest time. The author Christie Aschwanden is basically fishing around for a basic, intuitive definition of a p-value. Her conclusion?
+ “What I learned by asking all these very smart people to explain p-values is that I was on a fool’s errand.</description>
+    </item>
     
     <item>
       <title>Clearing Some Confusion about the Central Limit Theorem</title>
