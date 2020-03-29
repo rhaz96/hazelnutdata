@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>An Intuitive Explanation of p-values</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Raleway', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: blue;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.67.1" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#">An Intuitive Explanation of p-values</a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/about/">About</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="rmhazell@outlook.com"><i class="fa fa-envelope-o"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://github.com/rhaz96/hazelnutdata"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/robertmhazell/"><i class="fa fa-linkedin"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+
+    <div>
+        <h2>An Intuitive Explanation of p-values</h2>
+        <h5>March 28, 2020</h5>
+        
+<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
+
+<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
+
+<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
+
+
+    </div>
+
+    <div align="start" class="content">
+
+
+<div id="striving-for-p-value-enlightenment" class="section level3">
+<h3>Striving for p-value enlightenment</h3>
+<p>Trying to describe p-values is notoriously difficult, even for seasoned statistics professionals. This <a href="https://fivethirtyeight.com/features/not-even-scientists-can-easily-explain-p-values/">article</a> from FiveThirtyEight has been at the back of my head for the longest time. The author Christie Aschwanden is basically fishing around for a basic, intuitive definition of a p-value. Her conclusion?</p>
+<blockquote>
+<p>“What I learned by asking all these very smart people to explain p-values is that I was on a fool’s errand.”</p>
+</blockquote>
+<p>That’s disappointing! Any attempt to distill p-values to a pithy phrase or single sentence is bound to leave some wrong impressions, and this is a problem for educators trying to reach a general audience. However, I don’t think all hope is lost. Appealing to analogies or anecdotes often does a sufficient job. That is what I attempt to do here while minimizing the number of (statistical) spare parts left over. I’ll leave that for you to judge…</p>
+</div>
+<div id="mms-again" class="section level3">
+<h3>m&amp;m’s (again)</h3>
+<center>
+<img src="/post/pvalues_intuitive_files/m&amp;m.png" />
+</center>
+<p>Suppose m&amp;m’s claimed that their Share Size bags (3.27 oz) contain around 42 m&amp;m’s. In my <a href="https://hazelnutdata.netlify.com/clearing-some-confusion-about-the-central-limit-theorem/">first blog post</a> we supposed you went out and bought fifty such share bags and found the average number of m&amp;m’s to be 29. Each package had a slightly different amount of m&amp;m’s per bag, and this difference was 5.</p>
+<p>You’d be justified in feeling suspicious about m&amp;m’s claim of 42 since 29 seems quite far off. To investigate this, you’d ask the following question:</p>
+<blockquote>
+<p><em>How likely is it to get an average of 29 m&amp;m’s if the company’s claim of 42 were true?</em></p>
+</blockquote>
+<p>Notice that if you think 29 m&amp;m’s is evidence that the company is packaging less m&amp;m’s than it claims, then so is 28, or 27, or 26…in fact, anything less than 29 would <em>also</em> count as evidence to you against m&amp;m’s claim of 42. Because of this, you’d revise your question to be:</p>
+<blockquote>
+<p><em>How likely is it to get an average of 29 m&amp;m’s <strong>or less</strong>, if the company’s claim of 42 were true?</em></p>
+</blockquote>
+<p>We have two competing claims: the mean number m&amp;m’s is 42 and the mean number of m&amp;m’s is less than 42.</p>
+<p>It turns out the likelihood of seeing an average of 29 m&amp;m’s or less, under the assumption the company is telling the truth, is <span class="math inline">\(8.69*10^{-76}\)</span>, which is a 0 followed by a decimal with 75 zeroes! That’s soooo close to 0 (the way the p-value was calculated isn’t essential to understanding p-values).</p>
+<pre class="r"><code>z_score &lt;- (29-42)/sqrt(25/50)
+pnorm(z_score)</code></pre>
+<pre><code>## [1] 8.697787e-76</code></pre>
+<p>That right there is your p-value!</p>
+</div>
+<div id="what-should-we-say" class="section level3">
+<h3>What should we say?</h3>
+<p>At this point you have two possibilities. You can say</p>
+<ul>
+<li>We were incredibly (un)lucky and just so happened to buy fifty packages of m&amp;m’s that had far less than 42 m&amp;m’s.</li>
+</ul>
+<p>Or you can say</p>
+<ul>
+<li>This is strong evidence that m&amp;m’s claim of 42 is fishy!</li>
+</ul>
+<p>Given how small the p-value is, I think the second possibility makes more sense.</p>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>Hopefully this sheds insight on why the technical definition of a p-value is:</p>
+<blockquote>
+<p>the probability of observing our sample result, or results more extreme, if we assume the null hypothesis is true</p>
+</blockquote>
+<p>In our example, m&amp;m’s claim of 42 is the <em>null hypothesis</em> since it describes the default claim assumed to be true. Our claim that the number of m&amp;m’s is less than 42 is considered the <em>alternative hypothesis</em> since it challenges the default claim.</p>
+<p>The “results more extreme” points back to the fact that in our m&amp;m’s example, we didn’t consider 29 to be the only result to challenge the null hypothesis. Values more extreme than 29 (like 28 or 27, or 14) would also in our minds count as evidence challenging the null hypothesis of 42. Therefore, p-values must take such values into account.</p>
+</div>
+<div id="a-final-word" class="section level3">
+<h3>A Final Word</h3>
+<p>Here’s an important point: <strong>we did not prove that m&amp;m’s is lying</strong>. It entirely possible that all fifty bags we bought just so happened to have far less than 42 m&amp;m’s. Maybe all those m&amp;m’s packages came from a single production line that happened to be faulty. The only way to better test m&amp;m’s claim is to gather more data…which means buying more m&amp;m’s.</p>
+</div>
+</div>
+
+    
+    
+    
+        <h4 class="page-header">Related</h4>
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/clt_revisited/">Clearing Some Confusion about the Central Limit Theorem</a></h4>
+    <h5>March 24, 2020</h5>
+    
+<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
+
+<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
+
+<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
+
+
+
+</div>
+ 
+    
+
+    
+    
+        <h4 class="page-header">Comments</h4>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "username" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+</main>
+
+        <footer>
+            <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>
+        </footer>
+
+        
+
+        
+    </body>
+
+</html>
+

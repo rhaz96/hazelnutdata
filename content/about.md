@@ -1,6 +1,10 @@
 ---
-title: About
+title: "About"
 ---
+
+
+![](/./about_files/rhresize.png)
+
 
 Hello and welcome to my blog!  My inspiration for this comes from my work as a teaching assistant to a graduate-level applied statistics course at [SMU](https://datascience.smu.edu/), where I'm currently completing my Masters degree in data science.
 
