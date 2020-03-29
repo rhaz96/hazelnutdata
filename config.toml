@@ -1,4 +1,4 @@
-baseurl = "/"
+baseurl = "https://statisticalmusings.netlify.com/"
 languageCode = "en-us"
 title = "Statistical Musings"
 theme = "hugo-lithium"
@@ -10,23 +10,30 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
     post = "/:slug/"
 
 [[menu.main]]
+    name = "Posts"
+    url = "/"
+    weight=1
+
+
+[[menu.main]]
     name = "About"
     url = "/about/"
+    weight=2
     
 [[menu.main]]
     name = "Projects"
     url = "/project/"
+    weight=3
     
-[[menu.main]]
-    name = "Posts"
-    url = "/post/"    
-
 [[menu.main]]
     name = "GitHub"
     url = "https://github.com/rhaz96/statisticalmusings"
+    weight=4
+
 [[menu.main]]
     name = "LinkedIn"
     url = "http://linkedin.com/in/robertmhazell/"
+    weight=5
 
 [params]
     description = "Musings on statistics and data science"
