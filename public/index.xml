@@ -6,10 +6,19 @@
     <description>Recent content on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Coming Soon</title>
+      <link>/project/coming-soon/</link>
+      <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/coming-soon/</guid>
+      <description>Stay tuned! I have projects to post as part of my portfolio!</description>
+    </item>
     
     <item>
       <title>An Intuitive Explanation of p-values</title>

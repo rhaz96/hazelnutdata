@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Projects on hazelnut data</title>
+    <title>Projects on Statistical Musings</title>
     <link>/project/</link>
-    <description>Recent content in Projects on hazelnut data</description>
+    <description>Recent content in Projects on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 29 Mar 2020 00:00:00 +0000</lastBuildDate>
@@ -12,21 +12,12 @@
     
     
     <item>
-      <title>please work</title>
-      <link>/project/please-work/</link>
+      <title>Coming Soon</title>
+      <link>/project/coming-soon/</link>
       <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/project/please-work/</guid>
-      <description>maybe this will work</description>
-    </item>
-    
-    <item>
-      <title>surprise</title>
-      <link>/project/surprise/</link>
-      <pubDate>Sun, 29 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/project/surprise/</guid>
-      <description>I wonder if this will work.</description>
+      <guid>/project/coming-soon/</guid>
+      <description>Stay tuned! I have projects to post as part of my portfolio!</description>
     </item>
     
   </channel>
