@@ -2,9 +2,6 @@
 title: "About"
 ---
 
-
-![](/./about_files/rhresize.png)
-
 Hello and welcome to my blog!  I'm Robert Hazell.  My inspiration for this comes from my work as a teaching assistant to a graduate-level applied statistics course at [SMU](https://datascience.smu.edu/), where I'm currently completing my Masters degree in data science.
 
 This blog is designed to capture my statistics and data science musings that I hope illuminates concepts in those fields.  
