@@ -8,11 +8,6 @@
   </url>
   
   <url>
-    <loc>/project/lets-see/</loc>
-    <lastmod>2020-03-29T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/project/</loc>
     <lastmod>2020-03-29T00:00:00+00:00</lastmod>
   </url>
@@ -23,7 +18,7 @@
   </url>
   
   <url>
-    <loc>/an-intuitive-explanation-of-p-values/</loc>
+    <loc>/post/an-intuitive-explanation-of-p-values/</loc>
     <lastmod>2020-03-28T00:00:00+00:00</lastmod>
   </url>
   
@@ -53,12 +48,8 @@
   </url>
   
   <url>
-    <loc>/clearing-some-confusion-about-the-central-limit-theorem/</loc>
+    <loc>/post/clt_revisited/</loc>
     <lastmod>2020-03-24T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/2020-03-29-lets-see/</loc>
   </url>
   
   <url>
