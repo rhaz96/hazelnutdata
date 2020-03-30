@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585598592441.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6324ABC8",
+    "lastKnownWriteTime" : 1585598922,
+    "last_content_update" : 1585598922431,
+    "path" : "~/Desktop/SMU/statisticalmusings/config.toml",
+    "project_path" : "config.toml",
+    "properties" : {
+        "cursorPosition" : "48,13",
+        "scrollLine" : "45"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "toml"
+}

@@ -1,0 +1,70 @@
+---
+title: An Intuitive Explanation of p-values
+author: Robert Hazell
+date: '2020-03-28'
+slug: an-intuitive-explanation-of-p-values
+#categories: []
+tags: ["explanatory", "statistics", "R"]
+---
+
+### Striving for p-value enlightenment
+
+Trying to describe p-values is notoriously difficult, even for seasoned statistics professionals.  This [article](https://fivethirtyeight.com/features/not-even-scientists-can-easily-explain-p-values/) from FiveThirtyEight has been at the back of my head for the longest time.  The author Christie Aschwanden is basically fishing around for a basic, intuitive definition of a p-value.  Her conclusion?
+
+>"What I learned by asking all these very smart people to explain p-values is that I was on a fool’s errand."
+
+That's disappointing!  Any attempt to distill p-values to a pithy phrase or single sentence is bound to leave some wrong impressions, and this is a problem for educators trying to reach a general audience.  However, I don't think all hope is lost.  Appealing to analogies or anecdotes often does a sufficient job.  That is what I attempt to do here while minimizing the number of (statistical) spare parts left over.  I'll leave that for you to judge...
+
+### m&m's (again)
+
+<center>
+![](/post/pvalues_intuitive_files/m&m.png)
+</center>
+
+Suppose m&m's claimed that their Share Size bags (3.27 oz) contain around 42 m&m's.  In my [first blog post](https://hazelnutdata.netlify.com/clearing-some-confusion-about-the-central-limit-theorem/) we supposed you went out and bought fifty such share bags and found the average number of m&m's to be 29.  Each package had a slightly different amount of m&m's per bag, and this difference was 5.  
+
+You'd be justified in feeling suspicious about m&m's claim of 42 since 29 seems quite far off. To investigate this, you'd ask the following question:
+
+> *How likely is it to get an average of 29 m&m's if the company's claim of 42 were true?*
+
+Notice that if you think 29 m&m's is evidence that the company is packaging less m&m's than it claims, then so is 28, or 27, or 26...in fact, anything less than 29 would *also* count as evidence to you against m&m's claim of 42.  Because of this, you'd revise your question to be:
+
+> *How likely is it to get an average of 29 m&m's __or less__, if the company's claim of 42 were true?*
+
+We have two competing claims: the mean number m&m's is 42 and the mean number of m&m's is less than 42.  
+
+It turns out the likelihood of seeing an average of 29 m&m's or less, under the assumption the company is telling the truth, is $8.69*10^{-76}$, which is a 0 followed by a decimal with 75 zeroes!  That's soooo close to 0 (the way the p-value was calculated isn't essential to understanding p-values).
+
+```{r}
+z_score <- (29-42)/sqrt(25/50)
+pnorm(z_score)
+```
+
+That right there is your p-value! 
+
+### What should we say?
+
+At this point you have two possibilities.  You can say
+
+* We were incredibly (un)lucky and just so happened to buy fifty packages of m&m's that had far less than 42 m&m's.
+
+Or you can say
+
+* This is strong evidence that m&m's claim of 42 is fishy!
+
+Given how small the p-value is, I think the second possibility makes more sense.
+
+### Conclusion
+
+Hopefully this sheds insight on why the technical definition of a p-value is:
+
+> the probability of observing our sample result, or results more extreme, if we assume the null hypothesis is true
+
+In our example, m&m's claim of 42 is the *null hypothesis* since it describes the default claim assumed to be true.  Our claim that the number of m&m's is less than 42 is considered the *alternative hypothesis* since it challenges the default claim.
+
+The "results more extreme" points back to the fact that in our m&m's example, we didn't consider 29 to be the only result to challenge the null hypothesis.  Values more extreme than 29 (like 28 or 27, or 14) would also in our minds count as evidence challenging the null hypothesis of 42.  Therefore, p-values must take such values into account.
+
+### A Final Word
+
+Here's an important point: **we did not prove that m&m's is lying**.  It entirely possible that all fifty bags we bought just so happened to have far less than 42 m&m's.  Maybe all those m&m's packages came from a single production line that happened to be faulty.  The only way to better test m&m's claim is to gather more data...which means buying more m&m's. 
+

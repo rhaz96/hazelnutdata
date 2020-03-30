@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585512804680.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "646FB788",
+    "lastKnownWriteTime" : 1585443338,
+    "last_content_update" : 1585513893754,
+    "path" : "~/Desktop/SMU/statisticalmusings/content/post/pvalues_intuitive.Rmd",
+    "project_path" : "content/post/pvalues_intuitive.Rmd",
+    "properties" : {
+        "cursorPosition" : "12,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

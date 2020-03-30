@@ -1,0 +1,27 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1585024262080.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "B7D32AAE",
+    "lastKnownWriteTime" : 1585448059,
+    "last_content_update" : 1585448059786,
+    "path" : "~/Desktop/SMU/statisticalmusings/content/post/clt_revisited.Rmd",
+    "project_path" : "content/post/clt_revisited.Rmd",
+    "properties" : {
+        "cursorPosition" : "11,0",
+        "ignored_words" : "darkgreen,m's\n",
+        "last_setup_crc32" : "",
+        "scrollLine" : "1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
