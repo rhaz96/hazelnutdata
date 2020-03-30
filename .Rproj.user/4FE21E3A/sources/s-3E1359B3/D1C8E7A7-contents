@@ -1,6 +1,0 @@
-# use readLines to determine that the file is tab delimited
-#readLines("~/Desktop/SMU/QTW/Case Study 5/MSDS7333_Wk10_carmpgdata.txt")
-car_info <- read.table("~/Desktop/SMU/QTW/Case Study 5/MSDS7333_Wk10_carmpgdata.txt", header = T, fill=T, sep= "\t")
-car_info <- car_info[complete.cases(car_info),]
-setwd("~/Desktop/SMU/QTW/Case Study 5")
-write.csv(car_info, "car_info.csv")
