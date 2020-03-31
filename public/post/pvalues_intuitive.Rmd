@@ -21,7 +21,7 @@ That's disappointing!  Any attempt to distill p-values to a pithy phrase or sing
 ![](/post/pvalues_intuitive_files/m&m.png)
 </center>
 
-Suppose m&m's claimed that their Share Size bags (3.27 oz) contain around 42 m&m's.  In my [first blog post](https://hazelnutdata.netlify.com/clearing-some-confusion-about-the-central-limit-theorem/) we supposed you went out and bought fifty such share bags and found the average number of m&m's to be 29.  Each package had a slightly different amount of m&m's per bag, and this difference was 5.  
+Suppose m&m's claimed that their Share Size bags (3.27 oz) contain around 42 m&m's.  In my [first blog post](https://statisticalmusings.netlify.com/post/clt_revisited/) we supposed you went out and bought fifty such share bags and found the average number of m&m's to be 29.  Each package had a slightly different amount of m&m's per bag, and this difference was 5.  
 
 You'd be justified in feeling suspicious about m&m's claim of 42 since 29 seems quite far off. To investigate this, you'd ask the following question:
 
