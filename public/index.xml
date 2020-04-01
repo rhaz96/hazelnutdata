@@ -6,10 +6,22 @@
     <description>Recent content on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 31 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>testing mathjax/latex</title>
+      <link>/project/testing-mathjax-latex/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/testing-mathjax-latex/</guid>
+      <description>\(PredictedOriginal_{t+1} = PredictedDiff_{t+1} + Actual_t\)
+\(R^{2}\)
+El-Assi, et al 2017 perform a similar types of analysis of Toronto’s bike share program, developing models for weekday, weekend, station origin, and station destination ridership. Adjusted \({R^2}\) values hover around 0.66.
+Wang et al 2012 use 19 total socioeconomic variables to develop a regression model for station level, 2011 ridership of the Nice Ride bike share program in Minneapolis. Notably no weather variables are included.</description>
+    </item>
     
     <item>
       <title>Forecasting Capital BikeShare Ridership</title>

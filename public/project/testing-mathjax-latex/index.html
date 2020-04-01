@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Projects</title>
+        <title>testing mathjax/latex</title>
         
         <style>
 
@@ -60,9 +60,6 @@
 <script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
  <meta name="generator" content="Hugo 0.67.1" />
         
-            <link href="/project/index.xml" rel="alternate" type="application/rss&#43;xml" title="Statistical Musings" />
-            <link href="/project/index.xml" rel="feed" type="application/rss&#43;xml" title="Statistical Musings" />
-        
 
         
 
@@ -80,7 +77,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand visible-xs" href="#">Projects</a>
+                    <a class="navbar-brand visible-xs" href="#">testing mathjax/latex</a>
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -117,51 +114,43 @@
 
 <main>
 
-    <h2>Projects</h2>
+    <div>
+        <h2>testing mathjax/latex</h2>
+        <h5></h5>
+        
 
-     <div class="item">
+    </div>
 
-    
-    
-    
-
-    
-    
-
-    <h4><a href="/project/testing-mathjax-latex/">testing mathjax/latex</a></h4>
-    <h5>April 1, 2020</h5>
-    
+    <div align="start" class="content">
 
 
+<p><span class="math inline">\(PredictedOriginal_{t+1} = PredictedDiff_{t+1} + Actual_t\)</span></p>
+<p><span class="math inline">\(R^{2}\)</span></p>
+<p><a href="https://www.researchgate.net/profile/Khandker_Nurul_Habib2/publication/286379583_Effects_of_Built_Environment_and_Weather_on_Bike_Sharing_Demand_A_Station_Level_Analysis_of_Commercial_Bike_Sharing_in_Toronto/links/56684b7c08ae7dc22ad1c992/Effects-of-Built-Environment-and-Weather-on-Bike-Sharing-Demand-A-Station-Level-Analysis-of-Commercial-Bike-Sharing-in-Toronto.pdf">El-Assi, et al 2017</a> perform a similar types of analysis of Toronto’s bike share program, developing models for weekday, weekend, station origin, and station destination ridership. Adjusted <span class="math inline">\({R^2}\)</span> values hover around 0.66.</p>
+<p><a href="https://pdfs.semanticscholar.org/8a39/c1df91725ac27ea0c413360c3592b911d17a.pdf">Wang et al 2012</a> use 19 total socioeconomic variables to develop a regression model for station level, 2011 ridership of the Nice Ride bike share program in Minneapolis. Notably no weather variables are included. They achieve an adjusted Adjusted <span class="math inline">\({R^2}\)</span> of approximately 0.87. <span class="math inline">\({R^2}\)</span></p>
+<pre class="r"><code>summary(lm(mpg~disp, data=mtcars))</code></pre>
+<pre><code>
+Call:
+lm(formula = mpg ~ disp, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.8922 -2.2022 -0.9631  1.6272  7.2305 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 29.599855   1.229720  24.070  &lt; 2e-16 ***
+disp        -0.041215   0.004712  -8.747 9.38e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.251 on 30 degrees of freedom
+Multiple R-squared:  0.7183,    Adjusted R-squared:  0.709 
+F-statistic: 76.51 on 1 and 30 DF,  p-value: 9.38e-10</code></pre>
+<p><span class="math inline">\({R^2}\)</span></p>
 </div>
-  <div class="item">
-
-    
-    
-    
-
-    
-    
-
-    <h4><a href="/project/forecasting-capital-bikeshare-ridership/">Forecasting Capital BikeShare Ridership</a></h4>
-    <h5>March 31, 2020</h5>
-    
-<a href="/tags/time-series"><kbd class="item-tag">time series</kbd></a>
-
-<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
-
-<a href="/tags/projects"><kbd class="item-tag">projects</kbd></a>
-
-<a href="/tags/machine-learning"><kbd class="item-tag">machine learning</kbd></a>
-
-
-
-</div>
- 
 
 </main>
-
-
 
         <footer>
             <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>

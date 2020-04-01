@@ -1,0 +1,36 @@
+---
+title: testing mathjax/latex
+author: Robert Hazell
+date: '2020-04-01'
+slug: testing-mathjax-latex
+categories: []
+tags: []
+description: ''
+---
+
+
+
+<p><span class="math inline">\(PredictedOriginal_{t+1} = PredictedDiff_{t+1} + Actual_t\)</span></p>
+<p><span class="math inline">\(R^{2}\)</span></p>
+<p><a href="https://www.researchgate.net/profile/Khandker_Nurul_Habib2/publication/286379583_Effects_of_Built_Environment_and_Weather_on_Bike_Sharing_Demand_A_Station_Level_Analysis_of_Commercial_Bike_Sharing_in_Toronto/links/56684b7c08ae7dc22ad1c992/Effects-of-Built-Environment-and-Weather-on-Bike-Sharing-Demand-A-Station-Level-Analysis-of-Commercial-Bike-Sharing-in-Toronto.pdf">El-Assi, et al 2017</a> perform a similar types of analysis of Toronto’s bike share program, developing models for weekday, weekend, station origin, and station destination ridership. Adjusted <span class="math inline">\({R^2}\)</span> values hover around 0.66.</p>
+<p><a href="https://pdfs.semanticscholar.org/8a39/c1df91725ac27ea0c413360c3592b911d17a.pdf">Wang et al 2012</a> use 19 total socioeconomic variables to develop a regression model for station level, 2011 ridership of the Nice Ride bike share program in Minneapolis. Notably no weather variables are included. They achieve an adjusted Adjusted <span class="math inline">\({R^2}\)</span> of approximately 0.87. <span class="math inline">\({R^2}\)</span></p>
+<pre class="r"><code>summary(lm(mpg~disp, data=mtcars))</code></pre>
+<pre><code>
+Call:
+lm(formula = mpg ~ disp, data = mtcars)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.8922 -2.2022 -0.9631  1.6272  7.2305 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 29.599855   1.229720  24.070  &lt; 2e-16 ***
+disp        -0.041215   0.004712  -8.747 9.38e-10 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 3.251 on 30 degrees of freedom
+Multiple R-squared:  0.7183,    Adjusted R-squared:  0.709 
+F-statistic: 76.51 on 1 and 30 DF,  p-value: 9.38e-10</code></pre>
+<p><span class="math inline">\({R^2}\)</span></p>

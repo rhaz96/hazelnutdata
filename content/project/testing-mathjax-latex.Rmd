@@ -1,0 +1,32 @@
+---
+title: testing mathjax/latex
+author: Robert Hazell
+date: '2020-04-01'
+slug: testing-mathjax-latex
+categories: []
+tags: []
+description: ''
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, comment=NA)
+# change path to load data and saved models
+knitr::opts_knit$set(root.dir = normalizePath("~/Desktop/SMU/bike-sharing-dataset/CapitalBikeShare")) 
+```
+
+
+$PredictedOriginal_{t+1} = PredictedDiff_{t+1} + Actual_t$
+
+$R^{2}$
+
+
+[El-Assi, et al 2017](https://www.researchgate.net/profile/Khandker_Nurul_Habib2/publication/286379583_Effects_of_Built_Environment_and_Weather_on_Bike_Sharing_Demand_A_Station_Level_Analysis_of_Commercial_Bike_Sharing_in_Toronto/links/56684b7c08ae7dc22ad1c992/Effects-of-Built-Environment-and-Weather-on-Bike-Sharing-Demand-A-Station-Level-Analysis-of-Commercial-Bike-Sharing-in-Toronto.pdf) perform a similar types of analysis of Toronto's bike share program, developing models for weekday, weekend, station origin, and station destination ridership.  Adjusted ${R^2}$ values hover around 0.66.
+
+[Wang et al 2012](https://pdfs.semanticscholar.org/8a39/c1df91725ac27ea0c413360c3592b911d17a.pdf) use 19 total socioeconomic variables to develop a regression model for station level, 2011 ridership of the Nice Ride bike share program in Minneapolis.  Notably no weather variables are included.  They achieve an adjusted Adjusted ${R^2}$ of approximately 0.87.    ${R^2}$
+
+
+```{r}
+summary(lm(mpg~disp, data=mtcars))
+```
+
+ ${R^2}$
