@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>time series on Statistical Musings</title>
+    <link>/tags/time-series/</link>
+    <description>Recent content in time series on Statistical Musings</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 31 Mar 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/time-series/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Forecasting Capital BikeShare Ridership</title>
+      <link>/project/forecasting-capital-bikeshare-ridership/</link>
+      <pubDate>Tue, 31 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/forecasting-capital-bikeshare-ridership/</guid>
+      <description>Introduction I love to bike, especially during the spring and summer. As a New York City resident the city affords miles of urban bike paths, my favorite being the seamless connection between Riverside and Hudson River parks. Of course thousands (if not millions) of others enjoy biking throughout the country, and if you don’t own a bike you can rent one through various bike programs, like NYC’s Citi Bike and Washington DC’s Capital BikeShare (CB henceforth).</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -67,4 +67,3 @@ The "results more extreme" points back to the fact that in our m&m's example, we
 ### A Final Word
 
 Here's an important point: **we did not prove that m&m's is lying**.  It entirely possible that all fifty bags we bought just so happened to have far less than 42 m&m's.  Maybe all those m&m's packages came from a single production line that happened to be faulty.  The only way to better test m&m's claim is to gather more data...which means buying more m&m's. 
-
