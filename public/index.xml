@@ -17,10 +17,7 @@
       <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>/project/testing-mathjax-latex/</guid>
-      <description>\(PredictedOriginal_{t+1} = PredictedDiff_{t+1} + Actual_t\)
-\(R^{2}\)
-El-Assi, et al 2017 perform a similar types of analysis of Toronto’s bike share program, developing models for weekday, weekend, station origin, and station destination ridership. Adjusted \({R^2}\) values hover around 0.66.
-Wang et al 2012 use 19 total socioeconomic variables to develop a regression model for station level, 2011 ridership of the Nice Ride bike share program in Minneapolis. Notably no weather variables are included.</description>
+      <description>Capital BikeShare docking station  Introduction I love to bike, especially during the spring and summer. As a New York City resident the city affords miles of urban bike paths, my favorite being the seamless connection between Riverside and Hudson River parks. Of course thousands (if not millions) of others enjoy biking throughout the country, and if you don’t own a bike you can rent one through various bike programs, like NYC’s Citi Bike and Washington DC’s Capital BikeShare (CB henceforth).</description>
     </item>
     
     <item>
