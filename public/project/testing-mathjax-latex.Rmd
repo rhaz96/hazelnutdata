@@ -1,10 +1,10 @@
 ---
-title: testing mathjax/latex
+title: Forecasting Capital BikeShare Ridership
 author: Robert Hazell
-date: '2020-04-01'
-slug: testing-mathjax-latex
+date: '2020-03-31'
+slug: forecasting-capital-bikeshare-ridership
 categories: []
-tags: []
+tags: ["time series", "R", "projects", "machine learning"]
 description: ''
 ---
 
@@ -13,7 +13,6 @@ knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, comment=NA)
 # change path to load data and saved models
 knitr::opts_knit$set(root.dir = normalizePath("~/Desktop/SMU/bike-sharing-dataset/CapitalBikeShare")) 
 ```
-
 
 <center>
 ![](/project/testing-mathjax-latex_files/capitalbike.png)
@@ -275,6 +274,7 @@ Curiously, all humidity data from October 2013 is missing (as well as for four o
 bikes[which(is.na(bikes$hum)), c(1,4,9:11)]
 ```
 
+
 Fortunately we can use past values to impute missing data.  The ACF plot below quantifies how strong current and past humidity values are correlated, such as ~ 0.5 correlation between a given day's value and yesterday's value.  
 
 ```{r}
@@ -348,7 +348,7 @@ The line plot below is interactive, so feel free to click and drag around your m
 
 The tall upward peaks in 2014 and 2015 most likely reflect high turnout at the annual National Cherry Blossom Festival.
 
-```{r fig.width=8, fig.height=5}
+```{r eval=FALSE, fig.height=5, fig.width=8, include=FALSE}
 library(plotly)
 plot_ly(data = bikes,
         x = ~TripDate,
@@ -402,324 +402,4 @@ dow_anim <- animate(dow_animation, nframes = 50, renderer = magick_renderer())
 anim_save("dayofweek.gif", dow_anim)
 ```
 
-![](/project/testing-mathjax-latex_files/dayofweek.gif)
-
-## Modeling & Forecasting Methodology
-
-To reiterate, we want to make 30 day ahead trip predictions.  We'll explore several models using (virtually) all of 2011-2016 as training data and an expanding window with a seven day skip period for 2017 as our test data.  That was a mouthful.  To rephrase, initial model parameters are estimated beginning with all 2011-2016 data.  When it comes time to test, the training set is expanded to re-estimate model parameters.  Here's a tabular look at what the training and test sets look like.
-
-```{r}
-train_test <- tibble("Training Set (always expanding)" = c("1/8/2011 – 12/31/2016",
-                                                               "1/8/2011 – 1/8/2017",
-                                                               "1/8/2011 – 1/16/2017"),
-                         "Test Set (always 30 days)" = c("1/1/2017 – 1/30/2017",
-                                                         "1/9/2017 - 2/7/2017",
-                                                         "1/17/2017 – 2/15/2017"))
-
-train_test %>% kable() %>% kable_styling(bootstrap_options = "striped", full_width = F)
-```
-
-It's fixed origin since the training set always begins at 1/8/2011.  We need to skip 1/1/2011 - 1/7/2011 since (spoiler alert) one of the later models uses a lag of 7 of ```cnt``` and we want to make model comparisons on the same test sets.  We also skip seven days for subsequent training sets since it'd take much more time to run all possible models.  For example, instead of making our second training set 1/8/2011 - 1/1/2017 (one day after 12/31/2016) we make it 1/8/2011 - 1/8/2017.  So we sidestep having additional training sets 1/8/2011-1/1/2017, 1/8/2011-1/2/2017, ... , 1/8/2011-1/7/2017. Test sets are always 30 days long.  In total we have 42 training and test sets, created using the ```createTimeSlices``` function in the ```caret``` package.  
-
-The RMSE (root mean square error) and RMSLE (root mean square log error) is used to evaluate models.  These metrics are different from each other in that RMSLE penalizes underestimates more stronger than overestimates, whereas RMSE sees both equally.  However, both are used since some models have drastically lower RMSEs but almost identical RMSLEs.  In a bike share context it's logical to view underestimates more harshly than overestimates, that's why RMSLE is considered in this analysis alongside RMSE.
-
-After the 42 RMSE and RMSLE values are calculated from a model we take the *median* of RMSE since a couple "bad" forecasts can quite skewer the true performance of our model, giving a false impression.  We'll use the *mean* of the RMSLEs since the RMSLE doesn't suffer from that skewering.
-
-```{r}
-library(caret)
-# use 2011-2016 for fitting model parameters; 2017 testing
-bikes_train <- bikes %>% filter(between(TripDate, "2011/01/08", "2016/12/31"))
-bikes_test <- bikes %>% filter(between(TripDate, "2017/01/01", "2017/12/31"))
-
-bikes_adj <- bikes[8:2553, ]
-# create training and test splits
-bike_splits <- createTimeSlices(bikes_adj$cnt,
-                                initialWindow = 2181, # row number of 12/31/2016
-                                horizon = 30,
-                                fixedWindow = F,
-                                skip=7)
-```
-
-## Model 1: Multiple Linear Regression (MLR) with autocorrelated residuals
-
-The pure time series ARIMA model doesn't take advantage of the other variables in our dataset.  A regression model can.  Regression with time series data tends to create serially correlated residuals, violating a key MLR assumption.  This is usually remedied by *simultaneously* computing the regression coefficients and residual structure.  The seasonal period limitation of 350 in  ```auto.arima``` (which performs the simultaneous calculations) doesn't allow for this. As an alternative, we create two forecasts: 30 day forecasts from the "raw" MLR model and 30 days forecasts of the MLR's residuals.  Those are summed to create ridership forecasts.
-
-### Selecting Predictors
-
-We don't have too many variables, so let's see which predictors produce the highest adjusted $R^{2}$ and the lowest AIC.  Using ```weekofmon``` as a predictor would be misleading since the fourth week has more than seven days most of the time.  In the dataset nearly 200 extra days belong in the fourth week, so these extra days artificially inflate ridership numbers.
-
-```{r}
-table(bikes$weekofmon)
-```
-
-
-```{r}
-library(olsrr)
-bike_reg <- lm(cnt ~ weekday+mnth+holiday+temp+hum+windspeed+prec+snow+Time, 
-               data=bikes_train)
-all_regs <- ols_step_all_possible(bike_reg)
-
-# using highest adj R^2
-best_r2 <- all_regs %>% arrange(desc(adjr))
-best_r2[1:5, c(2:3,5)] %>% 
-  kable(caption = "Predictors for best Adjusted R-Squared",) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F) %>%
-  row_spec(1, bold = T, color = "white", background = "teal")
-  
-# using lowest AIC
-best_aic <- all_regs %>% arrange(aic)
-best_aic[1:5, c(2:3,8)] %>% 
-  kable(caption = "Predictors for best AIC",) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F) %>%
-  row_spec(1, bold = T, color = "white", background = "orange")
-```
-
-While adjusted $R^{2}$ is a popular metric for regression, the AIC is usually used for forecasting.  Since
-adj $R^{2}$ for the best AIC model is virtually identical to that of the full model with all 9 variables, we'll
-use the lowest AIC model.  Those variables are highlighted in green; those in red are excluded.
-
-```{r}
-# variables selected by minimizing AIC
-selected <- best_aic[1,3] %>% strsplit(" ") %>% unlist() %>% match(colnames(bikes))
-chosen_vars <- colnames(bikes)[selected]
-# data frame of all possible x variables
-possible_variables <- data.frame(Variables = colnames(bikes)[5:14])
-# highlight green all variables in Variables found in chosen_vars, otherwise make red
-possible_variables %>%
-  mutate_all(~cell_spec(.x, color = ifelse(.x %in% chosen_vars, "green","red"))) %>%
-  kable(escape = F) %>%
-  kable_styling(bootstrap_options = "striped", full_width = F)
-```
-
-### Fitting and Forecasting Model 1
-
-Fitting an MLR with the seven variables above produces residuals that evidence an s=364 seasonality and a need to perform first order differencing.  The ACF residuals cuts off after lag 3 while the PACF (slowly) dampens to 0, which implies an MA(3) should be fit to the residuals.  An MA(3) passes the Ljung-Box test (p-val of 0.176 with lag=30), strong evidence to conclude the MA(3) fit produces residuals resembling white noise.  The ACF plot of the MA(3) gives visual confirmation. Since we took one seasonal and one nonseasonal difference and fit an MA(3) to the residuals, our final model is an MLR with an ARIMA(0,1,3)(0,1,0)[364] residual structure.
-
-```{r }
-bike_reg <- lm(cnt ~ weekday+mnth+holiday+temp+hum+prec+Time, 
-               data=bikes_train)
-
-reg_364 <- diff(bike_reg$residuals, lag=364)
-reg_364_1 <- diff(reg_364, 1)
-#Acf(reg_364_1, lag.max = 30)
-#Pacf(reg_364_1, lag.max = 30)
-reg_364_1_est <- est.arma.wge(reg_364_1, p=0, q=3, factor=F)
-Acf(reg_364_1_est$res, lag.max=30, main="")
-title("ACF after fitting ARIMA(0,1,3)(0,1,0)[364] to Model 1's Residuals", line=1)
-#ljung.wge(reg_364_1_est$res, p=0, q=3, K=30) # 0.176
-```
-
-The forecasts yield a median RMSE of 2302.075 and a mean RMSLE of 0.269. 
-
-```{r}
-rmses_mlr <- c()
-rmsle_mlr <- c()
-#42 is the number of train/test sets
-for (i in 1:42) {
-  rows_train <- bike_splits$train[[i]]
-  rows_test <- bike_splits$test[[i]]
-  fit_reg <- lm(cnt ~ weekday+mnth+holiday+temp+hum+prec+Time, 
-                data=bikes_adj, subset = rows_train)
-  # perform first order and seasonal differencing
-  reg_364_1 <- diff(diff(fit_reg$residuals, 364), 1)
-  # result is stationary, so now estimate parameters MA parameters
-  reg_364_1_est <- est.arma.wge(reg_364_1, p=0, q=3, factor=F)
-  # get forecast of residuals
-  reg_res_for <- fore.aruma.wge(fit_reg$residuals, 
-                                phi=reg_364_1_est$phi, 
-                                theta=reg_364_1_est$theta,
-                                d=1,
-                                s=364,
-                                n.ahead = 30,
-                                limits=F, plot = F)
-  
-  # get forecast of raw MLR values
-  reg_for <- predict(fit_reg, newdata = bikes_adj[rows_test, selected])
-  # add these forecasts together
-  forecast_combined = reg_res_for$f + reg_for
-  # calculate rmse
-  err_rmse <- Metrics::rmse(bikes_adj$cnt[rows_test], forecast_combined)
-  rmses_mlr <- append(rmses_mlr, err_rmse)
-  # calculate rmsle
-  err_rmsle <- Metrics::rmsle(bikes_adj$cnt[rows_test], forecast_combined)
-  rmsle_mlr <- append(rmsle_mlr, err_rmsle)
-  
-  #rmse <- sqrt(mean(forecast_combined - bikes_adj$cnt[rows_test])^2)
-  #rmses_mlr <- append(rmses_mlr, rmse)
-}
-#median(rmses_mlr)
-#mean(rmsle_mlr)
-```
-
-## Model 2: Gradient Boosted Regression Trees
-
-All the models thus far considered only linear relationships. Tree-based methods like random forests and gradient boosted machines are non-parametric, exploiting non-linearities to creating custom if-then statements or rules for prediction (or classification) tasks. Gradient boosting trees are applied here to unlock further predictive accuracy.
-
-Since boosting uses tree-based methods, it does not automatically account for time series data. This is important since each tree in boosting is created by bootstrapping the training data in a random fashion.  Order matters in time series, so random sampling can destruct time dependencies within data.  Another issue arising from standard tree methods is failure to extrapolate increasing (or decreasing) trend for forecasting tasks.  The final predictions from each tree during model building are averages of the response variable from the training set. The test set, by contrast, will include values of the response variable outside the range of the training set. This leads to systematically underpredicting test set data if there's positive trend, or systematically overpredicting if there's negative trend.  Check this [Medium post](https://medium.com/datadriveninvestor/why-wont-time-series-data-and-random-forests-work-very-well-together-3c9f7b271631) for a visual example.
-
-Our data has clear positive trend (see [Overall Daily Ridership](#overall-daily-ridership)) section). To remedy the issues of extrapolation, the response variable is detrended using first-order differencing on the ```cnt``` variable (which is called ```dif1```). The model and it's predictions are based on the ```dif1```, but the final predictions are back transformed to the original scale using the following formula:
-
-$PredictedOriginal_{t+1} = PredictedDiff_{t+1} + Actual_t$
-
-In other words, tomorrow's predicted ridership (on the original scale) is the sum of tomorrow's predicted difference and today's actual ridership.  To remedy time-dependency issues, we'll use lagged values of ```dif1```.  Using a lag of 7 is the equivalent of looking back over the last week (seven days) of ridership numbers to form future predictions. Using any other lag didn't improve forecast accuracies.  Like Model 2 other predictors like temperature and windspeed are included, except ```Time``` since ```cnt`` is detrended.  This model also includes first-differenced values of temperature; hence, we look at both a given day's temperature and the temperature difference between that day and the previous day.
-
-```{r}
-# new dataframe that includes differenced and lagged values of cnt
-b2 <- bikes %>%
-  select(cnt, weekday, mnth, holiday, temp, hum, windspeed, prec, snow, TripDate) %>%
-  mutate(dif1 = c(NA, diff(cnt,1)),
-         lag1 = lag(dif1),
-         lag2 = lag(dif1, 2),
-         lag3 = lag(dif1, 3),
-         lag4 = lag(dif1, 4),
-         lag5 = lag(dif1, 5),
-         lag6 = lag(dif1, 6),
-         lag7 = lag(dif1, 7),
-         dif_temp = c(NA, diff(temp,1))
-  ) %>% 
-  filter(complete.cases(.))
-
-# rolling window construction
-bike_splits2 <- createTimeSlices(b2$cnt,
-                                 initialWindow = 2180, # row number of 12/31/2016
-                                 horizon = 30,
-                                 fixedWindow = F,
-                                 skip=7)
-library(gbm) # used for gradient boosting trees
-n_mods <- length(bike_splits2$train)
-rmsle_boost <- c() # store each RMSLE here
-rmse_boost<- c() # store each RMSE here
-smape_boost <- c() #store each SMAPE here
-# for each of the 42 train/test sets
-
-set.seed(100)
-for(i in 1:n_mods){
-  # this is where the original data and (differenced) predictions will be stored
-  # will be reinitialized for each training iteration
-  mod_df <- NULL 
-  rows_train <- bike_splits2$train[[i]]
-  rows_test <- bike_splits2$test[[i]]
-  mod_df <- b2[c(rows_train, rows_test), ] # dataframe containing train and test values
-  boost.bikes=gbm(dif1 ~ .-cnt-TripDate,
-                  data=mod_df[rows_train, ], 
-                  distribution="gaussian", n.trees=5000, interaction.depth=2)
-  bike.boost.pred=predict(boost.bikes,newdata=mod_df[rows_test, ], n.trees=5000)
-  mod_df <- mod_df %>% 
-    mutate(Preds = c(boost.bikes$fit, bike.boost.pred))
-  
-  # store back-transformed predictions here
-  bike_trans <- c()
-  for (i in rows_test){
-    pred <- mod_df[i, "Preds"] + mod_df[i-1, "cnt"]
-    # make any negative predictions be 0
-    if (pred < 0) {pred <- 0}
-    bike_trans <- append(bike_trans, pred)
-  }
-  #calculate RMSE
-  err_rmse <- Metrics::rmse(mod_df[rows_test, "cnt"], bike_trans)
-  rmse_boost <- append(rmse_boost, err_rmse)
-  # calculate RMSLE
-  err_rmsle <- Metrics::rmsle(mod_df[rows_test, "cnt"], bike_trans)
-  rmsle_boost <- append(rmsle_boost, err_rmsle)
-  # calculate SMAPE
-  err_smape <- Metrics::smape(mod_df[rows_test, "cnt"], bike_trans)
-  smape_boost <- append(smape_boost, err_smape)
-}
-```
-
-### Model 2 Results
-
-This model significantly outperforms Model 1, further reducing the median RMSE from 2302 to 1642. Median accuracy is 87%.  As evidenced in the mean RMSLE underpredictions are reduced, dropping from 0.269 to 0.2.
-
-```{r}
-# Median GBM RMSE
-paste0("Median RMSE: ", round(median(rmse_boost),3))
-```
-
-```{r}
-# Mean GBM RMSLE
-paste0("Mean RMSLE: ", round(mean(rmsle_boost),3))
-```
-
-```{r}
-# Median GBM SMAPE
-paste0("Median SMAPE: ", round(median(smape_boost), 2))
-```
-
-## Model 3: A Naive Model -- The Baseline
-
-Finally, we fit a baseline model that simply uses predicts next-day ridership to be that of the current day. Building complex models like the first two above doesn't give us an idea of how much better they perform relative to simpler alternatives.  Simple (naive) models often perform well, especially on financial data.  Our naive serves a baseline to compare Model 1 and 2.  If the naive performs closely to first two, the naive model should be preferred.
-
-The naive model doesn't require training and test sets, but to compare its performance with the other two models, forecasts are made only on the test set dates from the the first two models.  We want all models to be compared on the same data.  
-
-```{r}
-# include lag 1 of cnt variable
-b3 <- b2 %>% mutate(cnt_1 = lag(cnt)) %>% filter(complete.cases(.))
-# time slices are the same as in model 2
-# use the test indices
-rmsle_naive <- c()
-smape_naive <- c()
-rmse_naive <- c()
-for (i in 1:n_mods) {
-  indices <- bike_splits2$test[[i]]
-  actual <- b3[indices, "cnt"]
-  naive_preds <- b3[indices, "cnt_1"]
-  rmsle_naive <- append(rmsle_naive, Metrics::rmsle(actual, naive_preds))
-  smape_naive <- append(smape_naive, Metrics::smape(actual, naive_preds))
-  rmse_naive <- append(rmse_naive, Metrics::rmse(actual, naive_preds))
-  }
-
-# Median Naive RMSE
-paste0("Median RMSE: ", round(median(rmse_naive),3))
-# Mean Naive RMSLE
-paste0("Mean RMSLE: ", round(mean(rmsle_naive),3))
-# Median Naive SMAPE
-paste0("Median SMAPE: ", round(median(smape_naive), 2))
-```
-
-The naive model fares rather poorly compared to the other two models on all three performance metrics.
-
-## Comments on Model Performance
-
-Each model and its performance in the following table.  Gradient boosting affords the highest accuracies on all performance metrics but is the least interpretable since each tree in gradient boosting is different, and 5000 were used in each training iteration!  Volatility in daily trip numbers means relying purely on calendar and weather variables may not be sufficient for attaining higher accuracies (or lower RMSEs).  For instance (as mentioned earlier) the annual National Cherry Blossom Festival is not consistent year to year, and ridership on those days isn't easily predicted.  The volatility can be seen in the numerous ridership dips in 2017, presented in the plot below.  Inclusion of other variables mentioned in the [Literature Review](#literature-review) may help improve forecasts and could be used in future research.
-
-```{r}
-mod_perf <- tibble(Model = c("Naive (Baseline)",
-                             "MLR w/ Correlated Errors",
-                             "Gradient Boosted Regression Trees"),
-                   "Median % Accuracy" = c("77%","81%","87%"),
-                   "Median RMSE" = c(2715,2302,1642), 
-                   "Mean RMSLE" = c(0.338, 0.27, 0.20)
-)
-mod_perf %>% 
-  kable() %>% 
-  kable_styling(bootstrap_options = "striped", full_width = F) %>% 
-  row_spec(row=3, bold = T, color = "white", background = "green") 
-```
-
-```{r}
-bikes %>% filter(between(TripDate, "2017/01/01", "2017/12/31")) -> bikes_2017
-
-plot_ly(data = bikes_2017,
-        x = ~TripDate,
-        y = ~cnt,
-        color = I("black"),
-        hoverinfo = 'text',
-        text = ~paste(TripDate,
-                      '</br></br>', cnt),
-        type="scatter",
-        mode="lines") %>%
-  layout(title = "Capital BikeShare Daily Trips (2017)",
-         xaxis = list(title = "", showgrid=F),
-         yaxis = list(title = "Total Trips", showgrid=F))
-```
-
-## Further Research
-
-This analysis focuses on overall ridership numbers regardless of membership type (casual or registered).  To predict revenue by membership type we could calculate the proportion of persons belonging to each category from historical data (say, from 2016) as an estimate.  Future research can involve forecasting registered and casual ridership numbers separately, combining their forecasts for predicted overall ridership.  This in itself still wouldn't help determine revenue by membership type since memberships are broken down by [five different plan types](https://www.capitalbikeshare.com/pricing) not provided in the dataset, though CB officials would theoretically have such information.
-
-Other research can involve station-level forecasting and use of other model techniques like neural networks.
-
-## Conclusion
-
-We examine three competing forecasting models for 30-day ahead bike share ridership for Washington DC's Capital BikeShare program, the best model being gradient boosted regression trees.  It also improves on the best previous research by reducing the number of variables used for regression, with only 8 unique variables are used here compared to 17 by Wang et al.  This work can serve as a starting point for refining forecast accuracy at the station level.
+![](/post/pvalues_intuitive_files/dayofweek.gif)

@@ -1,11 +1,14 @@
 ---
 title: Forecasting Capital BikeShare Ridership
 author: Robert Hazell
-date: '2020-03-31'
+date: '2020-04-02'
 slug: forecasting-capital-bikeshare-ridership
 categories: []
-tags: ["time series", "R", "projects", "machine learning"]
-description: ''
+tags:
+  - R
+  - projects
+  - time series
+  - machine learning
 ---
 
 ```{r setup, include=FALSE}
@@ -13,6 +16,17 @@ knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, comment=NA)
 # change path to load data and saved models
 knitr::opts_knit$set(root.dir = normalizePath("~/Desktop/SMU/bike-sharing-dataset/CapitalBikeShare")) 
 ```
+
+<center>
+![](/project/forecasting-capital-bikeshare-ridership_files/capitalbike.png)
+</center>
+
+<center>
+<p class="caption">
+[Capital BikeShare docking station](https://dc.curbed.com/2019/8/22/20828525/capital-bikeshare-dc-college-students-transportation-biking)
+</p>
+
+</center>
 
 ## Introduction
 
@@ -337,7 +351,7 @@ The line plot below is interactive, so feel free to click and drag around your m
 
 The tall upward peaks in 2014 and 2015 most likely reflect high turnout at the annual National Cherry Blossom Festival.
 
-```{r fig.width=8, fig.height=5}
+```{r eval=FALSE, fig.height=5, fig.width=8, include=FALSE}
 library(plotly)
 plot_ly(data = bikes,
         x = ~TripDate,
@@ -350,6 +364,17 @@ plot_ly(data = bikes,
   layout(title = "Capital BikeShare Daily Trips (2011-2017)",
          xaxis = list(title = "", showgrid=F),
          yaxis = list(title = "Total Trips", showgrid=F))
+```
+
+```{r}
+ggplot(bikes, aes(TripDate,cnt)) + 
+  geom_line(col="steelblue") +
+  xlab("")+
+  ylab("Total Trips")+
+  scale_x_date(breaks = "11 months") +
+  ggtitle("Capital BikeShare Daily Trips (2011-2017)") +
+  theme(panel.grid = element_blank(),
+        plot.title = element_text(hjust=0.5, family = "Georgia"))
 ```
 
 ### Exploring Weather Variables on Ridership
@@ -391,7 +416,7 @@ dow_anim <- animate(dow_animation, nframes = 50, renderer = magick_renderer())
 anim_save("dayofweek.gif", dow_anim)
 ```
 
-![](/post/pvalues_intuitive_files/dayofweek.gif)
+![](/project/forecasting-capital-bikeshare-ridership_files/dayofweek.gif)
 
 ## Modeling & Forecasting Methodology
 
@@ -689,18 +714,14 @@ mod_perf %>%
 ```{r}
 bikes %>% filter(between(TripDate, "2017/01/01", "2017/12/31")) -> bikes_2017
 
-plot_ly(data = bikes_2017,
-        x = ~TripDate,
-        y = ~cnt,
-        color = I("black"),
-        hoverinfo = 'text',
-        text = ~paste(TripDate,
-                      '</br></br>', cnt),
-        type="scatter",
-        mode="lines") %>%
-  layout(title = "Capital BikeShare Daily Trips (2017)",
-         xaxis = list(title = "", showgrid=F),
-         yaxis = list(title = "Total Trips", showgrid=F))
+ggplot(bikes_2017, aes(TripDate,cnt)) + 
+  geom_line(col="steelblue") +
+  xlab("")+
+  ylab("Total Trips")+
+  scale_x_date(breaks = "3 months") +
+  ggtitle("Capital BikeShare Daily Trips (2017)") +
+  theme(panel.grid = element_blank(),
+        plot.title = element_text(hjust=0.5, family = "Georgia"))
 ```
 
 ## Further Research
@@ -712,9 +733,5 @@ Other research can involve station-level forecasting and use of other model tech
 ## Conclusion
 
 We examine three competing forecasting models for 30-day ahead bike share ridership for Washington DC's Capital BikeShare program, the best model being gradient boosted regression trees.  It also improves on the best previous research by reducing the number of variables used for regression, with only 8 unique variables are used here compared to 17 by Wang et al.  This work can serve as a starting point for refining forecast accuracy at the station level.
-
-
-
-
 
 

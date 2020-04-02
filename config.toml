@@ -15,7 +15,7 @@ googleAnalytics = ""
     font = "Georgia" # should match the name on Google Fonts!
     highlight = true
     highlightStyle = "monokai"
-    highlightLanguages = ["r"]
+    highlightLanguages = ["r", "python"]
 
 [[menu.main]]
     url = "/"
