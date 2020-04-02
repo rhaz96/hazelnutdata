@@ -1,0 +1,11 @@
+---
+title: The need for multiple comparison correction procedures
+author: Robert Hazell
+date: '2020-04-02'
+slug: the-need-for-multiple-comparison-correction-procedures
+categories: []
+tags:
+  - R
+  - explanatory
+description: ''
+---

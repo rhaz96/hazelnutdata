@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>The need for multiple comparison correction procedures</title>
+      <link>/post/the-need-for-multiple-comparison-correction-procedures/</link>
+      <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/the-need-for-multiple-comparison-correction-procedures/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>An Intuitive Explanation of p-values</title>
