@@ -6,16 +6,17 @@ slug: forecasting-capital-bikeshare-ridership
 categories: []
 tags:
   - R
-  - projects
   - time series
+  - projects
   - machine learning
+description: ''
 ---
 
 <script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
 
 
 <center>
-<img src="/project/forecasting-capital-bikeshare-ridership_files/capitalbike.png" />
+<img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/capitalbike.png" />
 </center>
 <center>
 <p class="caption">
@@ -306,14 +307,14 @@ rect(xleft=0.5, ybottom=0, xright=1.5, ytop=0.53, border=&quot;red&quot;,lwd=2)
 arrows(x0=4, y0=0.45, x1=2, y1=0.45, angle=20, col=&quot;red&quot;, length=.1)
 text(x=3.7, y=0.45, labels = c(&quot;Lag 1&quot;), pos=4, cex=.85)
 title(&quot;Humidity Autocorrelations&quot;, line=1)</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Using one day previous values of humidity would be great if we weren’t missing 31 consecutive days! However, if we assign a seasonality of 365 to humidity, decomposing the humidity data displays a strong annual pattern, as seen in the <code>seasonal</code> component below.</p>
 <pre class="r"><code># remove NAs from humidity column
 hum_2 &lt;- na.omit(bikes$hum)
 # make into ts object
 hum_2_ts &lt;- ts(hum_2, frequency = 365)
 stl(hum_2_ts, s.window = &quot;periodic&quot;) %&gt;% autoplot() + xlab(&quot;Time (Years)&quot;) + theme_minimal()</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>So we resort to using last year’s date ( ~ 365 days) for each missing date since there’s evidence of annual seasonality. For example, we’ll use humidity from 10/12/2012 as a substitute for 10/12/2013. It’s quite natural to ask what last year’s value of something was if you’re missing this year’s data and have evidence of annual seasonality, as we do here.</p>
 <pre class="r"><code>############## final data cleaning ##############
 # find date of missing hum values and get the previous year&#39;s date
@@ -492,7 +493,7 @@ Day Number (Day 1, Day 2, etc). Used to model trend in regression models
   ggtitle(&quot;Capital BikeShare Daily Trips (2011-2017)&quot;) +
   theme(panel.grid = element_blank(),
         plot.title = element_text(hjust=0.5, family = &quot;Georgia&quot;))</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 </div>
 <div id="exploring-weather-variables-on-ridership" class="section level3">
 <h3>Exploring Weather Variables on Ridership</h3>
@@ -503,7 +504,7 @@ Day Number (Day 1, Day 2, etc). Used to model trend in regression models
 <li>Snowfall and precipitation negatively affect trips (as expected)</li>
 </ul>
 <pre class="r"><code>pairs(bikes[, c(4,9:13)], lower.panel = NULL, col=&quot;steelblue&quot;)</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="ridership-by-day-of-the-week" class="section level3">
 <h3>Ridership by Day of the Week</h3>
@@ -528,58 +529,12 @@ dow_animation &lt;- bikes %&gt;%
 dow_anim &lt;- animate(dow_animation, nframes = 50, renderer = magick_renderer())
 # save as gif
 anim_save(&quot;dayofweek.gif&quot;, dow_anim)</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/dayofweek.gif" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/dayofweek.gif" /></p>
 </div>
 </div>
 <div id="modeling-forecasting-methodology" class="section level2">
 <h2>Modeling &amp; Forecasting Methodology</h2>
 <p>To reiterate, we want to make 30 day ahead trip predictions. We’ll explore several models using (virtually) all of 2011-2016 as training data and an expanding window with a seven day skip period for 2017 as our test data. That was a mouthful. To rephrase, initial model parameters are estimated beginning with all 2011-2016 data. When it comes time to test, the training set is expanded to re-estimate model parameters. Here’s a tabular look at what the training and test sets look like.</p>
-<pre class="r"><code>train_test &lt;- tibble(&quot;Training Set (always expanding)&quot; = c(&quot;1/8/2011 – 12/31/2016&quot;,
-                                                               &quot;1/8/2011 – 1/8/2017&quot;,
-                                                               &quot;1/8/2011 – 1/16/2017&quot;),
-                         &quot;Test Set (always 30 days)&quot; = c(&quot;1/1/2017 – 1/30/2017&quot;,
-                                                         &quot;1/9/2017 - 2/7/2017&quot;,
-                                                         &quot;1/17/2017 – 2/15/2017&quot;))
-
-train_test %&gt;% kable() %&gt;% kable_styling(bootstrap_options = &quot;striped&quot;, full_width = F)</code></pre>
-<table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
-<thead>
-<tr>
-<th style="text-align:left;">
-Training Set (always expanding)
-</th>
-<th style="text-align:left;">
-Test Set (always 30 days)
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left;">
-1/8/2011 – 12/31/2016
-</td>
-<td style="text-align:left;">
-1/1/2017 – 1/30/2017
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1/8/2011 – 1/8/2017
-</td>
-<td style="text-align:left;">
-1/9/2017 - 2/7/2017
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-1/8/2011 – 1/16/2017
-</td>
-<td style="text-align:left;">
-1/17/2017 – 2/15/2017
-</td>
-</tr>
-</tbody>
-</table>
 <p>It’s fixed origin since the training set always begins at 1/8/2011. We need to skip 1/1/2011 - 1/7/2011 since (spoiler alert) one of the later models uses a lag of 7 of <code>cnt</code> and we want to make model comparisons on the same test sets. We also skip seven days for subsequent training sets since it’d take much more time to run all possible models. For example, instead of making our second training set 1/8/2011 - 1/1/2017 (one day after 12/31/2016) we make it 1/8/2011 - 1/8/2017. So we sidestep having additional training sets 1/8/2011-1/1/2017, 1/8/2011-1/2/2017, … , 1/8/2011-1/7/2017. Test sets are always 30 days long. In total we have 42 training and test sets, created using the <code>createTimeSlices</code> function in the <code>caret</code> package.</p>
 <p>The RMSE (root mean square error) and RMSLE (root mean square log error) is used to evaluate models. These metrics are different from each other in that RMSLE penalizes underestimates more stronger than overestimates, whereas RMSE sees both equally. However, both are used since some models have drastically lower RMSEs but almost identical RMSLEs. In a bike share context it’s logical to view underestimates more harshly than overestimates, that’s why RMSLE is considered in this analysis alongside RMSE.</p>
 <p>After the 42 RMSE and RMSLE values are calculated from a model we take the <em>median</em> of RMSE since a couple “bad” forecasts can quite skewer the true performance of our model, giving a false impression. We’ll use the <em>mean</em> of the RMSLEs since the RMSLE doesn’t suffer from that skewering.</p>
@@ -776,16 +731,6 @@ weekday mnth temp hum prec Time
 <p>While adjusted <span class="math inline">\(R^{2}\)</span> is a popular metric for regression, the AIC is usually used for forecasting. Since
 adj <span class="math inline">\(R^{2}\)</span> for the best AIC model is virtually identical to that of the full model with all 9 variables, we’ll
 use the lowest AIC model. Those variables are highlighted in green; those in red are excluded.</p>
-<pre class="r"><code># variables selected by minimizing AIC
-selected &lt;- best_aic[1,3] %&gt;% strsplit(&quot; &quot;) %&gt;% unlist() %&gt;% match(colnames(bikes))
-chosen_vars &lt;- colnames(bikes)[selected]
-# data frame of all possible x variables
-possible_variables &lt;- data.frame(Variables = colnames(bikes)[5:14])
-# highlight green all variables in Variables found in chosen_vars, otherwise make red
-possible_variables %&gt;%
-  mutate_all(~cell_spec(.x, color = ifelse(.x %in% chosen_vars, &quot;green&quot;,&quot;red&quot;))) %&gt;%
-  kable(escape = F) %&gt;%
-  kable_styling(bootstrap_options = &quot;striped&quot;, full_width = F)</code></pre>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -861,7 +806,7 @@ reg_364_1 &lt;- diff(reg_364, 1)
 reg_364_1_est &lt;- est.arma.wge(reg_364_1, p=0, q=3, factor=F)
 Acf(reg_364_1_est$res, lag.max=30, main=&quot;&quot;)
 title(&quot;ACF after fitting ARIMA(0,1,3)(0,1,0)[364] to Model 1&#39;s Residuals&quot;, line=1)</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <pre class="r"><code>#ljung.wge(reg_364_1_est$res, p=0, q=3, K=30) # 0.176</code></pre>
 <p>The forecasts yield a median RMSE of 2302.075 and a mean RMSLE of 0.269.</p>
 <pre class="r"><code>rmses_mlr &lt;- c()
@@ -1019,17 +964,6 @@ paste0(&quot;Median SMAPE: &quot;, round(median(smape_naive), 2))</code></pre>
 <div id="comments-on-model-performance" class="section level2">
 <h2>Comments on Model Performance</h2>
 <p>Each model and its performance in the following table. Gradient boosting affords the highest accuracies on all performance metrics but is the least interpretable since each tree in gradient boosting is different, and 5000 were used in each training iteration! Volatility in daily trip numbers means relying purely on calendar and weather variables may not be sufficient for attaining higher accuracies (or lower RMSEs). For instance (as mentioned earlier) the annual National Cherry Blossom Festival is not consistent year to year, and ridership on those days isn’t easily predicted. The volatility can be seen in the numerous ridership dips in 2017, presented in the plot below. Inclusion of other variables mentioned in the <a href="#literature-review">Literature Review</a> may help improve forecasts and could be used in future research.</p>
-<pre class="r"><code>mod_perf &lt;- tibble(Model = c(&quot;Naive (Baseline)&quot;,
-                             &quot;MLR w/ Correlated Errors&quot;,
-                             &quot;Gradient Boosted Regression Trees&quot;),
-                   &quot;Median % Accuracy&quot; = c(&quot;77%&quot;,&quot;81%&quot;,&quot;87%&quot;),
-                   &quot;Median RMSE&quot; = c(2715,2302,1642), 
-                   &quot;Mean RMSLE&quot; = c(0.338, 0.27, 0.20)
-)
-mod_perf %&gt;% 
-  kable() %&gt;% 
-  kable_styling(bootstrap_options = &quot;striped&quot;, full_width = F) %&gt;% 
-  row_spec(row=3, bold = T, color = &quot;white&quot;, background = &quot;green&quot;) </code></pre>
 <table class="table table-striped" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1102,7 +1036,7 @@ ggplot(bikes_2017, aes(TripDate,cnt)) +
   ggtitle(&quot;Capital BikeShare Daily Trips (2017)&quot;) +
   theme(panel.grid = element_blank(),
         plot.title = element_text(hjust=0.5, family = &quot;Georgia&quot;))</code></pre>
-<p><img src="/project/forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
+<p><img src="/project/2020-04-02-forecasting-capital-bikeshare-ridership_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 </div>
 <div id="further-research" class="section level2">
 <h2>Further Research</h2>
