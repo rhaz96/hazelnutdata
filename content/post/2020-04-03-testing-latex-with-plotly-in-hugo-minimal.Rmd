@@ -1,0 +1,39 @@
+---
+title: Testing LaTeX with Plotly in Hugo Minimal
+author: Robert Hazell
+date: '2020-04-03'
+slug: testing-latex-with-plotly-in-hugo-minimal
+categories: []
+tags:
+  - out-of-the-loop
+description: ''
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, comment=NA)
+```
+
+I've noticed some wierd quirks about [Hugo Minimal](https://themes.gohugo.io/minimal/), which is the theme used for this website.  There's no indication it supports by default rendering of LaTeX with MathJax.  However, I have no problem rendering LaTex - see [this post](https://statisticalmusings.netlify.com/post/mean-variance-standardized-data/) of mine for example.
+
+What *is* problematic for me is including a plotly chart in a document that contains LaTeX.  Plotly is nice if you want to include interactive plots in your documents. Here's a scatterplot from the ```mtcars``` dataset.
+
+```{r}
+library(plotly)
+plot_ly(mtcars,
+        x = ~disp,
+        y = ~mpg)
+```
+
+For some reason if I include a plotly chart, LaTeX typed in the document will not render.  
+
+$c^2 = a^2 + b^2 - 2abcos(C)$
+
+As shown above, you instead see the raw LaTeX.
+
+The workaround that checks-out for me is using a LaTeX online editor like [CodeCogs](https://www.codecogs.com/latex/eqneditor.php).  The website converts math expressions you type to LaTeX.  They automatically produce ```html``` code that can be copied and pasted into your document -- inline!  So, I can write the law of cosines formula is <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;c^2&space;=&space;a^2&space;&plus;&space;b^2&space;-&space;2abcos(C)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;c^2&space;=&space;a^2&space;&plus;&space;b^2&space;-&space;2abcos(C)" title="c^2 = a^2 + b^2 - 2abcos(C)" /></a> with no issue, thanks to the ```html``` produced by CodeCogs.  It looks like this:
+
+```{r eval=FALSE}
+<a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;c^2&space;=&space;a^2&space;&plus;&space;b^2&space;-&space;2abcos(C)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;c^2&space;=&space;a^2&space;&plus;&space;b^2&space;-&space;2abcos(C)" title="c^2 = a^2 + b^2 - 2abcos(C)" /></a>
+```
+
+So I don't know why LaTeX code renders natively without modifying Minimal's Javascript, or why it it *doesn't* render when I include plotly chart.  Thankfully, you can turn to CodeCogs to sort it out!  
