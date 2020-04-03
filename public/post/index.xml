@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 28 Mar 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Apr 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Proving the Properties of the Mean and Variance of Standardized Data</title>
+      <link>/post/mean-variance-standardized-data/</link>
+      <pubDate>Fri, 03 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mean-variance-standardized-data/</guid>
+      <description>Some Background There’s a lot of concepts we take for granted in applied statistics, like the CLT or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.
+That being said, it’s a good idea whenever possible to understand why things are the way they are.</description>
+    </item>
     
     <item>
       <title>An Intuitive Explanation of p-values</title>
