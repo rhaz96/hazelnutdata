@@ -89,5 +89,4 @@ We've shown the variance of the standardized data is indeed 1.
 
 ### Wrapping up
 
-I hope this sheds some insight into how standardization works!  You can now see why, for example, the standard normal distribution has a mean of 0 and variance of 1.  
-
+Standardization is often used in machine learning applications like linear regression and KNN. I hope this post sheds some insight into how standardization works!
