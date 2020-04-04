@@ -170,12 +170,12 @@
 <p><span class="math inline">\(Var\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\)</span></p>
 <p>This translates to</p>
 <p><span class="math inline">\(\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s} - \overline{x}^*)^2 + (\frac{x_2 - \overline{x}}{s} - \overline{x}^*)^2 + ... +(\frac{x_n - \overline{x}}{s} - \overline{x}^*)^2 \right ]\)</span></p>
-<p>where <span class="math inline">\(\overline{x}^*\)</span> is the mean of the <em>standardized data</em>, NOT the original sample data! Notw that we now have <em>two</em> sample means. One of the sample means (<span class="math inline">\(\overline{x}\)</span>) is the mean of the original dataset used for standardizing each observation in that dataset. The second mean (<span class="math inline">\(\overline{x}^*\)</span>) is the mean of the standardized data, and we use this to calculate the variance of the standardized data.</p>
-<p>Lucky for us, we just found the mean of the standardized data… it’s 0! So now the variance of the standardized data reduces to</p>
+<p>where <span class="math inline">\(\overline{x}^*\)</span> is the mean of the <em>standardized data</em>, NOT the original sample data! Note that we now have <em>two</em> sample means. One of the sample means (<span class="math inline">\(\overline{x}\)</span>) is the mean of the original dataset used for standardizing each observation in that dataset. The second mean (<span class="math inline">\(\overline{x}^*\)</span>) is the mean of the standardized data, and we use this to calculate the variance of the standardized data.</p>
+<p>We just found the mean of the standardized data… it’s 0! So now the variance of the standardized data reduces to</p>
 <p><span class="math inline">\(\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s})^2 + (\frac{x_2 - \overline{x}}{s})^2 + ... +(\frac{x_n - \overline{x}}{s})^2 \right ]\)</span></p>
 <p>Let’s factor out the <span class="math inline">\(s^2\)</span> from each term.</p>
 <p><span class="math inline">\(\frac{1}{(n-1)s^2}\left [(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... +(x_n - \overline{x})^2 \right ]\)</span></p>
-<p>How do we deal with the terms in the brackets? Look back at the sample variance formula – the terms inside are the same! Multiply both sides by <span class="math inline">\(n-1\)</span>: the terms in the bracket are equivalent to <span class="math inline">\((n-1)s^2\)</span></p>
+<p>How do we deal with the terms in the square brackets? Look back at the sample variance formula – the terms inside are the same! Multiply both sides by <span class="math inline">\(n-1\)</span>: the terms in the bracket are equivalent to <span class="math inline">\((n-1)s^2\)</span></p>
 <p>So we’re left with</p>
 <p><span class="math inline">\(\frac{1}{(n-1)s^2}\left [(n-1)s^2) \right ] = 1\)</span></p>
 <p>We’ve shown the variance of the standardized data is indeed 1.</p>
