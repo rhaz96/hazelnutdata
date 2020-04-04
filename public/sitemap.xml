@@ -3,11 +3,6 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/tags/out-of-the-loop/</loc>
-    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/post/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
   </url>
@@ -29,11 +24,6 @@
   
   <url>
     <loc>/tags/technical/</loc>
-    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/testing-latex-with-plotly-in-hugo-minimal/</loc>
     <lastmod>2020-04-03T00:00:00+00:00</lastmod>
   </url>
   

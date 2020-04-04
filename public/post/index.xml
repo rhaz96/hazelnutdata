@@ -22,16 +22,6 @@ That being said, it’s a good idea whenever possible to understand why things a
     </item>
     
     <item>
-      <title>Testing LaTeX with Plotly in Hugo Minimal</title>
-      <link>/post/testing-latex-with-plotly-in-hugo-minimal/</link>
-      <pubDate>Fri, 03 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/testing-latex-with-plotly-in-hugo-minimal/</guid>
-      <description>I’ve noticed some wierd quirks about Hugo Minimal, which is the theme used for this website. There’s no indication it supports by default rendering of LaTeX with MathJax. However, I have no problem rendering LaTex - see this post of mine for example.
-What is problematic for me is including a plotly chart in a document that contains LaTeX. Plotly is nice if you want to include interactive plots in your documents.</description>
-    </item>
-    
-    <item>
       <title>An Intuitive Explanation of p-values</title>
       <link>/post/an-intuitive-explanation-of-p-values/</link>
       <pubDate>Sat, 28 Mar 2020 00:00:00 +0000</pubDate>
