@@ -83,7 +83,7 @@ How do we deal with the terms in the square brackets?  Look back at the sample v
 
 So we're left with
 
-$\frac{1}{(n-1)s^2}\left [(n-1)s^2)  \right ] = 1$
+$\frac{1}{(n-1)s^2}\left [(n-1)s^2\right] = 1$
 
 We've shown the variance of the standardized data is indeed 1.
 
