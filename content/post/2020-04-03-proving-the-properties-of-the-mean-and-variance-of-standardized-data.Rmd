@@ -17,7 +17,7 @@ That being said, it's a good idea whenever possible to understand why things are
 
 $$\frac{X - \mu}{\sigma };X = {x_1, x_2, ..., x_n}$$
 
-However, it's often the case we don't know the true mean $\mu$ and true population variance ${\sigma}^2$, so we use the sample mean $\overline{x}$ and sample variance $s^2$.  So the above formula translates to
+It's often the case we don't know the true mean $\mu$ and true population variance ${\sigma}^2$, so we use the sample mean $\overline{x}$ and sample variance $s^2$.  So the above formula translates to
 
 $$\frac{X - \overline{x}}{s};X = {x_1, x_2, ..., x_n}$$
 
