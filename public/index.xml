@@ -13,10 +13,10 @@
     
     <item>
       <title>Working around LaTeX and Plotly issue in Hugo Minimal</title>
-      <link>/post/correcting-latex-issues-with-plotly-in-hugo-minimal/</link>
+      <link>/post/latex-plotly-issue-hugo-minimal/</link>
       <pubDate>Sat, 04 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/correcting-latex-issues-with-plotly-in-hugo-minimal/</guid>
+      <guid>/post/latex-plotly-issue-hugo-minimal/</guid>
       <description>I’ve noticed some wierd quirks about Hugo Minimal, which is the theme used for this website. There’s no indication it supports by default rendering of LaTeX with MathJax. However, I have no problem rendering LaTeX - see this post of mine for example.
 What is problematic for me is including a plotly chart in a document that contains LaTeX. Plotly is nice if you want to include interactive plots in your documents.</description>
     </item>

@@ -2,7 +2,7 @@
 title: Working around LaTeX and Plotly issue in Hugo Minimal
 author: Robert Hazell
 date: '2020-04-04'
-slug: correcting-latex-issues-with-plotly-in-hugo-minimal
+slug: latex-plotly-issue-hugo-minimal
 categories: []
 tags:
   - out-of-the-loop
