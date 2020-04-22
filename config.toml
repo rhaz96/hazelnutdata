@@ -14,7 +14,7 @@ googleAnalytics = ""
     backgroundColor = "white"
     font = "Georgia" # should match the name on Google Fonts!
     highlight = true
-    highlightStyle = "monokai"
+    highlightStyle = "foundation"
     highlightLanguages = ["r", "python"]
 
 [[menu.main]]

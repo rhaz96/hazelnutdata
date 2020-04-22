@@ -1,0 +1,113 @@
+---
+title: test reticulate
+author: ''
+date: '2020-04-22'
+slug: test-reticulate
+categories: []
+tags: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, comment=NA)
+```
+
+
+```{r}
+library(reticulate)
+use_python("/usr/local/bin/python3", required = T)
+```
+
+
+```{python}
+import pandas as pd
+import seaborn as sns
+
+bankingDF = pd.read_csv("/Users/roberthazell/Desktop/SMU/ML1/bank-additional-full.csv")
+```
+
+```{python}
+x = [1,2,3,4,5]
+y = [2,4,5,2,5]
+sns.scatterplot(x,y)
+
+```
+
+```{python}
+print(bankingDF.head())
+```
+
+```{python}
+bankingDF.groupby("marital").aggregate("sum")
+```
+
+```{r}
+set.seed(4)
+rand_nums <- rnorm(100)
+```
+
+
+```{python}
+sns.distplot(r.rand_nums)
+```
+
+```{python}
+len(bankingDF[bankingDF.y=='yes'])/len(bankingDF)*100.0
+```
+
+```{python}
+pd.crosstab(bankingDF["day_of_week"],bankingDF["month"])
+```
+
+```{python}
+import matplotlib.pyplot as plt
+```
+
+
+```{python}
+day_and_month = pd.crosstab(bankingDF["day_of_week"],bankingDF["month"])
+day_and_month = day_and_month.reindex(['mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep','oct', 'nov', 'dec'], axis=1).reindex(["mon","tue","wed","thu","fri"])
+sns.heatmap(day_and_month, annot=True, fmt="d", cmap="YlGnBu")
+plt.ylabel("month")
+```
+
+```{python}
+plt.text(0.29, 0.6, "31%", size=40,
+         va="baseline", ha="right", multialignment="left",
+         color = "green"
+        )
+
+plt.text(0.8, 0.6, "of students converted...", size=16,
+         va="baseline", ha="right", multialignment="left"
+         )
+
+plt.text(0.15, 0.4, "...yet made up only", size=16,
+         va="baseline", ha="left", multialignment="left"
+         )
+
+plt.text(0.57, 0.4, "2%", size=20,
+         va="baseline", ha="left", multialignment="left",
+         color="red"
+         )
+
+plt.text(0.67, 0.4, "of contacts", size=16,
+         va="baseline", ha="left", multialignment="left"
+         )
+
+plt.gca().axes.get_yaxis().set_visible(False)
+plt.gca().axes.get_xaxis().set_visible(False)
+plt.show()
+```
+
+```{r}
+rand_df <- data.frame(CustName = c("John", "Jerry"),
+                      Time_start = c(10,40),
+                      Proj_end_time = c(200,500))
+```
+
+```{python}
+import numpy as np
+df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+                   columns=['a', 'b', 'c'])
+df2
+```
+

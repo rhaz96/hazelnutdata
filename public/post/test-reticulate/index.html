@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Working around LaTeX and Plotly issue in Hugo Minimal</title>
+        <title>test reticulate</title>
         
         <style>
 
@@ -79,7 +79,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand visible-xs" href="#">Working around LaTeX and Plotly issue in Hugo Minimal</a>
+                    <a class="navbar-brand visible-xs" href="#">test reticulate</a>
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -117,39 +117,100 @@
 <main>
 
     <div>
-        <h2>Working around LaTeX and Plotly issue in Hugo Minimal</h2>
-        <h5>April 4, 2020</h5>
+        <h2>test reticulate</h2>
+        <h5>April 22, 2020</h5>
         
-<a href="/tags/out-of-the-loop"><kbd class="item-tag">out-of-the-loop</kbd></a>
-
 
     </div>
 
     <div align="start" class="content">
-<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="/rmarkdown-libs/plotly-binding/plotly.js"></script>
-<script src="/rmarkdown-libs/typedarray/typedarray.min.js"></script>
-<script src="/rmarkdown-libs/jquery/jquery.min.js"></script>
-<link href="/rmarkdown-libs/crosstalk/css/crosstalk.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/crosstalk/js/crosstalk.min.js"></script>
-<link href="/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/plotly-main/plotly-latest.min.js"></script>
 
 
-<p>I’ve noticed some wierd quirks about <a href="https://themes.gohugo.io/minimal/">Hugo Minimal</a>, which is the theme used for this website. There’s no indication it supports by default rendering of LaTeX with MathJax. However, I have no problem rendering LaTeX - see <a href="https://statisticalmusings.netlify.com/post/mean-variance-standardized-data/">this post</a> of mine for example.</p>
-<p>What <em>is</em> problematic for me is including a plotly chart in a document that contains LaTeX. Plotly is nice if you want to include interactive plots in your documents. Here’s a scatterplot from the <code>mtcars</code> dataset.</p>
-<pre class="r"><code>library(plotly)
-plot_ly(mtcars,
-        x = ~hp,
-        y = ~mpg)</code></pre>
-<div id="htmlwidget-1" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"visdat":{"4ea21e35758d":["function () ","plotlyVisDat"]},"cur_data":"4ea21e35758d","attrs":{"4ea21e35758d":{"x":{},"y":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20]}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"hp"},"yaxis":{"domain":[0,1],"automargin":true,"title":"mpg"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[110,110,93,110,175,105,245,62,95,123,123,180,180,180,205,215,230,66,52,65,97,150,150,245,175,66,91,113,264,175,335,109],"y":[21,21,22.8,21.4,18.7,18.1,14.3,24.4,22.8,19.2,17.8,16.4,17.3,15.2,10.4,10.4,14.7,32.4,30.4,33.9,21.5,15.5,15.2,13.3,19.2,27.3,26,30.4,15.8,19.7,15,21.4],"type":"scatter","mode":"markers","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
-<p>For some reason if I include a plotly chart, LaTeX typed in the document will not render.</p>
-<p><span class="math inline">\(c^2 = a^2 + b^2 - 2abcos(C)\)</span></p>
-<p>As shown above, you instead see the raw LaTeX.</p>
-<p>The workaround that checks-out for me is using a LaTeX online editor like <a href="https://www.codecogs.com/latex/eqneditor.php">CodeCogs</a>. The website converts math expressions you type to LaTeX. They automatically produce <code>html</code> code that can be copied and pasted into your document – even inline! So, I can write the law of cosines formula is <a href="https://www.codecogs.com/eqnedit.php?latex=\inline&space;c^2&space;=&space;a^2&space;&plus;&space;b^2&space;-&space;2abcos(C)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\inline&space;c^2&space;=&space;a^2&space;&plus;&space;b^2&space;-&space;2abcos(C)" title="c^2 = a^2 + b^2 - 2abcos(C)" /></a> with no issue, thanks to the <code>html</code> produced by CodeCogs. It looks like this:</p>
-<pre class="r"><code>&lt;a href=&quot;https://www.codecogs.com/eqnedit.php?latex=\inline&amp;space;c^2&amp;space;=&amp;space;a^2&amp;space;&amp;plus;&amp;space;b^2&amp;space;-&amp;space;2abcos(C)&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://latex.codecogs.com/gif.latex?\inline&amp;space;c^2&amp;space;=&amp;space;a^2&amp;space;&amp;plus;&amp;space;b^2&amp;space;-&amp;space;2abcos(C)&quot; title=&quot;c^2 = a^2 + b^2 - 2abcos(C)&quot; /&gt;&lt;/a&gt;</code></pre>
-<p>So I don’t know why LaTeX code renders natively without modifying Minimal’s Javascript, or why it it <em>doesn’t</em> render when I include plotly charts. One of those is a happy coincidence. Thankfully for the other one, you can turn to CodeCogs to sort it out!</p>
+<pre class="r"><code>library(reticulate)
+use_python(&quot;/usr/local/bin/python3&quot;, required = T)</code></pre>
+<pre class="python"><code>import pandas as pd
+import seaborn as sns
+
+bankingDF = pd.read_csv(&quot;/Users/roberthazell/Desktop/SMU/ML1/bank-additional-full.csv&quot;)</code></pre>
+<pre class="python"><code>x = [1,2,3,4,5]
+y = [2,4,5,2,5]
+sns.scatterplot(x,y)</code></pre>
+<p><img src="/post/2020-04-22-test-reticulate_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="python"><code>print(bankingDF.head())</code></pre>
+<pre><code>   age        job  marital  ... euribor3m nr.employed   y
+0   56  housemaid  married  ...     4.857      5191.0  no
+1   57   services  married  ...     4.857      5191.0  no
+2   37   services  married  ...     4.857      5191.0  no
+3   40     admin.  married  ...     4.857      5191.0  no
+4   56   services  married  ...     4.857      5191.0  no
+
+[5 rows x 21 columns]</code></pre>
+<pre class="python"><code>bankingDF.groupby(&quot;marital&quot;).aggregate(&quot;sum&quot;)</code></pre>
+<pre><code>              age  duration  campaign  ...  cons.conf.idx  euribor3m   nr.employed
+marital                                ...                                        
+divorced   207076   1170481     12053  ...      -187741.0  17136.362  2.384809e+07
+married   1054633   6417430     64135  ...     -1003867.0  93376.096  1.289238e+08
+single     383580   3025314     29311  ...      -473347.5  38376.225  5.963535e+07
+unknown      3222     25018       255  ...        -3265.6    265.043  4.125915e+05
+
+[4 rows x 10 columns]</code></pre>
+<pre class="r"><code>set.seed(4)
+rand_nums &lt;- rnorm(100)</code></pre>
+<pre class="python"><code>sns.distplot(r.rand_nums)</code></pre>
+<p><img src="/post/2020-04-22-test-reticulate_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="python"><code>len(bankingDF[bankingDF.y==&#39;yes&#39;])/len(bankingDF)*100.0</code></pre>
+<pre><code>11.265417111780131</code></pre>
+<pre class="python"><code>pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[&quot;month&quot;])</code></pre>
+<pre><code>month        apr   aug  dec   jul   jun  mar   may  nov  oct  sep
+day_of_week                                                      
+fri          610  1070   24  1012  1147   94  2858  755  142  115
+mon          702  1222   53  1516  1251  143  2642  766  129   90
+thu          768  1347   45  1672   967   99  2537  903  163  122
+tue          252  1296   25  1517   970  140  2809  814  149  118
+wed          300  1243   35  1457   983   70  2923  863  135  125</code></pre>
+<pre class="python"><code>import matplotlib.pyplot as plt</code></pre>
+<pre class="python"><code>day_and_month = pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[&quot;month&quot;])
+day_and_month = day_and_month.reindex([&#39;mar&#39;, &#39;apr&#39;, &#39;may&#39;, &#39;jun&#39;, &#39;jul&#39;, &#39;aug&#39;, &#39;sep&#39;,&#39;oct&#39;, &#39;nov&#39;, &#39;dec&#39;], axis=1).reindex([&quot;mon&quot;,&quot;tue&quot;,&quot;wed&quot;,&quot;thu&quot;,&quot;fri&quot;])
+sns.heatmap(day_and_month, annot=True, fmt=&quot;d&quot;, cmap=&quot;YlGnBu&quot;)
+plt.ylabel(&quot;month&quot;)</code></pre>
+<p><img src="/post/2020-04-22-test-reticulate_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="python"><code>plt.text(0.29, 0.6, &quot;31%&quot;, size=40,
+         va=&quot;baseline&quot;, ha=&quot;right&quot;, multialignment=&quot;left&quot;,
+         color = &quot;green&quot;
+        )
+
+plt.text(0.8, 0.6, &quot;of students converted...&quot;, size=16,
+         va=&quot;baseline&quot;, ha=&quot;right&quot;, multialignment=&quot;left&quot;
+         )
+
+plt.text(0.15, 0.4, &quot;...yet made up only&quot;, size=16,
+         va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;
+         )
+
+plt.text(0.57, 0.4, &quot;2%&quot;, size=20,
+         va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;,
+         color=&quot;red&quot;
+         )
+
+plt.text(0.67, 0.4, &quot;of contacts&quot;, size=16,
+         va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;
+         )
+
+plt.gca().axes.get_yaxis().set_visible(False)
+plt.gca().axes.get_xaxis().set_visible(False)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-22-test-reticulate_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code>rand_df &lt;- data.frame(CustName = c(&quot;John&quot;, &quot;Jerry&quot;),
+                      Time_start = c(10,40),
+                      Proj_end_time = c(200,500))</code></pre>
+<pre class="python"><code>import numpy as np
+df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+                   columns=[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;])
+df2</code></pre>
+<pre><code>   a  b  c
+0  1  2  3
+1  4  5  6
+2  7  8  9</code></pre>
 </div>
 
     
