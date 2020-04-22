@@ -1,0 +1,1535 @@
+---
+title: Customer Conversion Modeling for Portuguese retail bank
+author: ''
+date: '2020-04-21'
+slug: conversion-portuguese-bank
+categories: []
+output:
+  blogdown::html_page:
+    toc: true
+tags:
+  - python
+  - projects
+  - machine learning
+description: ''
+---
+
+<center>Authors: Robert Hazell, [Gavin Hudgeons](https://www.linkedin.com/in/gavin-hudgeons-2b61388/), [Bruce Lee](https://www.linkedin.com/in/bruce-lee-38227019/)</center>
+
+
+# Part I - Exploratory Data Analysis
+
+## Business Understanding
+
+The Bank Marketing Data Set from the UCI Machine Learning Repository was selected to be analyzed by our group. The data involves information obtained from direct telemarketing campaigns from a Portuguese banking institution.  The data contains 41,188 observations with 20 attributes and was collected between May 2008 to November 2010.
+
+Our objective is to build a customer conversion model that predicts the likelihood a customer converts after seeing a bank term deposit offer.  A cash investment, which will be held at the bank, is invested at an agreed rate of interest over a fixed period of time.  Characteristics of a customer such as age, education, type of job, and many others will be analyzed to determine if they are factors determining conversion.
+
+A good prediction algorithm would establish a relationship or correlation between specific attributes with the probability of whether a bank customer would subscribe to a bank term deposit.  We will assess the qualities of our models using a confusion matrix.  With the results from our analysis, the attributes that are strongly correlated to a customer subscribing to a bank term deposit would be emphasized in future telemarketing campaigns.
+
+## Data Understanding 
+
+### Data Dictionary
+
+The original description of the 20 data attributes can be found at: https://archive.ics.uci.edu/ml/datasets/bank+marketing
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/datadict.png)
+
+
+```python
+import pandas as pd
+import pandas_profiling
+import seaborn as sns
+import matplotlib.pyplot as plt
+```
+
+
+```python
+bankingDF = pd.read_csv("/Users/roberthazell/Desktop/SMU/ML1/ML1_Lab1_Banking/bank-additional-full.csv")
+```
+
+### Verifying Data Quality
+
+The quality of the data initially appears relatively good as there are no missing or NA values.  However, further reading into the documentation reveals several missing attribute values, all for categorical variables.  These are encoded as "unknown". We'll need to decide on either treating these "unknown" values as a possible class label, delete or impute these values.  The attributes that contain the "unknown" value are:
+
+* ```job``` (330 instances)
+* ```marital``` (80 instances)
+* ```education``` (1731 instances)
+* ```default``` (8597 instances)
+* ```housing``` (990 instances) 
+* ```loan``` (990 instances)  
+
+For now in our exploratory data analysis we'll keep 'unknown' values as a class label, but will need to re-evaluate this value in future analysis.
+
+There are 12 duplicate observations, which accounts for about 0.1% of the data.  However, without an attribute to indicate if each observation is unique like 'CustomerId', it is very possible that the duplicate observations are legitmate observations that are unrelated to the other duplicates.
+
+There are outliers in several attributes.  For ```age``` the majority of the customers fall between the ages of 17 and 60, with 10 customers over the age of 90.  The ```campaign``` attribute, which measures how often a customer is contacted, also has some extreme values where 8 customers were contacted over 40 times during a marketing campaign.  Visualization of these and other features are presented a little later.  Future analysis will need to be done with and without outliers to determine any possible improvement in model adequacy.
+
+### Simple Statistics
+The table below displays the simple statistics for the numeric values of the data set.
+
+We see the average bank customer is around 40 years old and contacted 2 to 3 times during the marketing campaign, but rarely contacted before the marketing campaign as deduced from the means of ```pdays``` and ```previous``` attributes, which measure the number of days after the customer was last contacted from a previous campaign and the number of times the customer was contacted before the current campaign respectively.  As one would expect, the targeted customers are at an age where investing makes sense.  Customers in the lower age range (late teens to early 30's) are less likely to invest their money as they may not be planning for the future or may not have the disposable income to invest.
+
+
+```python
+bankingDF.describe()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>duration</th>
+      <th>campaign</th>
+      <th>pdays</th>
+      <th>previous</th>
+      <th>emp.var.rate</th>
+      <th>cons.price.idx</th>
+      <th>cons.conf.idx</th>
+      <th>euribor3m</th>
+      <th>nr.employed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>41188.00000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+      <td>41188.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>40.02406</td>
+      <td>258.285010</td>
+      <td>2.567593</td>
+      <td>962.475454</td>
+      <td>0.172963</td>
+      <td>0.081886</td>
+      <td>93.575664</td>
+      <td>-40.502600</td>
+      <td>3.621291</td>
+      <td>5167.035911</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>10.42125</td>
+      <td>259.279249</td>
+      <td>2.770014</td>
+      <td>186.910907</td>
+      <td>0.494901</td>
+      <td>1.570960</td>
+      <td>0.578840</td>
+      <td>4.628198</td>
+      <td>1.734447</td>
+      <td>72.251528</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>17.00000</td>
+      <td>0.000000</td>
+      <td>1.000000</td>
+      <td>0.000000</td>
+      <td>0.000000</td>
+      <td>-3.400000</td>
+      <td>92.201000</td>
+      <td>-50.800000</td>
+      <td>0.634000</td>
+      <td>4963.600000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>32.00000</td>
+      <td>102.000000</td>
+      <td>1.000000</td>
+      <td>999.000000</td>
+      <td>0.000000</td>
+      <td>-1.800000</td>
+      <td>93.075000</td>
+      <td>-42.700000</td>
+      <td>1.344000</td>
+      <td>5099.100000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>38.00000</td>
+      <td>180.000000</td>
+      <td>2.000000</td>
+      <td>999.000000</td>
+      <td>0.000000</td>
+      <td>1.100000</td>
+      <td>93.749000</td>
+      <td>-41.800000</td>
+      <td>4.857000</td>
+      <td>5191.000000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>47.00000</td>
+      <td>319.000000</td>
+      <td>3.000000</td>
+      <td>999.000000</td>
+      <td>0.000000</td>
+      <td>1.400000</td>
+      <td>93.994000</td>
+      <td>-36.400000</td>
+      <td>4.961000</td>
+      <td>5228.100000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>98.00000</td>
+      <td>4918.000000</td>
+      <td>56.000000</td>
+      <td>999.000000</td>
+      <td>7.000000</td>
+      <td>1.400000</td>
+      <td>94.767000</td>
+      <td>-26.900000</td>
+      <td>5.045000</td>
+      <td>5228.100000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Strictly viewing the results of if a customer subscribed or not, the percentage of customers who did subscribe is a little over 11%.
+
+
+```python
+# The percentage of individuals that subscribed to the bank
+len(bankingDF[bankingDF.y=='yes'])/len(bankingDF)*100.0
+```
+
+
+
+
+    11.265417111780131
+
+
+
+In the data set, over 60% of the customers are married as opposed to being single, divorced or a small percentage being unknown. This makes sense as married customers are most likely to invest for the future whether it being to purchase a home or to pay for their children's college education.
+
+
+```python
+# Marital status basic statistics
+bankingDF.marital.describe()
+```
+
+
+
+
+    count       41188
+    unique          4
+    top       married
+    freq        24928
+    Name: marital, dtype: object
+
+
+
+### Visualize Attributes
+
+#### Age of Potential Customers
+
+
+```python
+# histogram of age
+ax = sns.distplot(bankingDF["age"])
+ax.grid(False)
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_14_0.png)
+
+
+There is some right skew in terms of the age range the bank targets, with the majority of customers targeted in their 30s-40s.  This makes sense as those in that age bracket would more likely have money to spend on long-term deposits given a stable income. Individuals past 60 years old are not considered, most likely since such are already retired; they should have made long-term deposits decades before!  
+
+#### Job Categories
+
+
+```python
+job_totals = bankingDF["job"].value_counts()
+job_totals = pd.DataFrame({"Job Type": job_totals.index,
+                         "Total": job_totals.values})
+
+ax = sns.barplot(x = "Total", y="Job Type", data=job_totals,
+                 palette="Blues_d")
+ax.grid(False)
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_17_0.png)
+
+
+The bank tends to heavily profile blue-collar workers in that three of the top four job types are in the blue-collar sector.  The number one category -- ```admin``` -- is white-collar.
+
+#### How frequent a prospect is called (current campaign) 
+
+
+```python
+plt.boxplot(bankingDF["campaign"], vert=False)
+plt.xlabel("Number of times contacted")
+plt.grid(False)
+fig = plt.gcf()
+a = plt.gca()
+a.axes.get_yaxis().set_ticks([])
+fig.set_size_inches(18.5, 5)
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_20_0.png)
+
+
+On average the bank has been in contact less than 5 times for any given customer, but several were constantly targeted.  Perhaps these are highly promising but wavering customers. 
+
+#### When are calls made?
+
+
+```python
+# count number of calls by day
+call_day = bankingDF["day_of_week"].value_counts()
+# convert to dataframe
+call_day = pd.DataFrame({"Day": call_day.index,
+                         "Total": call_day.values})
+# plot barplot of counts
+ax = sns.barplot(call_day["Day"], call_day["Total"],
+           palette="Purples_d")
+ax.grid(False)
+plt.xlabel('')
+plt.ylabel("Calls Made")
+```
+
+
+
+
+    Text(0, 0.5, 'Calls Made')
+
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_23_1.png)
+
+
+In terms of follow-up call days, bankers show some preference, most following up on Thursday and least on Fridays, but these differences don't seem significant.
+
+#### Time elapsed since a prospect was previously called
+
+
+```python
+# plotting how long it took for a prospect to receive
+# another campaign call
+
+# remove people who were contacted for the first time
+bank_pdays_filtered = bankingDF[bankingDF["pdays"] != 999]
+# plot data this way to change x-axis label from default
+ax = sns.violinplot(x="pdays",
+                   data = bank_pdays_filtered,
+                   color="turquoise")
+ax.set(xlabel = "Days since last contact")
+ax.grid(False)
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_26_0.png)
+
+We see evidence of bimodality and right-skew from this violinplot, aspects not clearly seen in the inscribed boxplot.  
+
+Bankers followed up with them roughly between 3 and 6 days after their latest call for most people in this data. The two peaks are perhaps indicative of early stage sale-pitching by the banks where communication is frequent.  For those in late-stage or completed negotiations, or people who constantly ignore campaign calls, the right skew probably reflects such cases.
+
+#### Education level of prospects
+
+
+```python
+education_totals = bankingDF["education"].value_counts()
+education_totals = pd.DataFrame({"Education Type": education_totals.index,
+                         "Total": education_totals.values})
+
+my_range=range(1,len(education_totals.index)+1)
+plt.hlines(y=my_range, xmin=0, xmax=education_totals['Total'], color='skyblue')
+plt.plot(education_totals['Total'], my_range, "o")
+
+plt.yticks(my_range, education_totals['Education Type'])
+plt.xlabel('People Called by Bank')
+plt.ylabel('Education')
+plt.grid(False)
+```
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_29_0.png)
+
+Code for lollipop chart adapted from [here](https://python-graph-gallery.com/182-vertical-lollipop-plot/).  As you'd expect the bank tends to target those who have, at the very least, completed high school.  Greatest preference is shown towards college educated individuals.  Again, this makes sense since they tend to earn more money relative to other education groups, making them likelier to deposit money.
+
+### Explore Joint Attributes
+
+#### Job and Education
+
+
+```python
+fig, ax = plt.subplots(figsize=(15,10)) 
+sns.heatmap(pd.crosstab(bankingDF["education"],bankingDF["job"]),
+            annot=True,ax=ax, fmt="g")
+```
+
+
+
+
+    <matplotlib.axes._subplots.AxesSubplot at 0x1a1f7b80f0>
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_33_1.png)
+
+
+We can visualize a cross tabulation between education level and job status.  There isn't much to be said for ```illiterate``` folks, but for those with ```unknown``` education tend to work blue-collar, admin, and technician type jobs.  The most blue collar employees are those with ```basic.4y```, ```basic.6y```, and ```basic.9y``` educations.  It's not clear what these categories represent.  College educated individuals work predominantly as admins, in management, or as technicians.  High school grads also work in large proportion within admin, but also in the services industry.  
+
+#### Consumer Confidence and Consumer Price Indexes
+
+
+```python
+ax = sns.lmplot( x="cons.price.idx", y="cons.conf.idx", 
+               data=bankingDF, fit_reg=True, line_kws={'color': 'red'})
+plt.grid(False)
+plt.xlabel("Price Index")
+plt.ylabel("Confidence Index")
+```
+
+
+
+
+    Text(3.6750000000000043, 0.5, 'Confidence Index')
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_36_1.png)
+
+
+Almost no correlation is present between consumer confidence and the price index.  That being said, the price index is relatively consistent in this data, ranging from ~ 92 to ~ 95, so it's unsurprising to see a flat relationship between these variables (the correlation is ~ 0.06).  Consumer confidence was negative in Portugal throughout 2014 (when this data was taken) and has been that way for nearly the past decade, as can be seen [here](https://tradingeconomics.com/portugal/consumer-confidence).  As an aside, that the correlation between price index and consumer confidence is slightly *positive* is mildly interesting.
+
+#### Month and Day of Week of Contact
+
+
+```python
+pd.crosstab(bankingDF["day_of_week"],bankingDF["month"])
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>month</th>
+      <th>apr</th>
+      <th>aug</th>
+      <th>dec</th>
+      <th>jul</th>
+      <th>jun</th>
+      <th>mar</th>
+      <th>may</th>
+      <th>nov</th>
+      <th>oct</th>
+      <th>sep</th>
+    </tr>
+    <tr>
+      <th>day_of_week</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>fri</th>
+      <td>610</td>
+      <td>1070</td>
+      <td>24</td>
+      <td>1012</td>
+      <td>1147</td>
+      <td>94</td>
+      <td>2858</td>
+      <td>755</td>
+      <td>142</td>
+      <td>115</td>
+    </tr>
+    <tr>
+      <th>mon</th>
+      <td>702</td>
+      <td>1222</td>
+      <td>53</td>
+      <td>1516</td>
+      <td>1251</td>
+      <td>143</td>
+      <td>2642</td>
+      <td>766</td>
+      <td>129</td>
+      <td>90</td>
+    </tr>
+    <tr>
+      <th>thu</th>
+      <td>768</td>
+      <td>1347</td>
+      <td>45</td>
+      <td>1672</td>
+      <td>967</td>
+      <td>99</td>
+      <td>2537</td>
+      <td>903</td>
+      <td>163</td>
+      <td>122</td>
+    </tr>
+    <tr>
+      <th>tue</th>
+      <td>252</td>
+      <td>1296</td>
+      <td>25</td>
+      <td>1517</td>
+      <td>970</td>
+      <td>140</td>
+      <td>2809</td>
+      <td>814</td>
+      <td>149</td>
+      <td>118</td>
+    </tr>
+    <tr>
+      <th>wed</th>
+      <td>300</td>
+      <td>1243</td>
+      <td>35</td>
+      <td>1457</td>
+      <td>983</td>
+      <td>70</td>
+      <td>2923</td>
+      <td>863</td>
+      <td>135</td>
+      <td>125</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+
+```python
+fig, ax = plt.subplots(figsize=(15,10)) 
+day_and_month = pd.crosstab(bankingDF["day_of_week"],bankingDF["month"])
+day_and_month = day_and_month.reindex(['mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep','oct', 'nov', 'dec'], axis=1).reindex(["mon","tue","wed","thu","fri"])
+ax = sns.heatmap(day_and_month, annot=True,ax=ax, fmt="d", cmap="YlGnBu")
+ax.set_xlabel("")
+ax.set_ylabel("")
+```
+
+
+
+
+    Text(111.5, 0.5, '')
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_40_1.png)
+
+The most popular months for calling are the late spring and summer months: May through August.  The least popular months were in the fall and winter (September, October, and December), although November marks an uptick in campaign calling.  There is no data for January or February, implying the latest campaign began in March.
+
+#### Timing of return call depending on previous campaign outcome
+
+
+```python
+# filter out the first-time calls
+outcome = bankingDF.loc[bankingDF["poutcome"].isin(["failure", "success"])]
+# find mean time elpased from previous campaign call
+outcome_tab = outcome[outcome["pdays"] != 999].groupby("poutcome").agg({"pdays":"mean"})
+outcome_tab.index.names = ["Prev. Call Outcome"]
+outcome_tab.rename(columns = {"pdays": "Avg. Days Until Next Call"})
+
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Avg. Days Until Next Call</th>
+    </tr>
+    <tr>
+      <th>Prev. Call Outcome</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>failure</th>
+      <td>10.140845</td>
+    </tr>
+    <tr>
+      <th>success</th>
+      <td>5.587764</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+On average, if a previous campaign call failed, the bank would wait about twice as long to recall the prospect compared to recall time for previous campaign calls that succeeded.
+
+### Explore Attributes and Prediction Class
+
+As is often the case, this class is imbalanced.  People tend to reject the bank's offers, so oversampling those who didn't reject (those who do subscribe to a term deposit) is needed in the future.
+
+#### Education and Subscribers
+
+
+```python
+# all those who subscribed, grouped by education
+accepted = bankingDF[bankingDF["y"] == "yes"].groupby("education").agg({"y":"count"}).reset_index()
+accepted = accepted.sort_values('y')
+
+# lollipop plot
+my_range=range(1,len(accepted.index)+1)
+sns.set_style('dark')
+plt.hlines(y=my_range, xmin=0, xmax=accepted['y'], color='maroon')
+plt.plot(accepted['y'], my_range, "o", color = 'maroon')
+
+plt.yticks(my_range, accepted['education'])
+plt.xlabel('Contacts who accepted bank offer')
+plt.ylabel('Education Level')
+
+```
+
+
+
+
+    Text(0, 0.5, 'Education Level')
+    
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_48_1.png)
+
+The majority who sign up with the bank are college educated, but the pattern above is almost identical for those who reject the bank.  This suggests the need to examine prevalence rates across education levels, as will be seen later.
+
+#### Call Duration and Outcome (Non First time calls)
+
+The vast majority of bank calls are to first time contacts, so we'll like to see the call distributions for non-first timers.
+
+
+```python
+first_timers = len(bankingDF[bankingDF["pdays"] == 999]) / bankingDF.shape[0]
+print("Proportion of first time calls: ", round(first_timers, 3))
+```
+
+    Proportion of first time calls:  0.963
+
+
+
+```python
+success = bankingDF[(bankingDF['y'] == "yes") & (bankingDF['pdays']!=999)]
+fail = bankingDF[(bankingDF['y'] == "no") & (bankingDF['pdays']!=999)]
+
+fig, ax = plt.subplots(figsize = (12,4))
+for a in [success, fail]:
+    sns.distplot(a["duration"], bins=range(1, 3600, 20), ax=ax, kde=False)
+ax.set_xlim([0, 4000])
+fig.legend(labels = ["Subscribed","Rejected"])
+plt.xlabel("Duration of Last Phone Call (Seconds)")
+plt.grid(False)
+plt.show()
+```
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_53_0.png)
+
+[As is pointed out](https://archive.ics.uci.edu/ml/datasets/bank+marketing) call duration isn't known before the bank makes a call, and the outcome of the call is known immediately after a call.  So ```duration``` can't be used as a predictor when building a model.  Nevertheless, for those who've been contacted before, bank-rejecters spend on average less time engaging with the bank agent.  The distribution of talk time is right-skewed regardless of call outcome.  When analyzing the response and ```duration``` it needs to be done in a retrospective manner.
+
+#### Day of Week and Subscriptions
+
+
+```python
+fig, ax = plt.subplots(figsize=(5,5)) 
+sns.heatmap(pd.crosstab(bankingDF["day_of_week"],bankingDF[bankingDF['y'] == "yes"]["y"]).reindex(["mon","tue","wed","thu","fri"]),
+            annot=True,ax=ax, fmt="g")
+
+ax.set_xlabel("")
+ax.set_ylabel("")
+```
+
+
+
+
+    Text(21.5, 0.5, '')
+
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_56_1.png)
+
+
+The most successes come on Thursdays, followed by a near tie between Tuesday and Wednesday.  It seems like the beginning and end of the week are the least favorable days to call.
+
+#### Job Profession of those who Subscribe
+
+
+```python
+# all those who subscribed, grouped by education
+accepted = bankingDF[bankingDF["y"] == "yes"].groupby("job").agg({"y":"count"}).reset_index()
+accepted = accepted.sort_values('y')
+
+# lollipop plot
+my_range=range(1,len(accepted.index)+1)
+sns.set_style('dark')
+plt.hlines(y=my_range, xmin=0, xmax=accepted['y'])
+plt.plot(accepted['y'], my_range, "o", color="black")
+
+plt.yticks(my_range, accepted['job'])
+plt.xlabel('Contacts who accepted bank offer')
+plt.ylabel('Job Type')
+
+```
+
+
+
+
+    Text(0, 0.5, 'Job Type')
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_59_1.png)
+
+
+Interestingly, ```retired``` folks were one of the least targeted groups (look back at the ```age``` histogram) that ended up subscribing quite often.
+
+#### Prevalance Rates by Job Category
+
+The plot immediately above gives the raw values of subscribers by job type.  We also know the overall prevalence rate is ~ 11%.  Perhaps there's quite a bit of imbalance between education or job positions so we'll see if prevalence rates differ by category.
+
+
+```python
+# those who accept by job category
+job_yes = (bankingDF[bankingDF["y"] == "yes"]
+    .groupby('job')
+    .agg({'y':'count'})
+    .rename(columns = {'y':'Subscribed'})
+    .reset_index())
+
+# total number of people in each job category
+# regardless of subscription status
+all_job = (bankingDF
+    .groupby('job')
+    .agg({'y':'count'})
+    .rename(columns = {'y':'Job Total'})
+    .reset_index())
+
+# calculate prevalence rates
+job_yes['Job Total'] = all_job["Job Total"]
+job_yes["Prevalence Rate"] = job_yes["Subscribed"]/job_yes["Job Total"]
+job_yes = job_yes.sort_values("Prevalence Rate", ascending=False)
+
+
+chart = sns.barplot(job_yes["job"], job_yes["Prevalence Rate"],
+           palette=sns.cubehelix_palette(12, reverse=True))
+
+chart.set_xticklabels(
+    chart.get_xticklabels(), 
+    rotation=45, 
+    horizontalalignment='right',
+    fontweight='light',
+    fontsize='large'
+)
+
+```
+
+
+
+
+    [Text(0, 0, 'student'),
+     Text(0, 0, 'retired'),
+     Text(0, 0, 'unemployed'),
+     Text(0, 0, 'admin.'),
+     Text(0, 0, 'management'),
+     Text(0, 0, 'unknown'),
+     Text(0, 0, 'technician'),
+     Text(0, 0, 'self-employed'),
+     Text(0, 0, 'housemaid'),
+     Text(0, 0, 'entrepreneur'),
+     Text(0, 0, 'services'),
+     Text(0, 0, 'blue-collar')]
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_63_1.png)
+
+
+
+```python
+job_yes.set_index("job")
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Subscribed</th>
+      <th>Job Total</th>
+      <th>Prevalence Rate</th>
+    </tr>
+    <tr>
+      <th>job</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>student</th>
+      <td>275</td>
+      <td>875</td>
+      <td>0.314286</td>
+    </tr>
+    <tr>
+      <th>retired</th>
+      <td>434</td>
+      <td>1720</td>
+      <td>0.252326</td>
+    </tr>
+    <tr>
+      <th>unemployed</th>
+      <td>144</td>
+      <td>1014</td>
+      <td>0.142012</td>
+    </tr>
+    <tr>
+      <th>admin.</th>
+      <td>1352</td>
+      <td>10422</td>
+      <td>0.129726</td>
+    </tr>
+    <tr>
+      <th>management</th>
+      <td>328</td>
+      <td>2924</td>
+      <td>0.112175</td>
+    </tr>
+    <tr>
+      <th>unknown</th>
+      <td>37</td>
+      <td>330</td>
+      <td>0.112121</td>
+    </tr>
+    <tr>
+      <th>technician</th>
+      <td>730</td>
+      <td>6743</td>
+      <td>0.108260</td>
+    </tr>
+    <tr>
+      <th>self-employed</th>
+      <td>149</td>
+      <td>1421</td>
+      <td>0.104856</td>
+    </tr>
+    <tr>
+      <th>housemaid</th>
+      <td>106</td>
+      <td>1060</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>entrepreneur</th>
+      <td>124</td>
+      <td>1456</td>
+      <td>0.085165</td>
+    </tr>
+    <tr>
+      <th>services</th>
+      <td>323</td>
+      <td>3969</td>
+      <td>0.081381</td>
+    </tr>
+    <tr>
+      <th>blue-collar</th>
+      <td>638</td>
+      <td>9254</td>
+      <td>0.068943</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+Perhaps surprisingly, ```student```s have the highest prevalence (~31.4%) albeit being one of the least targeted demographics.  By contrast ```blue-collar``` prospects were second most called (see "Education Levels" section) yet had the lowest conversion rate at ~ 6.9%.  This plot confirms raw values give an incomplete picture of conversion. We can summarize the first fact with this simple text graphic below.
+
+
+```python
+plt.text(0.29, 0.6, "31%", size=40,
+         va="baseline", ha="right", multialignment="left",
+         color = "green"
+        )
+
+plt.text(0.8, 0.6, "of students converted...", size=16,
+         va="baseline", ha="right", multialignment="left"
+         )
+
+plt.text(0.15, 0.4, "...yet made up only", size=16,
+         va="baseline", ha="left", multialignment="left"
+         )
+
+plt.text(0.57, 0.4, "2%", size=20,
+         va="baseline", ha="left", multialignment="left",
+         color="red"
+         )
+
+plt.text(0.67, 0.4, "of contacts", size=16,
+         va="baseline", ha="left", multialignment="left"
+         )
+
+plt.gca().axes.get_yaxis().set_visible(False)
+plt.gca().axes.get_xaxis().set_visible(False)
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_66_0.png)
+
+The bank should consider reaching out to students more.
+
+#### Prevalence Rates by Education Level
+
+We now do the same analysis for education.
+
+
+```python
+educ_yes = (bankingDF[bankingDF["y"] == "yes"]
+    .groupby('education')
+    .agg({'y':'count'})
+    .rename(columns = {'y':'Subscribed'})
+    .reset_index())
+
+# total number of people in each job category
+# regardless of subscription status
+all_educ = (bankingDF
+    .groupby('education')
+    .agg({'y':'count'})
+    .rename(columns = {'y':'Education Total'})
+    .reset_index())
+
+# calculate prevalence rates
+educ_yes['Education Total'] = all_educ["Education Total"]
+educ_yes["Prevalence Rate"] = educ_yes["Subscribed"]/educ_yes["Education Total"]
+educ_yes = educ_yes.sort_values("Prevalence Rate", ascending=False)
+
+
+chart = sns.barplot(educ_yes["education"], educ_yes["Prevalence Rate"],
+           color="skyblue")
+
+chart.set_xticklabels(
+    chart.get_xticklabels(), 
+    rotation=45, 
+    horizontalalignment='right',
+    fontweight='light',
+    fontsize='large'
+)
+
+```
+
+
+
+
+    [Text(0, 0, 'illiterate'),
+     Text(0, 0, 'unknown'),
+     Text(0, 0, 'university.degree'),
+     Text(0, 0, 'professional.course'),
+     Text(0, 0, 'high.school'),
+     Text(0, 0, 'basic.4y'),
+     Text(0, 0, 'basic.6y'),
+     Text(0, 0, 'basic.9y')]
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_70_1.png)
+
+
+```python
+educ_yes.set_index("education")
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Subscribed</th>
+      <th>Education Total</th>
+      <th>Prevalence Rate</th>
+    </tr>
+    <tr>
+      <th>education</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>illiterate</th>
+      <td>4</td>
+      <td>18</td>
+      <td>0.222222</td>
+    </tr>
+    <tr>
+      <th>unknown</th>
+      <td>251</td>
+      <td>1731</td>
+      <td>0.145003</td>
+    </tr>
+    <tr>
+      <th>university.degree</th>
+      <td>1670</td>
+      <td>12168</td>
+      <td>0.137245</td>
+    </tr>
+    <tr>
+      <th>professional.course</th>
+      <td>595</td>
+      <td>5243</td>
+      <td>0.113485</td>
+    </tr>
+    <tr>
+      <th>high.school</th>
+      <td>1031</td>
+      <td>9515</td>
+      <td>0.108355</td>
+    </tr>
+    <tr>
+      <th>basic.4y</th>
+      <td>428</td>
+      <td>4176</td>
+      <td>0.102490</td>
+    </tr>
+    <tr>
+      <th>basic.6y</th>
+      <td>188</td>
+      <td>2292</td>
+      <td>0.082024</td>
+    </tr>
+    <tr>
+      <th>basic.9y</th>
+      <td>473</td>
+      <td>6045</td>
+      <td>0.078246</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+With only 18 ```illiterate``` contacts it's no surprise seeing an inflated prevalence rate for that group.  Just like job category, we see an asymmetry in education level: those with an unknown education fall nearly last in terms of being contacted (see "Education level of prospects" section) but converted second most often (or the most often if you ignore contacts who were illiterate). 
+
+### Extra features
+
+Here are some other variables that could widen the scope of analysis:
+
+* (Monthly) Income: this adds more info than ```loan``` or ```default```
+* Current bank provider: if someone has a different bank than this Portugal bank, they may be less likely to accept
+* Does the prospect have kids?
+* If so, what is the current education level or age of the kid(s)?
+* Is the bank agent who called male or female?
+* Is the prospect male or female?
+
+A (major) caveat is some of this info may be thought too personal to share.
+
+## Extras
+
+### Rejecting the bank: what are the odds?
+
+For individuals with similar age, education, job, and marital status, what are the odds someone *with* a personal loan rejecting the bank's offer compared to that of someone *without* a personal loan rejecting the bank's offer?  We'll look at single college graduates in the age range 30-40 who work in administrative positions.  These characteristics comprise one of the largest demographics targed by the bank.
+
+
+```python
+# getting the desired sample
+bank_retro = bankingDF[(bankingDF["age"].between(30,40)) & 
+          (bankingDF["education"] == "university.degree") & 
+          (bankingDF["job"]=="admin.") &
+          (bankingDF["marital"] == "single") &
+          (bankingDF["loan"] != "unknown")]
+
+# two way table summary
+retro_tab = pd.crosstab(bank_retro["loan"], bank_retro["y"], margins=True, margins_name = "Total")
+retro_tab.columns.names = ["Subscribed?"]
+retro_tab.index.names = ["Personal Loan?"]
+retro_tab
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Subscribed?</th>
+      <th>no</th>
+      <th>yes</th>
+      <th>Total</th>
+    </tr>
+    <tr>
+      <th>Personal Loan?</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>no</th>
+      <td>976</td>
+      <td>154</td>
+      <td>1130</td>
+    </tr>
+    <tr>
+      <th>yes</th>
+      <td>226</td>
+      <td>23</td>
+      <td>249</td>
+    </tr>
+    <tr>
+      <th>Total</th>
+      <td>1202</td>
+      <td>177</td>
+      <td>1379</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+From this we see, for instance, 226 people who rejected the bank (i.e. did not subscribe) had a personal loan.  We can compute the odds ratio (the odds of rejecting) as follows:
+
+* Odds of saying no, given that one has a personal loan: $\frac{226}{23}$
+* Odds of saying no, given that one doesn't have a personal loan: $\frac{976}{154}$
+
+Therefore the odds of rejecting the bank's offer if one has a personal loan is (226/23)/(976/154) = 1.55 times higher than the odds of rejecting the bank if one has no personal loan.  This applies only to those with the prescribed characterisitcs above: between 30-40 years old, college grad, single, and working in admin.
+
+Equivalently, the odds of someone with a personal loan rejecting the bank is 55% higher than the odds of someone without a personal loan rejecting the bank.  This (again) applies only to those with the prescribed characterisitcs just mentioned.  
+
+If the banking agency chose its contacts based off of random sampling, then these inferences are applicable to those in the general public in the same demographic. Said differently, the scope of inference wouldn't be restricted to just those in the current dataset.  We'll assume for simplicity that random sampling was used.
+
+The upshot would then be this: the bank runs a higher risk of rejection if people in the aforementioned demographics have personal loans, which is pretty intuitive - people in debt are less likely to fork out money.
+
+# Part II - Customer Conversion Modeling with Logistic Regression
+
+Part 1 dealt with exploratory analysis of the data. Now we use use logistic regression (LR) to build a customer conversion model that predicts the likelihood a customer converts after seeing a bank term deposit offer.  We consider LR first since the model is highly interpretable and can serve as baseline for model performance before moving to non-parametric models (considered in Part III).
+
+```python
+bankingDF[['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 
+           'month', 'day_of_week', 'poutcome']].describe().transpose()
+```
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>unique</th>
+      <th>top</th>
+      <th>freq</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>job</th>
+      <td>41188</td>
+      <td>12</td>
+      <td>admin.</td>
+      <td>10422</td>
+    </tr>
+    <tr>
+      <th>marital</th>
+      <td>41188</td>
+      <td>4</td>
+      <td>married</td>
+      <td>24928</td>
+    </tr>
+    <tr>
+      <th>education</th>
+      <td>41188</td>
+      <td>8</td>
+      <td>university.degree</td>
+      <td>12168</td>
+    </tr>
+    <tr>
+      <th>default</th>
+      <td>41188</td>
+      <td>3</td>
+      <td>no</td>
+      <td>32588</td>
+    </tr>
+    <tr>
+      <th>housing</th>
+      <td>41188</td>
+      <td>3</td>
+      <td>yes</td>
+      <td>21576</td>
+    </tr>
+    <tr>
+      <th>loan</th>
+      <td>41188</td>
+      <td>3</td>
+      <td>no</td>
+      <td>33950</td>
+    </tr>
+    <tr>
+      <th>contact</th>
+      <td>41188</td>
+      <td>2</td>
+      <td>cellular</td>
+      <td>26144</td>
+    </tr>
+    <tr>
+      <th>month</th>
+      <td>41188</td>
+      <td>10</td>
+      <td>may</td>
+      <td>13769</td>
+    </tr>
+    <tr>
+      <th>day_of_week</th>
+      <td>41188</td>
+      <td>5</td>
+      <td>thu</td>
+      <td>8623</td>
+    </tr>
+    <tr>
+      <th>poutcome</th>
+      <td>41188</td>
+      <td>3</td>
+      <td>nonexistent</td>
+      <td>35563</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+
+
+### Data Cleaning and Perform 1 hot encoding on categorical data
+Because the contact variable is binary, there is no need to encode it using OneHotEncoding.  We can just convert it to an integer.  The rest of the categorical variables will be OneHotEncoded.  
+
+We also get rid of the ```duration``` attribute since that cannot be known before the call is made. We get rid of ```nr.employed``` and ```euribor3m``` due to high correlation as mentioned earlier.  We also get rid of ```default``` and ```pdays``` due to insufficient numbers of instances for different values of those classes. Then, we clean up the data by removing the columns that were OneHotEncoded, and the ```unknown``` values from the categorical data.  The only exception will be for education, since in Part 1 we saw those with unknown education had the highest prevalence.
+
+
+```python
+# we'll be using this new dataframe moving forward
+bankingDF_working = bankingDF 
+```
+
+
+```python
+del bankingDF_working['duration'] # removed because it is not known before the call, so it is not predictive
+del bankingDF_working['nr.employed'] #removed due to high correlation
+del bankingDF_working['euribor3m'] #removed due to high correlation
+del bankingDF_working['default'] # default is removed because there are only 3 instances of yes
+del bankingDF_working['pdays'] # 97% are uncontacted.  The rest are too spread out for meaning.  Maybe later change to boolean (wasContacted)
+
+# function for inserting dummy variables into dataframe
+# and removing the associated original column 
+def banking_encoding(df, c_name):
+    tmp_df = pd.get_dummies(df[c_name],prefix=c_name)
+    df = pd.concat((df,tmp_df),axis=1)
+    del df[c_name]
+    return df
+    
+for c in ['job','marital','education','housing','loan','month','day_of_week','poutcome','contact']:
+    bankingDF_working = banking_encoding(bankingDF_working, c)
+
+# Remove Unknown Categoricals from one hot encoding
+del bankingDF_working['job_unknown']
+del bankingDF_working['housing_unknown']
+del bankingDF_working['loan_unknown']
+del bankingDF_working['marital_unknown']
+```
+
+### Training and Testing Split
+We use 80% of the instances for training and the remaining 20% for testing, utiliing 5 fold cross validation.  Because of the imbalance of our response variable (y), we begin with StratifiedShuffleSplit.  
+
+
+```python
+from sklearn.model_selection import StratifiedShuffleSplit
+bankingDF_working.rename({'y': 'result'}, axis='columns', inplace=True)
+
+# convert y to 1 for yes, 0 for no for precision, recall and F1 calculation
+bankingDF_working['result'] = bankingDF_working['result'].map({'yes': 1, 'no': 0})
+
+y = bankingDF_working['result'].values # get the labels we want
+X = bankingDF_working.drop('result', axis=1).values # use everything else to predict!
+
+num_cv_iterations = 5
+#num_instances = len(y)
+cv_object = StratifiedShuffleSplit(n_splits=num_cv_iterations,
+                                  test_size=0.2)
+                         
+print(cv_object)
+```
+
+    StratifiedShuffleSplit(n_splits=5, random_state=None, test_size=0.2,
+                train_size=None)
+
+
+
+```python
+# run logistic regression and vary some parameters
+from sklearn.linear_model import LogisticRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn import metrics as mt
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import precision_score
+from sklearn.metrics import recall_score
+from sklearn.metrics import f1_score
+
+iter_num=0
+# the indices are the rows used for training and testing in each iteration
+for train_indices, test_indices in cv_object.split(X,y): 
+    
+    X_train = X[train_indices]
+    y_train = y[train_indices]
+    
+    X_test = X[test_indices]
+    y_test = y[test_indices]
+    
+    scl_obj = StandardScaler()
+    scl_obj.fit(X_train) # find scalings for each column that make this zero mean and unit std
+    # the line of code above only looks at training data to get mean and std and we can use it 
+    # to transform new feature data
+
+    X_train_scaled = scl_obj.transform(X_train) # apply to training
+    X_test_scaled = scl_obj.transform(X_test) # apply those means and std to the test set (without snooping at the test set values)
+
+    # train the model just as before
+    lr_clf = LogisticRegression(penalty='l2', C=1.0, solver='newton-cg') # get object, the 'C' value is less (can you guess why??)
+    lr_clf.fit(X_train_scaled,y_train)  # train object
+
+    y_hat = lr_clf.predict(X_test_scaled) # get test set precitions
+
+    # now let's get the accuracy and confusion matrix for this iterations of training/testing
+    acc = mt.accuracy_score(y_test,y_hat)
+    conf = mt.confusion_matrix(y_test,y_hat)
+    print("====Iteration",iter_num," ====")
+    print("accuracy", acc )
+    print("confusion matrix\n",conf)
+    
+    # precision tp / (tp + fp)
+    precision = precision_score(y_test, y_hat)
+    print('Precision: %f' % precision)
+    # recall: tp / (tp + fn)
+    recall = recall_score(y_test, y_hat)
+    print('Recall: %f' % recall)
+    # f1: 2 tp / (2 tp + fp + fn)
+    f1 = f1_score(y_test, y_hat)
+    print('F1 score: %f\n\n' % f1)
+    
+    iter_num+=1
+
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/lr_iterations.png)
+
+    
+The accuracy hovers around 90% but the recall is abysmal!  Again, this is a consequence of imbalanced classes. From the bank's point of view it's worse to have false negatives than false positives - that is, it's worse to incorrectly predict that a customer rejects the bank.  We try to remedy the model using upsampling of the minority class (```No```).
+
+
+### Logistic Regression Model Improvement - Upsampling
+
+Now we look at upsampling to see if imbalance issues is remedied.
+
+### Test Train Split and Upsampling
+Here we simply use an 80/20 train-test split.  In the future .this method can be extended with 5 fold CV.  We make sure to upsample and scale only the training data in the process.
+
+
+```python
+from sklearn.utils import resample
+
+banking_train, banking_test = train_test_split(bankingDF_working, test_size=0.2)
+
+# Separate majority and minority classes
+majority = banking_train[banking_train['result']==0]
+minority = banking_train[banking_train['result']==1]
+
+minority_upsampled = resample(minority, 
+                              replace=True,     # sample with replacement
+                              n_samples=majority.shape[0],    # to match majority class
+                              random_state=123) # reproducible results
+ 
+# combine majority class with upsampled minority class
+df_upsampled = pd.concat([majority, minority_upsampled])
+
+# verify
+print("Target variable counts:\n", df_upsampled['result'].value_counts(), "\n")
+
+## ------ scale data
+scl_obj = StandardScaler()
+
+# training data
+y_train = df_upsampled["result"]
+X_train = df_upsampled.drop('result', axis=1)
+
+# test data
+y_test = banking_test["result"]
+X_test = banking_test.drop('result', axis=1)
+
+# scaling the training and test X values
+scl_obj.fit(X_train)
+X_train_scaled = scl_obj.transform(X_train)
+X_test_scaled = scl_obj.transform(X_test)
+
+## ------ fit and evaluate model
+lr_clf = LogisticRegression(penalty='l2', C=1.0, class_weight=None, solver='liblinear')
+lr_clf.fit(X_train_scaled,y_train)  # train object
+y_hat = lr_clf.predict(X_test_scaled) # get test set precitions
+
+# print the accuracy and confusion matrix 
+print('-- Results --\n')
+print("accuracy", mt.accuracy_score(y_test,y_hat)) 
+print("confusion matrix\n",mt.confusion_matrix(y_test,y_hat))
+# precision tp / (tp + fp)
+precision = precision_score(y_test, y_hat)
+print('Precision: %f' % precision)
+# recall: tp / (tp + fn)
+recall = recall_score(y_test, y_hat)
+print('Recall: %f' % recall)
+# f1: 2 tp / (2 tp + fp + fn)
+f1 = f1_score(y_test, y_hat)
+print('F1 score: %f' % f1)
+```
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/lr_upsampling.png)
+
+### Results
+This produces an accuracy of approximately 82%.  Although this is less than the earlier models, this model would be preferred given the increase in F1 score (from 0.33 to 0.45) and dramatic increase in the recall (from ~0.2 to ~0.65). This is still overall unsatisfactory, so we'll consider SVMs later and other algorithms in Part 3.  For now we look at the regression output and a corresponding plot (which is easier to read).
+  
+```python
+weights = pd.Series(lr_clf.coef_[0], index=df_upsampled.drop('result', axis=1).columns)
+weights.plot(kind='bar', figsize=(16,8))
+plt.show()
+```
+
+![](/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/output_20_0.png)
+
+
+### Interpretation of the parameters with the highest weights on the final model:
+Features with the highest weights were interpreted by taking the exponential of the weight to determine the odds ratio.  Interpretations of the parameters with the highest weights are as follows:
+
+A decrease in the Employment variation rate (emp.var.rate) changes (decreases) the odds of a customer to subscribe compared to a customer who won’t subscribe to the bank term deposit by a factor of 0.26 given all other features stay the same.
+
+An increase in the Consumer price index (cons.price.idx) changes (increases) the odds of a customer to subscribe compared to one who won’t subscribe to the bank term deposit by a factor of 2.03 given all other features stay the same.
+
+For customers who subscribed to a bank product previously due to a marketing campaign (poutcome_success), the odds for subscribing versus not subscribing to the bank term deposit are by a factor of 1.4 higher given all other features stay the same.
+
+For customers who did not subscribe to a bank product due to a previous marketing campaign (poutcome_failure) the odds for subscribing versus not subscribing to the bank term deposit are lower by a factor of 0.8 given all other features stay the same.
+
+For customers who were communicated to by cellular phone (isCellular), the odds for subscribing versus not subscribing to the bank term deposit are higher by a factor of 1.2 given that all other factors remain the same.
+
+For customers who were last contacted in the month of March, the odds for subscribing compared to not subscribing to the bank term deposit are higher by a factor of 1.26, given that all other factors remain the same.
+
+For customers who were last contacted in the month of May, the odds for subscribing compared to not subscribing to the bank term deposit are lower by a factor of 0.79, given that all other factors remain the same.
+
+
+### Conclusion
+
+We need a model that can detect higher complexity and nonlinearities in the data, seeing logistic regression has proved fruitless (even with upsampling) in achieving good predictions.  In Part 3 we build and tune a random forest model.  As will be seen, it performs significantly better.
+
+

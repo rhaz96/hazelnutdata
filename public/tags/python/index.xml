@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python on Statistical Musings</title>
+    <link>/tags/python/</link>
+    <description>Recent content in python on Statistical Musings</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 21 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/python/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Customer Conversion Modeling for Portuguese retail bank</title>
+      <link>/project/conversion-portuguese-bank/</link>
+      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/conversion-portuguese-bank/</guid>
+      <description>Part I - Exploratory Data Analysis Business Understanding Data Understanding Data Dictionary Verifying Data Quality Simple Statistics Visualize Attributes Explore Joint Attributes Explore Attributes and Prediction Class Extra features  Extras Rejecting the bank: what are the odds?   Part II - Customer Conversion Modeling with Logistic Regression Data Cleaning and Perform 1 hot encoding on categorical data Training and Testing Split Logistic Regression Model Improvement - Upsampling Test Train Split and Upsampling Results Interpretation of the parameters with the highest weights on the final model: Conclusion     Authors: Robert Hazell, Gavin Hudgeons, Bruce Lee  Part I - Exploratory Data Analysis Business Understanding The Bank Marketing Data Set from the UCI Machine Learning Repository was selected to be analyzed by our group.</description>
+    </item>
+    
+  </channel>
+</rss>
