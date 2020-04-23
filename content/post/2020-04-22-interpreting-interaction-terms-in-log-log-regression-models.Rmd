@@ -34,7 +34,7 @@ Throwing in a log transform makes things a bit more tricky to interpret.  Small 
 
 > "it is often difficult to interpret individual coefficients in an interaction model."^[*The Statistical Sleuth, 3rd Edition* (2013), Fred Ramsey and Daniel Schafer, p.250]
 
-Several students came to me asking how to interpret interaction terms in a log-log model.  I created a PowerPoint that became the basis for the blog post!
+Several students came to me asking how to interpret interaction terms in a log-log model.  I created a PowerPoint that became the basis for this blog post!
 
 ### Log-Log Model with Interaction Terms
 
