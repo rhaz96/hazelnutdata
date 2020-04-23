@@ -2,6 +2,7 @@
 title: Interpreting Interaction Terms in Log-Log Regression Models
 author: ''
 date: '2020-04-22'
+lastmod: '2020-04-23'
 slug: log-log-interaction
 categories: []
 tags:
@@ -73,7 +74,7 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 <p>Notice the interaction term <code>logSqFoot*Neighborho BrkSide</code> is 0.35, which is the difference between 0.82 and 0.47. This tells us 0.35 is the adjustment in the slope of home selling prices for Brookside homes, relative to North Ames homes. We can, however, give a more precise interpretation of the interaction term by noting</p>
 <p><span class="math inline">\(\frac{Multiplicative\,Increase\,BkSide}{Multiplicative\,Increase\,NAmes} = \frac{2^{\,0.82}}{2^{\,0.47}} = 2^{\,0.82-0.47} = 2^{\,0.35}\)</span></p>
 <p>This implies</p>
-<p><span class="math inline">\(Multiplicative Increase BkSide = 2^{0.35}*(Multiplicative Increase NAmes)\)</span></p>
+<p><span class="math inline">\(Multiplicative\,Increase\,BkSide = 2^{0.35}*(Multiplicative\,Increase\,NAmes)\)</span></p>
 <p>So we can then say:</p>
 <blockquote>
 <p><em>For a doubling in living area, the multiplicative increase in median sale price for Brookside homes is <span class="math inline">\(2^{0.35}\)</span> (= 1.27) times greater than the multiplicative increase in median sales prices for North Ames homes, holding all other variables constant</em></p>
