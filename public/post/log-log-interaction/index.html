@@ -141,14 +141,14 @@ The venerable House Price Competition on Kaggle
 </center>
 <p><br>
 In the graduate statistics class I’ve TA’ed, we explore a range of regression concepts, both theory and practice. This includes linear and polynomial regression, as well as transformations to align data to certain regression modeling assumptions. At the end of the course, students complete form groups to work on a project…the Kaggle housing prices <a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques">competition</a> on Ames, Iowa - perhaps the most well known and ongoing competition. This introduces students to real-world modeling and the ‘Kagglesphere’. Yes, we know linear regression isn’t the winning technique for this competition, but it’s simply an exercise in modeling. Also, the students in the best-scoring group gets 3 points extra credit on the final exam. That’s the <em>real</em> competition!</p>
-<p>Before delving into building a full model on the entire dataset, students are given an “appetizer” (ok, it’s not actually called that but that’s how I refer to it) where they focus on predicting house selling prices for just three neighborhoods — Brookside, Edwards, and North Ames — using a home’s living area as a predictor. By using this smaller subset it’s easier to explore the effects of certain regression techniques, and intepret model output. After all, linear regression is a highly interpretable machine learning algorithm (yes, linear regression <em>is</em> machine learning) and should thus be exploited whenever possible.</p>
-<p>Now, just because linear regression models are intepretable doesn’t mean it can’t become complex. Complexity often arises from combinng use of interaction terms and logarithmic transforms. In the appetizer, interaction terms allow the slope of each neighborhood’s selling price to differ.</p>
+<p>Before delving into building a full model on the entire dataset, students are given an “appetizer” (ok, it’s not actually called that but that’s how I refer to it) where they focus on predicting house selling prices for just three neighborhoods — Brookside, Edwards, and North Ames — using a home’s living area as a predictor. By using this smaller subset it’s easier to explore the effects of certain regression techniques, and interpret model output. After all, linear regression is a highly interpretable machine learning algorithm (yes, linear regression <em>is</em> machine learning) and should thus be exploited whenever possible.</p>
+<p>Now, just because linear regression models are interpretable doesn’t mean it can’t become complex. Complexity often arises from combining use of interaction terms and logarithmic transforms. In the appetizer, interaction terms allow the slope of each neighborhood’s selling price to differ.</p>
 <p>Suppose increasing a house’s living area is generally associated with an increase in a house’s price. An interaction term stipulates that the price hike per square foot increase of living area will be different for each of the three neighborhoods. For example, 1<span class="math inline">\({ft^2}\)</span> increase in living area my be associated with a $50 increase in selling price for North Ames homes, a $30 increase for Brookside homes, and a $65 increase for Edwards homes.</p>
 <p>Throwing in a log transform makes things a bit more tricky to interpret. Small wonder my textbook admonishes</p>
 <blockquote>
 <p>“it is often difficult to interpret individual coefficients in an interaction model.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 </blockquote>
-<p>Several students came to me asking how to interpret interaction terms in a log-log model. I created a powerpoint that became the basis for the blog post!</p>
+<p>Several students came to me asking how to interpret interaction terms in a log-log model. I created a PowerPoint that became the basis for the blog post!</p>
 <div id="log-log-model-with-interaction-terms" class="section level3">
 <h3>Log-Log Model with Interaction Terms</h3>
 <p>What would such a model look like for the appetizer model? Here’s some SAS output with the relevant portions highlighted</p>
@@ -177,7 +177,7 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 <p><img src="/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/logdoub.png" /></p>
 <p>Applying this to our two equations above</p>
 <div id="brookside-interpretation" class="section level4">
-<h4>BrookSide Interpretation</h4>
+<h4>Brookside Interpretation</h4>
 <p>A doubling in living area is associated with a <span class="math inline">\(2^{0.82}\)</span> multiplicative increase (or 77% increase) in median Brookside home prices.</p>
 </div>
 <div id="north-ames-interpretation" class="section level4">
@@ -197,8 +197,8 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 </blockquote>
 <p>Not a straightforward interpretation!</p>
 </div>
-<div id="motivating-an-alternate-intepretation" class="section level3">
-<h3>Motivating an alternate intepretation</h3>
+<div id="motivating-an-alternate-interpretation" class="section level3">
+<h3>Motivating an alternate interpretation</h3>
 <p>Another way to interpret <span class="math inline">\(\beta_1\)</span> in the equation <span class="math inline">\(ln(Y) = \beta_0 + \beta_1*ln(X)\)</span> is</p>
 <blockquote>
 <p>A 1% increase in X is associated with a <span class="math inline">\(\beta_1\)</span>% increase in Y, holding all other variables constant</p>
@@ -215,7 +215,7 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 <blockquote>
 <p><em>There’s a 0.35 percentage point difference in median sales price between Brookside and North Ames homes for a 1% increase in living area, holding all other variables constant.</em></p>
 </blockquote>
-<p>Note that going from 0.47% to 0.82% is a difference of 0.35 <em>percentage points</em> (not percent). In terms of a percent, it’s a *100 = 74.47% increase.</p>
+<p>Note that going from 0.47% to 0.82% is a difference of 0.35 <em>percentage points</em> (not percent). In terms of a percent, it’s a <span class="math inline">\(\frac{0.82-0.47}{0.47}*100\)</span> = 74.47% increase.</p>
 </div>
 </div>
 <div id="interaction-interpretation-template" class="section level3">
@@ -227,8 +227,8 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 <p>For a doubling in <strong>{x-variable}</strong>, the multiplicative increase in median <strong>{response variable}</strong> for <strong>{category}</strong> is <span class="math inline">\(2^{interaction\,term\,value}\)</span> times greater than the multiplicative increase in median <strong>{response variable}</strong> for <strong>{reference category}</strong>, holding all other variables constant.</p>
 </blockquote>
 </div>
-<div id="percentate-point-interpretation" class="section level4">
-<h4>“Percentate Point” Interpretation</h4>
+<div id="percentage-point-interpretation" class="section level4">
+<h4>“Percentage Point” Interpretation</h4>
 <blockquote>
 <p>There’s a <strong>{interaction term value}</strong> percentage point difference in median <strong>{response variable}</strong> between <strong>{category}</strong> and <strong>{reference category}</strong> for a 1% increase in <strong>{x-variable}</strong>, holding all other variables constant.</p>
 </blockquote>
