@@ -26,7 +26,7 @@ In the graduate statistics class I've TA'ed, we explore a range of regression co
 
 Before delving into building a full model on the entire dataset, students are given an "appetizer" (ok, it's not actually called that but that's how I refer to it) where they focus on predicting house selling prices for just three neighborhoods &mdash; Brookside, Edwards, and North Ames &mdash; using a home's living area as a predictor.  By using this smaller subset it's easier to explore the effects of certain regression techniques, and interpret model output.  After all, linear regression is a highly interpretable machine learning algorithm (yes, linear regression *is* machine learning) and should thus be exploited whenever possible.
 
-Now, just because linear regression models are interpretable doesn't mean it can't become complex. Complexity often arises from combining use of interaction terms and logarithmic transforms.  In the appetizer, interaction terms allow the slope of each neighborhood's selling price to differ.
+Now, just because linear regression models are interpretable doesn't mean they can't become complex. Complexity often arises from combining use of interaction terms and logarithmic transforms.  In the appetizer, interaction terms allow the slope of each neighborhood's selling price to differ.
 
 Suppose increasing a house's living area is generally associated with an increase in a house's price. An interaction term stipulates that the price hike per square foot increase of living area will be different for each of the three neighborhoods.  For example, 1${ft^2}$ increase in living area my be associated with a \$50 increase in selling price for North Ames homes, a \$30 increase for Brookside homes, and a \$65 increase for Edwards homes. 
 
