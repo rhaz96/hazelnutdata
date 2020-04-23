@@ -79,7 +79,7 @@ A doubling in living area is associated with a $2^{0.47}$ multiplicative increas
 
 Notice the interaction term  ```logSqFoot*Neighborho BrkSide``` is 0.35, which is the difference between 0.82 and 0.47.  This tells us 0.35 is the adjustment in the slope of home selling prices for Brookside homes, relative to North Ames homes.   We can, however, give a more precise interpretation of the interaction term by noting
 
-$\frac{Multiplicative Increase BkSide}{Multiplicative Increase NAmes} = \frac{2^{0.82}}{2^{0.47}} = 2^{0.82-0.47} = 2^{0.35}$
+$\frac{Multiplicative\,Increase\,BkSide}{Multiplicative\,Increase\,NAmes} = \frac{2^{\,0.82}}{2^{\,0.47}} = 2^{\,0.82-0.47} = 2^{\,0.35}$
 
 This implies 
 
