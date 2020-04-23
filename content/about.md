@@ -8,4 +8,4 @@ I started this blog in March 2020 to capture and solidify my statistics and data
 
 In my spare time I love reading philosophy, biking throughout New York City, and long walks.  
 
-I hope you find this blog useful.   All feedback is welcome.  Contact me via [LinkedIn](www.linkedin.com/in/robertmhazell) or by email: rmhazell@outlook.com
+I hope you find this blog useful!   All feedback is welcome.  Contact me via [LinkedIn](www.linkedin.com/in/robertmhazell) or by email: rmhazell@outlook.com
