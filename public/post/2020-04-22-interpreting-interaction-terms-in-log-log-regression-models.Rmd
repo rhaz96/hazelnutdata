@@ -87,7 +87,7 @@ $Multiplicative Increase BkSide = 2^{0.35}*(Multiplicative Increase NAmes)$
 So we can then say:
 
 
-> *For a doubling in living area, the multiplicative increase in median sale price for Brookside  homes is $2^{0.35}$ (= 1.27) times greater than the multiplicative increase in median sales prices for North Ames homes – holding all other variables constant*
+> *For a doubling in living area, the multiplicative increase in median sale price for Brookside  homes is $2^{0.35}$ (= 1.27) times greater than the multiplicative increase in median sales prices for North Ames homes, holding all other variables constant*
 
 Not a straightforward interpretation!
 
@@ -123,7 +123,9 @@ We can summarize both interpretations by providing a general template, where the
 
 #### "Percentage Point" Interpretation
 
->There’s a __{interaction term value}__ percentage point difference in median __{response variable}__ between __{category}__ and __{reference category}__ for a 1% increase in __{x-variable}__, holding all other variables constant.
+>There’s a __\{interaction term value}__ percentage point difference in median __{response variable}__ between __{category}__ and __{reference category}__ for a 1% increase in __{x-variable}__, holding all other variables constant.
 
 
+### Wrapping Up
 
+Perhaps it's best to follow my textbook's advice and avoid interpreting complex interaction terms.  But if you're a curious soul seeking meaning (of interaction terms), I hope this satisfies your curiosity. 
