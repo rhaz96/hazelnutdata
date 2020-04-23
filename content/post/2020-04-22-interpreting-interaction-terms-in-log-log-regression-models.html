@@ -1,5 +1,5 @@
 ---
-title: Interpreting Interaction Terms in Log-Log Regression Models (Part I)
+title: Interpreting Interaction Terms in Log-Log Regression Models
 author: ''
 date: '2020-04-22'
 slug: log-log-interaction
@@ -31,13 +31,14 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 <p>“it is often difficult to interpret individual coefficients in an interaction model.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 </blockquote>
 <p>Several students came to me asking how to interpret interaction terms in a log-log model. I created a powerpoint that became the basis for the blog post!</p>
-<div id="log-log-model-with-interaction-terms" class="section level2">
-<h2>Log-Log Model with Interaction Terms</h2>
+<div id="log-log-model-with-interaction-terms" class="section level3">
+<h3>Log-Log Model with Interaction Terms</h3>
 <p>What would such a model look like for the appetizer model? Here’s some SAS output with the relevant portions highlighted</p>
 <center>
 <img src="/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/loglogmodel.png" />
 </center>
-<p>Notice that North Ames (<code>NAmes</code>) is considered the reference category. There’s no particular reason North Ames was chosen. We’ll focus on comparing Brookside home prices to North Ames prices. Our goal is to interpret <code>logSqFoot*Neighborho BrkSide</code>, the interaction term for Brookside homes. Let’s first begin by writing out the equation for those neighborhoods.</p>
+<p>Notice that North Ames (<code>NAmes</code>) is considered the reference category. There’s no particular reason North Ames was chosen. We’ll focus on comparing Brookside home prices to North Ames prices. Our goal is to interpret <code>logSqFoot*Neighborho BrkSide</code>, the interaction term for Brookside homes.</p>
+<p>Let’s first begin by writing out the equation for those neighborhoods (I’m rounding all values to the nearest hundredth).</p>
 <div id="brookside" class="section level4">
 <h4>Brookside</h4>
 <p><span class="math inline">\(ln(Price) = 8.49+0.47*ln(sqft)-2.58+0.35*ln(sqft) = 5.91+0.82*ln(sqft)\)</span></p>
@@ -45,6 +46,74 @@ In the graduate statistics class I’ve TA’ed, we explore a range of regressio
 <div id="north-ames" class="section level4">
 <h4>North Ames</h4>
 <p><span class="math inline">\(ln(Price) = 8.49+0.47*ln(sqft)\)</span></p>
+<p>Notice how both the response and explanatory variables are (natural) log transformed.</p>
+</div>
+</div>
+<div id="individual-interpretation" class="section level3">
+<h3>Individual Interpretation</h3>
+<p>Generally speaking, an equation of the form <span class="math inline">\(ln(Y) = \beta_0 + \beta_1*ln(X)\)</span> has the following interpretation:</p>
+<blockquote>
+<p><em>a doubling of X is associated with a <span class="math inline">\(2^{\beta_1}\)</span> multiplicative increase in the median of Y</em></p>
+</blockquote>
+<p>We can show this with the following derivation (taken from my class notes)</p>
+<p><img src="/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/logdoub.png" /></p>
+<p>Applying this to our two equations above</p>
+<div id="brookside-interpretation" class="section level4">
+<h4>BrookSide Interpretation</h4>
+<p>A doubling in living area is associated with a <span class="math inline">\(2^{0.82}\)</span> multiplicative increase (or 77% increase) in median Brookside home prices.</p>
+</div>
+<div id="north-ames-interpretation" class="section level4">
+<h4>North Ames Interpretation</h4>
+<p>A doubling in living area is associated with a <span class="math inline">\(2^{0.47}\)</span> multiplicative increase (or 39% increase) in median North Ames home prices.</p>
+</div>
+</div>
+<div id="interaction-term-interpretation" class="section level3">
+<h3>Interaction Term Interpretation</h3>
+<p>Notice the interaction term <code>logSqFoot*Neighborho BrkSide</code> is 0.35, which is the difference between 0.82 and 0.47. This tells us 0.35 is the adjustment in the slope of home selling prices for Brookside homes, relative to North Ames homes. We can, however, give a more precise interpretation of the interaction term by noting</p>
+<p><span class="math inline">\(\frac{Multiplicative Increase BkSide}{Multiplicative Increase NAmes} = \frac{2^{0.82}}{2^{0.47}} = 2^{0.82-0.47} = 2^{0.35}\)</span></p>
+<p>This implies</p>
+<p><span class="math inline">\(Multiplicative Increase BkSide = 2^{0.35}*(Multiplicative Increase NAmes)\)</span></p>
+<p>So we can then say:</p>
+<blockquote>
+<p><em>For a doubling in living area, the multiplicative increase in median sale price for Brookside homes is <span class="math inline">\(2^{0.35}\)</span> (= 1.27) times greater than the multiplicative increase in median sales prices for North Ames homes – holding all other variables constant</em></p>
+</blockquote>
+<p>Not a straightforward interpretation!</p>
+</div>
+<div id="motivating-an-alternate-intepretation" class="section level3">
+<h3>Motivating an alternate intepretation</h3>
+<p>Another way to interpret <span class="math inline">\(\beta_1\)</span> in the equation <span class="math inline">\(ln(Y) = \beta_0 + \beta_1*ln(X)\)</span> is</p>
+<blockquote>
+<p>A 1% increase in X is associated with a <span class="math inline">\(\beta_1\)</span>% increase in Y, holding all other variables constant</p>
+</blockquote>
+<p>I’ll point you to <a href="https://kenbenoit.net/assets/courses/ME104/logmodels2.pdf">this</a> and this Stack Exchange <a href="https://stats.stackexchange.com/questions/244199/why-is-it-that-natural-log-changes-are-percentage-changes-what-is-about-logs-th">post</a> on why that makes sense. Those resources however don’t provide an interpretation of log-log interaction terms using percents. So let’s do that now.</p>
+<div id="brookside-interpretation-with-percents" class="section level4">
+<h4>Brookside Interpretation (with Percents)</h4>
+<p>A 1% increase in living area is associated with a 0.82% increase in median Brookside home price, holding all other variables constant</p>
+</div>
+<div id="north-ames-interpretation-with-percents" class="section level4">
+<h4>North Ames Interpretation (with Percents)</h4>
+<p>A 1% increase in living area is associated with a 0.47% increase in median North Ames home price, holding all other variables constant</p>
+<p>This implies the following interpretation for <code>logSqFoot*Neighborho BrkSide</code></p>
+<blockquote>
+<p><em>There’s a 0.35 percentage point difference in median sales price between Brookside and North Ames homes for a 1% increase in living area, holding all other variables constant.</em></p>
+</blockquote>
+<p>Note that going from 0.47% to 0.82% is a difference of 0.35 <em>percentage points</em> (not percent). In terms of a percent, it’s a *100 = 74.47% increase.</p>
+</div>
+</div>
+<div id="interaction-interpretation-template" class="section level3">
+<h3>Interaction Interpretation Template</h3>
+<p>We can summarize both interpretations by providing a general template, where the terms in curly braces are replaced with the relevant variable names</p>
+<div id="doubling-interpretation" class="section level4">
+<h4>“Doubling” Interpretation</h4>
+<blockquote>
+<p>For a doubling in <strong>{x-variable}</strong>, the multiplicative increase in median <strong>{response variable}</strong> for <strong>{category}</strong> is <span class="math inline">\(2^{interaction\,term\,value}\)</span> times greater than the multiplicative increase in median <strong>{response variable}</strong> for <strong>{reference category}</strong>, holding all other variables constant.</p>
+</blockquote>
+</div>
+<div id="percentate-point-interpretation" class="section level4">
+<h4>“Percentate Point” Interpretation</h4>
+<blockquote>
+<p>There’s a <strong>{interaction term value}</strong> percentage point difference in median <strong>{response variable}</strong> between <strong>{category}</strong> and <strong>{reference category}</strong> for a 1% increase in <strong>{x-variable}</strong>, holding all other variables constant.</p>
+</blockquote>
 </div>
 </div>
 <div class="footnotes">
