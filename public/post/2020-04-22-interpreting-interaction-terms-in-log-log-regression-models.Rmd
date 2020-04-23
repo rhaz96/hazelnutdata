@@ -17,6 +17,7 @@ p.caption {
 ![](/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/ames.png)
 <center>
 <p class="caption">
+<br>
 The venerable House Price Competition on Kaggle
 </p>
 
