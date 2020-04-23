@@ -29,7 +29,7 @@ Before delving into building a full model on the entire dataset, students are gi
 
 Now, just because linear regression models are interpretable doesn't mean they can't become complex. Complexity often arises from combining use of interaction terms and logarithmic transforms.  In the appetizer, interaction terms allow the slope of each neighborhood's selling price to differ.
 
-Suppose increasing a house's living area is generally associated with an increase in a house's price. An interaction term stipulates that the price hike per square foot increase of living area will be different for each of the three neighborhoods.  For example, 1${ft^2}$ increase in living area my be associated with a \$50 increase in selling price for North Ames homes, a \$30 increase for Brookside homes, and a \$65 increase for Edwards homes. 
+Suppose increasing a house's living area is generally associated with an increase in a house's price. An interaction term stipulates that the price hike per square foot increase of living area will be different for each of the three neighborhoods.  A 1${ft^2}$ increase in living area may be associated with a \$50 increase in selling price for North Ames homes, a \$30 increase for Brookside homes, and a \$65 increase for Edwards homes. 
 
 Throwing in a log transform makes things a bit more tricky to interpret.  Small wonder my textbook admonishes 
 
