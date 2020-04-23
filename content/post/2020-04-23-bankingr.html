@@ -1,0 +1,435 @@
+---
+title: bankingr
+author: ''
+date: '2020-04-23'
+slug: bankingr
+categories: []
+tags: []
+---
+
+
+
+<pre class="r"><code>library(reticulate)
+use_python(&quot;/usr/local/bin/python3&quot;, required = T)</code></pre>
+<pre class="python"><code>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+bankingDF = pd.read_csv(&quot;/Users/roberthazell/Desktop/SMU/ML1/bank-additional-full.csv&quot;)</code></pre>
+<div id="business-understanding" class="section level2">
+<h2>Business Understanding</h2>
+<p>The Bank Marketing Data Set from the UCI Machine Learning Repository was selected to be analyzed by our group. The data involves information obtained from direct telemarketing campaigns from a Portuguese banking institution. The data contains 41,188 observations with 20 attributes and was collected between May 2008 to November 2010.</p>
+<p>Our objective is to build a customer conversion model that predicts the likelihood a customer converts after seeing a bank term deposit offer. A cash investment, which will be held at the bank, is invested at an agreed rate of interest over a fixed period of time. Characteristics of a customer such as age, education, type of job, and many others will be analyzed to determine if they are factors determining conversion.</p>
+<p>A good prediction algorithm would establish a relationship or correlation between specific attributes with the probability of whether a bank customer would subscribe to a bank term deposit. We will assess the qualities of our models using a confusion matrix. With the results from our analysis, the attributes that are strongly correlated to a customer subscribing to a bank term deposit would be emphasized in future telemarketing campaigns.</p>
+</div>
+<div id="data-understanding" class="section level2">
+<h2>Data Understanding</h2>
+<div id="data-dictionary" class="section level3">
+<h3>Data Dictionary</h3>
+<style type="text/css">
+.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
+.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;border-color:#ccc;color:#333;background-color:#fff;}
+.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+.tg .tg-fymr{font-weight:bold;border-color:inherit;text-align:left;vertical-align:top}
+.tg .tg-0pky{border-color:inherit;text-align:left;vertical-align:top}
+</style>
+<table class="tg">
+<tr>
+<th class="tg-fymr">
+Attribute
+</th>
+<th class="tg-fymr">
+Data Type
+</th>
+<th class="tg-fymr">
+Description
+</th>
+<th class="tg-fymr">
+Examples
+</th>
+</tr>
+<tr>
+<td class="tg-0pky">
+age
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+The age of the customer in years
+</td>
+<td class="tg-0pky">
+26, 45, 50
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+job
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+The type of job of the customer
+</td>
+<td class="tg-0pky">
+admin, blue-collar, entrepreneur, housemaid, <br>management, retired, self-employed, services, <br>student,technician, unemployed, unknown
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+marital
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+The marital status of the customer
+</td>
+<td class="tg-0pky">
+divorced, married, single, unknown
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+education
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+The education level of the customer
+</td>
+<td class="tg-0pky">
+basic.4y, basic.6y, basic.9y, <br>high.school, illiterate, professional.course, <br>university.degree, unknown
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+default
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+If the customer has their credit in default
+</td>
+<td class="tg-0pky">
+yes, no
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+housing
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+If the customer has a housing loan
+</td>
+<td class="tg-0pky">
+yes, no
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+loan
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+If the customer has a personal loan
+</td>
+<td class="tg-0pky">
+yes, no
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+contact
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+Customer contact communication type
+</td>
+<td class="tg-0pky">
+cellular, telephone
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+month
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+Last contact month with the customer
+</td>
+<td class="tg-0pky">
+jan, feb, mar, …, nov, dec
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+day_of_week
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+Last contact day of the week with the customer <br>(note that the bank is only open during weekdays)
+</td>
+<td class="tg-0pky">
+mon, tue, wed, thu, fri
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+duration
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Duration of the last contact with customer in seconds
+</td>
+<td class="tg-0pky">
+20, 30, 60
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+campaign
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+The number of contacts performed during <br>the campaign for the customer
+</td>
+<td class="tg-0pky">
+3, 7, 15
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+pdays
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Number of days passed since the customer was last contacted <br>(999 means customer was never contacted)
+</td>
+<td class="tg-0pky">
+20, 30, 999, etc.
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+previous
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Number of contacts made with customer before this campaign
+</td>
+<td class="tg-0pky">
+20, 30, 1000, etc.
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+poutcome
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+Outcome of the previous marketing campaign
+</td>
+<td class="tg-0pky">
+failure, nonexistent, success
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+emp.var.rate
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Employment variation rate - quarterly indicator
+</td>
+<td class="tg-0pky">
+-1.2, 1.1, 2.3
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+cons.price.idx
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Consumer price index - monthly indicator
+</td>
+<td class="tg-0pky">
+91.21, 93.33, 94.32
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+cons.conf.idx
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Consumer confidence index - monthly indicator
+</td>
+<td class="tg-0pky">
+-50.8, -36.6, -26.9
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+euribor3m
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Interest rate where a selection of European banks <br>lend one another funds in euros where <br>loans have a maturity of 3 months
+</td>
+<td class="tg-0pky">
+1.048, 4.857, 3.569
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+nr.employed
+</td>
+<td class="tg-0pky">
+numeric
+</td>
+<td class="tg-0pky">
+Quarterly average of the total number of employed citizens
+</td>
+<td class="tg-0pky">
+4198, 5191, 5325
+</td>
+</tr>
+<tr>
+<td class="tg-0pky">
+y
+</td>
+<td class="tg-0pky">
+categorical
+</td>
+<td class="tg-0pky">
+Has the client subscribed to a term deposit? (the product)
+</td>
+<td class="tg-0pky">
+yes, no
+</td>
+</tr>
+</table>
+<pre class="python"><code>ax = sns.distplot(bankingDF[&quot;age&quot;])
+ax.grid(False)
+ax</code></pre>
+<p><img src="/post/2020-04-23-bankingr_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10))
+job_totals = bankingDF[&quot;job&quot;].value_counts()
+job_totals = pd.DataFrame({&quot;Job Type&quot;: job_totals.index,
+                         &quot;Total&quot;: job_totals.values})
+
+ax = sns.barplot(x = &quot;Total&quot;, y=&quot;Job Type&quot;, data=job_totals,
+                 palette=&quot;Blues_d&quot;)
+ax.grid(False)
+ax</code></pre>
+<p><img src="/post/2020-04-23-bankingr_files/figure-html/unnamed-chunk-4-1.png" width="1440" /></p>
+<pre class="python"><code># those who accept by job category
+job_yes = (bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;]
+    .groupby(&#39;job&#39;)
+    .agg({&#39;y&#39;:&#39;count&#39;})
+    .rename(columns = {&#39;y&#39;:&#39;Subscribed&#39;})
+    .reset_index())
+
+# total number of people in each job category
+# regardless of subscription status
+all_job = (bankingDF
+    .groupby(&#39;job&#39;)
+    .agg({&#39;y&#39;:&#39;count&#39;})
+    .rename(columns = {&#39;y&#39;:&#39;Job Total&#39;})
+    .reset_index())
+
+# calculate prevalence rates
+job_yes[&#39;Job Total&#39;] = all_job[&quot;Job Total&quot;]
+job_yes[&quot;Prevalence Rate&quot;] = job_yes[&quot;Subscribed&quot;]/job_yes[&quot;Job Total&quot;]
+job_yes = job_yes.sort_values(&quot;Prevalence Rate&quot;, ascending=False)
+
+
+chart = sns.barplot(job_yes[&quot;job&quot;], job_yes[&quot;Prevalence Rate&quot;],
+           palette=sns.cubehelix_palette(12, reverse=True))
+
+chart.set_xticklabels(
+    chart.get_xticklabels(), 
+    rotation=45, 
+    horizontalalignment=&#39;right&#39;,
+    fontweight=&#39;light&#39;,
+    fontsize=&#39;large&#39;
+)</code></pre>
+<pre><code>[Text(0, 0, &#39;student&#39;), Text(0, 0, &#39;retired&#39;), Text(0, 0, &#39;unemployed&#39;), Text(0, 0, &#39;admin.&#39;), Text(0, 0, &#39;management&#39;), Text(0, 0, &#39;unknown&#39;), Text(0, 0, &#39;technician&#39;), Text(0, 0, &#39;self-employed&#39;), Text(0, 0, &#39;housemaid&#39;), Text(0, 0, &#39;entrepreneur&#39;), Text(0, 0, &#39;services&#39;), Text(0, 0, &#39;blue-collar&#39;)]</code></pre>
+<pre class="python"><code>chart</code></pre>
+<p><img src="/post/2020-04-23-bankingr_files/figure-html/unnamed-chunk-5-1.png" width="1440" /></p>
+<pre class="python"><code>j = job_yes.set_index(&quot;job&quot;)
+j</code></pre>
+<pre><code>               Subscribed  Job Total  Prevalence Rate
+job                                                  
+student               275        875         0.314286
+retired               434       1720         0.252326
+unemployed            144       1014         0.142012
+admin.               1352      10422         0.129726
+management            328       2924         0.112175
+unknown                37        330         0.112121
+technician            730       6743         0.108260
+self-employed         149       1421         0.104856
+housemaid             106       1060         0.100000
+entrepreneur          124       1456         0.085165
+services              323       3969         0.081381
+blue-collar           638       9254         0.068943</code></pre>
+<pre><code>              Subscribed Job.Total Prevalence.Rate
+student              275       875      0.31428571
+retired              434      1720      0.25232558
+unemployed           144      1014      0.14201183
+admin.              1352     10422      0.12972558
+management           328      2924      0.11217510
+unknown               37       330      0.11212121
+technician           730      6743      0.10826042
+self-employed        149      1421      0.10485574
+housemaid            106      1060      0.10000000
+entrepreneur         124      1456      0.08516484
+services             323      3969      0.08138070
+blue-collar          638      9254      0.06894316</code></pre>
+<pre class="python"><code>bankingDF.describe()</code></pre>
+<pre><code>               age      duration  ...     euribor3m   nr.employed
+count  41188.00000  41188.000000  ...  41188.000000  41188.000000
+mean      40.02406    258.285010  ...      3.621291   5167.035911
+std       10.42125    259.279249  ...      1.734447     72.251528
+min       17.00000      0.000000  ...      0.634000   4963.600000
+25%       32.00000    102.000000  ...      1.344000   5099.100000
+50%       38.00000    180.000000  ...      4.857000   5191.000000
+75%       47.00000    319.000000  ...      4.961000   5228.100000
+max       98.00000   4918.000000  ...      5.045000   5228.100000
+
+[8 rows x 10 columns]</code></pre>
+</div>
+</div>
