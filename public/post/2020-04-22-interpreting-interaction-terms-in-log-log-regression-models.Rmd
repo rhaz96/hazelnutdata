@@ -2,7 +2,6 @@
 title: Interpreting Interaction Terms in Log-Log Regression Models
 author: ''
 date: '2020-04-22'
-lastmod: '2020-04-23'
 slug: log-log-interaction
 categories: []
 tags:
@@ -130,4 +129,6 @@ We can summarize both interpretations by providing a general template, where the
 
 ### Wrapping Up
 
-Perhaps it's best to follow my textbook's advice and avoid interpreting complex interaction terms.  But if you're a curious soul seeking meaning (of interaction terms), I hope this satisfies your curiosity. 
+Perhaps it's best to follow my textbook's advice and avoid interpreting complex interaction terms.  But if you're a curious soul seeking meaning (of interaction terms), I hope this satisfies your curiosity.
+
+That's it for now
