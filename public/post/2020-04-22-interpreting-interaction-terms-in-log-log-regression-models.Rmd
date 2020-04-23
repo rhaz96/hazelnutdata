@@ -1,10 +1,56 @@
 ---
-title: Interpreting Interaction Terms in Log-Log Regression Models
+title: Interpreting Interaction Terms in Log-Log Regression Models (Part I)
 author: ''
 date: '2020-04-22'
 slug: log-log-interaction
 categories: []
 tags:
-  - explanatory
-  - statistics
+  - regression
 ---
+
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+
+![](/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/ames.png)
+<center>
+<p class="caption">
+The venerable House Price Competition on Kaggle
+</p>
+
+</center>
+<br>
+In the graduate statistics class I've TA'ed, we explore a range of regression concepts, both theory and practice.  This includes linear and polynomial regression, as well as transformations to align data to certain regression modeling assumptions. At the end of the course, students complete form groups to work on a project...the Kaggle housing prices [competition](https://www.kaggle.com/c/house-prices-advanced-regression-techniques) on Ames, Iowa - perhaps the most well known and ongoing competition.  This introduces students to real-world modeling and the 'Kagglesphere'.  Yes, we know linear regression isn't the winning technique for this competition, but it's simply an exercise in modeling.  Also, the students in the best-scoring group gets 3 points extra credit on the final exam.  That's the *real* competition!
+
+Before delving into building a full model on the entire dataset, students are given an "appetizer" (ok, it's not actually called that but that's how I refer to it) where they focus on predicting house selling prices for just three neighborhoods &mdash; Brookside, Edwards, and North Ames &mdash; using a home's living area as a predictor.  By using this smaller subset it's easier to explore the effects of certain regression techniques, and intepret model output.  After all, linear regression is a highly interpretable machine learning algorithm (yes, linear regression *is* machine learning) and should thus be exploited whenever possible.
+
+Now, just because linear regression models are intepretable doesn't mean it can't become complex. Complexity often arises from combinng use of interaction terms and logarithmic transforms.  In the appetizer, interaction terms allow the slope of each neighborhood's selling price to differ.
+
+Suppose increasing a house's living area is generally associated with an increase in a house's price. An interaction term stipulates that the price hike per square foot increase of living area will be different for each of the three neighborhoods.  For example, 1${ft^2}$ increase in living area my be associated with a \$50 increase in selling price for North Ames homes, a \$30 increase for Brookside homes, and a \$65 increase for Edwards homes. 
+
+Throwing in a log transform makes things a bit more tricky to interpret.  Small wonder my textbook admonishes 
+
+> "it is often difficult to interpret individual coefficients in an interaction model."^[*The Statistical Sleuth, 3rd Edition* (2013), Fred Ramsey and Daniel Schafer, p.250]
+
+Several students came to me asking how to interpret interaction terms in a log-log model.  I created a powerpoint that became the basis for the blog post!
+
+## Log-Log Model with Interaction Terms
+
+What would such a model look like for the appetizer model?  Here's some SAS output with the relevant portions highlighted 
+
+<center>
+![](/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/loglogmodel.png)
+</center>
+
+Notice that North Ames (```NAmes```) is considered the reference category.  There's no particular reason North Ames was chosen.  We'll focus on comparing Brookside home prices to North Ames prices.  Our goal is to interpret ```logSqFoot*Neighborho BrkSide```, the interaction term for Brookside homes.  Let's first begin by writing out the equation for those neighborhoods.
+
+#### Brookside 
+$ln(Price) = 8.49+0.47*ln(sqft)-2.58+0.35*ln(sqft) = 5.91+0.82*ln(sqft)$
+
+#### North Ames
+$ln(Price) = 8.49+0.47*ln(sqft)$
+
+
+

@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Interpreting Interaction Terms in Log-Log Regression Models</title>
+        <title>Interpreting Interaction Terms in Log-Log Regression Models (Part I)</title>
         
         <style>
 
@@ -79,7 +79,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand visible-xs" href="#">Interpreting Interaction Terms in Log-Log Regression Models</a>
+                    <a class="navbar-brand visible-xs" href="#">Interpreting Interaction Terms in Log-Log Regression Models (Part I)</a>
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -117,12 +117,10 @@
 <main>
 
     <div>
-        <h2>Interpreting Interaction Terms in Log-Log Regression Models</h2>
+        <h2>Interpreting Interaction Terms in Log-Log Regression Models (Part I)</h2>
         <h5>April 22, 2020</h5>
         
-<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
-
-<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
+<a href="/tags/regression"><kbd class="item-tag">regression</kbd></a>
 
 
     </div>
@@ -130,56 +128,53 @@
     <div align="start" class="content">
 
 
-
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+<img src="/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/ames.png" />
+<center>
+<p class="caption">
+The venerable House Price Competition on Kaggle
+</p>
+</center>
+<p><br>
+In the graduate statistics class I’ve TA’ed, we explore a range of regression concepts, both theory and practice. This includes linear and polynomial regression, as well as transformations to align data to certain regression modeling assumptions. At the end of the course, students complete form groups to work on a project…the Kaggle housing prices <a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques">competition</a> on Ames, Iowa - perhaps the most well known and ongoing competition. This introduces students to real-world modeling and the ‘Kagglesphere’. Yes, we know linear regression isn’t the winning technique for this competition, but it’s simply an exercise in modeling. Also, the students in the best-scoring group gets 3 points extra credit on the final exam. That’s the <em>real</em> competition!</p>
+<p>Before delving into building a full model on the entire dataset, students are given an “appetizer” (ok, it’s not actually called that but that’s how I refer to it) where they focus on predicting house selling prices for just three neighborhoods — Brookside, Edwards, and North Ames — using a home’s living area as a predictor. By using this smaller subset it’s easier to explore the effects of certain regression techniques, and intepret model output. After all, linear regression is a highly interpretable machine learning algorithm (yes, linear regression <em>is</em> machine learning) and should thus be exploited whenever possible.</p>
+<p>Now, just because linear regression models are intepretable doesn’t mean it can’t become complex. Complexity often arises from combinng use of interaction terms and logarithmic transforms. In the appetizer, interaction terms allow the slope of each neighborhood’s selling price to differ.</p>
+<p>Suppose increasing a house’s living area is generally associated with an increase in a house’s price. An interaction term stipulates that the price hike per square foot increase of living area will be different for each of the three neighborhoods. For example, 1<span class="math inline">\({ft^2}\)</span> increase in living area my be associated with a $50 increase in selling price for North Ames homes, a $30 increase for Brookside homes, and a $65 increase for Edwards homes.</p>
+<p>Throwing in a log transform makes things a bit more tricky to interpret. Small wonder my textbook admonishes</p>
+<blockquote>
+<p>“it is often difficult to interpret individual coefficients in an interaction model.”<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+</blockquote>
+<p>Several students came to me asking how to interpret interaction terms in a log-log model. I created a powerpoint that became the basis for the blog post!</p>
+<div id="log-log-model-with-interaction-terms" class="section level2">
+<h2>Log-Log Model with Interaction Terms</h2>
+<p>What would such a model look like for the appetizer model? Here’s some SAS output with the relevant portions highlighted</p>
+<center>
+<img src="/post/2020-04-22-interpreting-interaction-terms-in-log-log-regression-models_files/loglogmodel.png" />
+</center>
+<p>Notice that North Ames (<code>NAmes</code>) is considered the reference category. There’s no particular reason North Ames was chosen. We’ll focus on comparing Brookside home prices to North Ames prices. Our goal is to interpret <code>logSqFoot*Neighborho BrkSide</code>, the interaction term for Brookside homes. Let’s first begin by writing out the equation for those neighborhoods.</p>
+<div id="brookside" class="section level4">
+<h4>Brookside</h4>
+<p><span class="math inline">\(ln(Price) = 8.49+0.47*ln(sqft)-2.58+0.35*ln(sqft) = 5.91+0.82*ln(sqft)\)</span></p>
+</div>
+<div id="north-ames" class="section level4">
+<h4>North Ames</h4>
+<p><span class="math inline">\(ln(Price) = 8.49+0.47*ln(sqft)\)</span></p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><em>The Statistical Sleuth, 3rd Edition</em> (2013), Fred Ramsey and Daniel Schafer, p.250<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
 </div>
 
     
     
-    
-        <h4 class="page-header">Related</h4>
-         <div class="item">
-
-    
-    
-    
-
-    
-    
-
-    <h4><a href="/post/an-intuitive-explanation-of-p-values/">An Intuitive Explanation of p-values</a></h4>
-    <h5>March 28, 2020</h5>
-    
-<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
-
-<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
-
-<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
-
-
-
-</div>
-  <div class="item">
-
-    
-    
-    
-
-    
-    
-
-    <h4><a href="/post/clt_revisited/">Clearing Some Confusion about the Central Limit Theorem</a></h4>
-    <h5>March 24, 2020</h5>
-    
-<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
-
-<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
-
-<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
-
-
-
-</div>
- 
     
 
     
