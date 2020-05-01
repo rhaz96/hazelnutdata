@@ -30,11 +30,11 @@
     </item>
     
     <item>
-      <title>machine learning</title>
-      <link>/tags/machine-learning/</link>
+      <title>data visualization</title>
+      <link>/tags/data-visualization/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/machine-learning/</guid>
+      <guid>/tags/data-visualization/</guid>
       <description></description>
     </item>
     
@@ -71,6 +71,15 @@
       <pubDate>Fri, 03 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>/tags/technical/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>machine learning</title>
+      <link>/tags/machine-learning/</link>
+      <pubDate>Thu, 02 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/machine-learning/</guid>
       <description></description>
     </item>
     

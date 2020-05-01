@@ -12,12 +12,12 @@
     
     
     <item>
-      <title>Customer Conversion Modeling for Portuguese retail bank</title>
+      <title>Visualizing a Portuguese retail bank&#39;s marketing efforts</title>
       <link>/project/conversion-portuguese-bank/</link>
       <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>/project/conversion-portuguese-bank/</guid>
-      <description>Part I - Exploratory Data Analysis Business Understanding Data Understanding Data Dictionary Verifying Data Quality Simple Statistics Visualize Attributes Explore Joint Attributes Explore Attributes and Prediction Class Extra features  Extras Rejecting the bank: what are the odds?   Part II - Customer Conversion Modeling with Logistic Regression Data Cleaning and Perform 1 hot encoding on categorical data Training and Testing Split Logistic Regression Model Improvement - Upsampling Test Train Split and Upsampling Results Interpretation of the parameters with the highest weights on the final model: Conclusion     Authors: Robert Hazell, Gavin Hudgeons, Bruce Lee  import pandas as pd import seaborn as sns import matplotlib.</description>
+      <description>Business Understanding Data Understanding Data Dictionary Verifying Data Quality Simple Statistics Visualize Attributes Explore Joint Attributes Explore Attributes and Prediction Class Extra features  Extras Rejecting the bank: what are the odds?    import pandas as pd import seaborn as sns import matplotlib.pyplot as plt # using a relative path would probably be better! bankingDF = pd.read_csv(&amp;quot;/Users/roberthazell/Desktop/SMU/ML1/bank-additional-full.csv&amp;quot;) Business Understanding The Bank Marketing Data Set from the UCI Machine Learning Repository was selected to be analyzed by our group.</description>
     </item>
     
   </channel>

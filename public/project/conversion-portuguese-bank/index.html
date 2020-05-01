@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Customer Conversion Modeling for Portuguese retail bank</title>
+        <title>Visualizing a Portuguese retail bank&#39;s marketing efforts</title>
         
         <style>
 
@@ -79,7 +79,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand visible-xs" href="#">Customer Conversion Modeling for Portuguese retail bank</a>
+                    <a class="navbar-brand visible-xs" href="#">Visualizing a Portuguese retail bank&#39;s marketing efforts</a>
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -117,14 +117,14 @@
 <main>
 
     <div>
-        <h2>Customer Conversion Modeling for Portuguese retail bank</h2>
+        <h2>Visualizing a Portuguese retail bank&#39;s marketing efforts</h2>
         <h5></h5>
         
 <a href="/tags/python"><kbd class="item-tag">python</kbd></a>
 
 <a href="/tags/projects"><kbd class="item-tag">projects</kbd></a>
 
-<a href="/tags/machine-learning"><kbd class="item-tag">machine learning</kbd></a>
+<a href="/tags/data-visualization"><kbd class="item-tag">data visualization</kbd></a>
 
 
     </div>
@@ -133,7 +133,6 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#part-i---exploratory-data-analysis">Part I - Exploratory Data Analysis</a><ul>
 <li><a href="#business-understanding">Business Understanding</a></li>
 <li><a href="#data-understanding">Data Understanding</a><ul>
 <li><a href="#data-dictionary">Data Dictionary</a></li>
@@ -147,28 +146,14 @@
 <li><a href="#extras">Extras</a><ul>
 <li><a href="#rejecting-the-bank-what-are-the-odds">Rejecting the bank: what are the odds?</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#part-ii---customer-conversion-modeling-with-logistic-regression">Part II - Customer Conversion Modeling with Logistic Regression</a><ul>
-<li><a href="#data-cleaning-and-perform-1-hot-encoding-on-categorical-data">Data Cleaning and Perform 1 hot encoding on categorical data</a></li>
-<li><a href="#training-and-testing-split">Training and Testing Split</a></li>
-<li><a href="#logistic-regression-model-improvement---upsampling">Logistic Regression Model Improvement - Upsampling</a></li>
-<li><a href="#test-train-split-and-upsampling">Test Train Split and Upsampling</a></li>
-<li><a href="#results">Results</a></li>
-<li><a href="#interpretation-of-the-parameters-with-the-highest-weights-on-the-final-model">Interpretation of the parameters with the highest weights on the final model:</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
-</ul></li>
 </ul>
 </div>
 
-<center>
-Authors: Robert Hazell, <a href="https://www.linkedin.com/in/gavin-hudgeons-2b61388/">Gavin Hudgeons</a>, <a href="https://www.linkedin.com/in/bruce-lee-38227019/">Bruce Lee</a>
-</center>
 <pre class="python"><code>import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+# using a relative path would probably be better! 
 bankingDF = pd.read_csv(&quot;/Users/roberthazell/Desktop/SMU/ML1/bank-additional-full.csv&quot;)</code></pre>
-<div id="part-i---exploratory-data-analysis" class="section level1">
-<h1>Part I - Exploratory Data Analysis</h1>
 <div id="business-understanding" class="section level2">
 <h2>Business Understanding</h2>
 <p>The Bank Marketing Data Set from the UCI Machine Learning Repository was selected to be analyzed by our group. The data involves information obtained from direct telemarketing campaigns from a Portuguese banking institution. The data contains 41,188 observations with 20 attributes and was collected between May 2008 to November 2010.</p>
@@ -549,13 +534,14 @@ Name: marital, dtype: object</code></pre>
 <pre class="python"><code># histogram of age
 ax = sns.distplot(bankingDF[&quot;age&quot;])
 ax.grid(False)
-ax</code></pre>
+plt.tick_params(labelsize=12)
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>There is some right skew in terms of the age range the bank targets, with the majority of customers targeted in their 30s-40s. This makes sense as those in that age bracket would more likely have money to spend on long-term deposits given a stable income. Individuals past 60 years old are not considered, most likely since such are already retired; they should have made long-term deposits decades before!</p>
 </div>
 <div id="job-categories" class="section level4">
 <h4>Job Categories</h4>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(20,10)) 
 job_totals = bankingDF[&quot;job&quot;].value_counts()
 job_totals = pd.DataFrame({&quot;Job Type&quot;: job_totals.index,
                          &quot;Total&quot;: job_totals.values})
@@ -563,22 +549,24 @@ job_totals = pd.DataFrame({&quot;Job Type&quot;: job_totals.index,
 ax = sns.barplot(x = &quot;Total&quot;, y=&quot;Job Type&quot;, data=job_totals,
                  palette=&quot;Blues_d&quot;)
 ax.grid(False)
-ax</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-7-1.png" width="1440" /></p>
+plt.tick_params(labelsize=20)
+_=plt.xlabel(&quot;Total Prospects&quot;, fontsize = 22)
+_=plt.ylabel(&quot;Job Type&quot;, fontsize = 22)
+plt.show()</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-7-1.png" width="1920" /></p>
 <p>The bank tends to heavily profile blue-collar workers in that three of the top four job types are in the blue-collar sector. The number one category – <code>admin</code> – is white-collar.</p>
 </div>
 <div id="how-frequent-a-prospect-is-called-current-campaign" class="section level4">
 <h4>How frequent a prospect is called (current campaign)</h4>
-<pre class="python"><code>plt.boxplot(bankingDF[&quot;campaign&quot;], vert=False)</code></pre>
-<pre><code>{&#39;whiskers&#39;: [&lt;matplotlib.lines.Line2D object at 0x127a38710&gt;, &lt;matplotlib.lines.Line2D object at 0x127a69550&gt;], &#39;caps&#39;: [&lt;matplotlib.lines.Line2D object at 0x127a69828&gt;, &lt;matplotlib.lines.Line2D object at 0x127a69f28&gt;], &#39;boxes&#39;: [&lt;matplotlib.lines.Line2D object at 0x127a38eb8&gt;], &#39;medians&#39;: [&lt;matplotlib.lines.Line2D object at 0x1290361d0&gt;], &#39;fliers&#39;: [&lt;matplotlib.lines.Line2D object at 0x129036860&gt;], &#39;means&#39;: []}</code></pre>
-<pre class="python"><code>plt.xlabel(&quot;Number of times contacted&quot;)
+<pre class="python"><code>_=plt.boxplot(bankingDF[&quot;campaign&quot;], vert=False)
+_=plt.xlabel(&quot;Number of times contacted&quot;, fontsize=20)
 plt.grid(False)
 fig = plt.gcf()
 a = plt.gca()
-a.axes.get_yaxis().set_ticks([])</code></pre>
-<pre><code>[]</code></pre>
-<pre class="python"><code>fig.set_size_inches(18.5, 5)
-fig</code></pre>
+_=a.axes.get_yaxis().set_ticks([])
+fig.set_size_inches(18.5, 8)
+plt.tick_params(labelsize=18)
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-8-1.png" width="1776" /></p>
 <p>On average the bank has been in contact less than 5 times for any given customer, but several were constantly targeted. Perhaps these are highly promising but wavering customers.</p>
 </div>
@@ -594,8 +582,10 @@ call_day = pd.DataFrame({&quot;Day&quot;: call_day.index,
 ax = sns.barplot(call_day[&quot;Day&quot;], call_day[&quot;Total&quot;],
            palette=&quot;Purples_d&quot;)
 ax.grid(False)
-plt.xlabel(&#39;&#39;)
-plt.ylabel(&quot;Calls Made&quot;)</code></pre>
+_=plt.xlabel(&#39;&#39;)
+_=plt.ylabel(&quot;Calls Made&quot;, fontsize=20)
+plt.tick_params(labelsize=18)
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-9-1.png" width="1440" /></p>
 <p>In terms of follow-up call days, bankers show some preference, most following up on Thursday and least on Fridays, but these differences don’t seem significant.</p>
 </div>
@@ -610,31 +600,31 @@ bank_pdays_filtered = bankingDF[bankingDF[&quot;pdays&quot;] != 999]
 ax = sns.violinplot(x=&quot;pdays&quot;,
                    data = bank_pdays_filtered,
                    color=&quot;turquoise&quot;)
-ax.set(xlabel = &quot;Days since last contact&quot;)
+#_=ax.set(xlabel = &quot;Days since last contact&quot;)
 ax.grid(False)
-ax</code></pre>
+plt.tick_params(labelsize = 18)
+_=plt.xlabel(&quot;Days since last contact&quot;, fontsize=19)
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-10-1.png" width="1440" /></p>
 <p>We see evidence of bimodality and right-skew from this violinplot, aspects not clearly seen in the inscribed boxplot.</p>
 <p>Bankers followed up with them roughly between 3 and 6 days after their latest call for most people in this data. The two peaks are perhaps indicative of early stage sale-pitching by the banks where communication is frequent. For those in late-stage or completed negotiations, or people who constantly ignore campaign calls, the right skew probably reflects such cases.</p>
 </div>
 <div id="education-level-of-prospects" class="section level4">
 <h4>Education level of prospects</h4>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(10,6)) 
 education_totals = bankingDF[&quot;education&quot;].value_counts()
 education_totals = pd.DataFrame({&quot;Education Type&quot;: education_totals.index,
                          &quot;Total&quot;: education_totals.values})
 
 my_range=range(1,len(education_totals.index)+1)
-plt.hlines(y=my_range, xmin=0, xmax=education_totals[&#39;Total&#39;], color=&#39;skyblue&#39;)
-plt.plot(education_totals[&#39;Total&#39;], my_range, &quot;o&quot;)
+_=plt.hlines(y=my_range, xmin=0, xmax=education_totals[&#39;Total&#39;], color=&#39;skyblue&#39;)
+_=plt.plot(education_totals[&#39;Total&#39;], my_range, &quot;o&quot;)
 
-plt.yticks(my_range, education_totals[&#39;Education Type&#39;])</code></pre>
-<pre><code>([&lt;matplotlib.axis.YTick object at 0x1279cce48&gt;, &lt;matplotlib.axis.YTick object at 0x1279cc828&gt;, &lt;matplotlib.axis.YTick object at 0x1279c0c50&gt;, &lt;matplotlib.axis.YTick object at 0x1279ef940&gt;, &lt;matplotlib.axis.YTick object at 0x1279efdd8&gt;, &lt;matplotlib.axis.YTick object at 0x114d3e2b0&gt;, &lt;matplotlib.axis.YTick object at 0x114d3e748&gt;, &lt;matplotlib.axis.YTick object at 0x114d3ebe0&gt;], [Text(0, 0, &#39;university.degree&#39;), Text(0, 0, &#39;high.school&#39;), Text(0, 0, &#39;basic.9y&#39;), Text(0, 0, &#39;professional.course&#39;), Text(0, 0, &#39;basic.4y&#39;), Text(0, 0, &#39;basic.6y&#39;), Text(0, 0, &#39;unknown&#39;), Text(0, 0, &#39;illiterate&#39;)])</code></pre>
-<pre class="python"><code>plt.xlabel(&#39;People Called by Bank&#39;)
-plt.ylabel(&#39;Education&#39;)
-plt.grid(False)
-plt.show()</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-11-1.png" width="1440" /></p>
+_=plt.yticks(my_range, education_totals[&#39;Education Type&#39;])
+_=plt.grid(False)
+_=plt.tick_params(labelsize=&quot;small&quot;)
+_=plt.show()</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-11-1.png" width="960" /></p>
 <p>Code for lollipop chart adapted from <a href="https://python-graph-gallery.com/182-vertical-lollipop-plot/">here</a>. As you’d expect the bank tends to target those who have, at the very least, completed high school. Greatest preference is shown towards college educated individuals. Again, this makes sense since they tend to earn more money relative to other education groups, making them likelier to deposit money.</p>
 </div>
 </div>
@@ -642,10 +632,14 @@ plt.show()</code></pre>
 <h3>Explore Joint Attributes</h3>
 <div id="job-and-education" class="section level4">
 <h4>Job and Education</h4>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
-sns.heatmap(pd.crosstab(bankingDF[&quot;education&quot;],bankingDF[&quot;job&quot;]),
-            annot=True,ax=ax, fmt=&quot;g&quot;)</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-12-1.png" width="1440" /></p>
+<pre class="python"><code>_=plt.subplots(figsize=(10,8)) 
+_=sns.heatmap(pd.crosstab(bankingDF[&quot;education&quot;],bankingDF[&quot;job&quot;]),
+            annot=True, fmt=&quot;g&quot;)
+plt.tick_params(rotation=45, labelsize=7)
+_=plt.ylabel(&quot;Education&quot;)
+_=plt.xlabel(&quot;Job&quot;)
+plt.show()</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-12-1.png" width="960" /></p>
 <p>We can visualize a cross tabulation between education level and job status. There isn’t much to be said for <code>illiterate</code> folks, but for those with <code>unknown</code> education tend to work blue-collar, admin, and technician type jobs. The most blue collar employees are those with <code>basic.4y</code>, <code>basic.6y</code>, and <code>basic.9y</code> educations. It’s not clear what these categories represent. College educated individuals work predominantly as admins, in management, or as technicians. High school grads also work in large proportion within admin, but also in the services industry.</p>
 </div>
 <div id="consumer-confidence-and-consumer-price-indexes" class="section level4">
@@ -653,8 +647,10 @@ sns.heatmap(pd.crosstab(bankingDF[&quot;education&quot;],bankingDF[&quot;job&quo
 <pre class="python"><code>ax = sns.lmplot( x=&quot;cons.price.idx&quot;, y=&quot;cons.conf.idx&quot;, 
                data=bankingDF, fit_reg=True, line_kws={&#39;color&#39;: &#39;red&#39;})
 plt.grid(False)
-plt.xlabel(&quot;Price Index&quot;)
-plt.ylabel(&quot;Confidence Index&quot;)</code></pre>
+_=plt.xlabel(&quot;Price Index&quot;)
+_=plt.ylabel(&quot;Confidence Index&quot;)
+plt.rcParams.update({&#39;font.size&#39;: 12})
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-13-1.png" width="480" /></p>
 <p>Almost no correlation is present between consumer confidence and the price index. That being said, the price index is relatively consistent in this data, ranging from ~ 92 to ~ 95, so it’s unsurprising to see a flat relationship between these variables (the correlation is ~ 0.06). Consumer confidence was negative in Portugal throughout 2014 (when this data was taken) and has been that way for nearly the past decade, as can be seen <a href="https://tradingeconomics.com/portugal/consumer-confidence">here</a>. As an aside, that the correlation between price index and consumer confidence is slightly <em>positive</em> is mildly interesting.</p>
 </div>
@@ -671,9 +667,11 @@ wed          300  1243   35  1457   983   70  2923  863  135  125</code></pre>
 <pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
 day_and_month = pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[&quot;month&quot;])
 day_and_month = day_and_month.reindex([&#39;mar&#39;, &#39;apr&#39;, &#39;may&#39;, &#39;jun&#39;, &#39;jul&#39;, &#39;aug&#39;, &#39;sep&#39;,&#39;oct&#39;, &#39;nov&#39;, &#39;dec&#39;], axis=1).reindex([&quot;mon&quot;,&quot;tue&quot;,&quot;wed&quot;,&quot;thu&quot;,&quot;fri&quot;])
-ax = sns.heatmap(day_and_month, annot=True,ax=ax, fmt=&quot;d&quot;, cmap=&quot;YlGnBu&quot;)
-ax.set_xlabel(&quot;&quot;)
-ax.set_ylabel(&quot;&quot;)</code></pre>
+_=sns.heatmap(day_and_month, annot=True, fmt=&quot;d&quot;, cmap=&quot;YlGnBu&quot;, ax=ax,annot_kws={&quot;size&quot;:16})
+_=plt.xlabel(&quot;&quot;)
+_=plt.ylabel(&quot;&quot;)
+_=plt.tick_params(labelsize=15)
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-15-1.png" width="1440" /></p>
 <p>The most popular months for calling are the late spring and summer months: May through August. The least popular months were in the fall and winter (September, October, and December), although November marks an uptick in campaign calling. There is no data for January or February, implying the latest campaign began in March.</p>
 </div>
@@ -704,14 +702,14 @@ accepted = accepted.sort_values(&#39;y&#39;)
 # lollipop plot
 my_range=range(1,len(accepted.index)+1)
 sns.set_style(&#39;dark&#39;)
-plt.hlines(y=my_range, xmin=0, xmax=accepted[&#39;y&#39;], color=&#39;maroon&#39;)
-plt.plot(accepted[&#39;y&#39;], my_range, &quot;o&quot;, color = &#39;maroon&#39;)
-
-plt.yticks(my_range, accepted[&#39;education&#39;])</code></pre>
-<pre><code>([&lt;matplotlib.axis.YTick object at 0x12c44cb70&gt;, &lt;matplotlib.axis.YTick object at 0x135603320&gt;, &lt;matplotlib.axis.YTick object at 0x12c458b38&gt;, &lt;matplotlib.axis.YTick object at 0x12c16ce80&gt;, &lt;matplotlib.axis.YTick object at 0x12c18c358&gt;, &lt;matplotlib.axis.YTick object at 0x12c18c7f0&gt;, &lt;matplotlib.axis.YTick object at 0x12c18c588&gt;, &lt;matplotlib.axis.YTick object at 0x12c18cd30&gt;], [Text(0, 0, &#39;illiterate&#39;), Text(0, 0, &#39;basic.6y&#39;), Text(0, 0, &#39;unknown&#39;), Text(0, 0, &#39;basic.4y&#39;), Text(0, 0, &#39;basic.9y&#39;), Text(0, 0, &#39;professional.course&#39;), Text(0, 0, &#39;high.school&#39;), Text(0, 0, &#39;university.degree&#39;)])</code></pre>
-<pre class="python"><code>plt.xlabel(&#39;Contacts who accepted bank offer&#39;)
-plt.ylabel(&#39;Education Level&#39;)</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-17-1.png" width="1440" /></p>
+fig, ax = plt.subplots(figsize=(8,6)) 
+_=plt.hlines(y=my_range, xmin=0, xmax=accepted[&#39;y&#39;], color=&#39;maroon&#39;)
+_=plt.plot(accepted[&#39;y&#39;], my_range, &quot;o&quot;, color = &#39;maroon&#39;)
+_=plt.yticks(my_range, accepted[&#39;education&#39;], rotation=45)
+_=plt.xlabel(&#39;Contacts who accepted bank offer&#39;)
+_=plt.tick_params(labelsize=10)
+_=plt.ylabel(&#39;Education Level&#39;)</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-17-1.png" width="768" /></p>
 <p>The majority who sign up with the bank are college educated, but the pattern above is almost identical for those who reject the bank. This suggests the need to examine prevalence rates across education levels, as will be seen later.</p>
 </div>
 <div id="call-duration-and-outcome-non-first-time-calls" class="section level4">
@@ -723,32 +721,34 @@ print(&quot;Proportion of first time calls: &quot;, round(first_timers, 3))</cod
 <pre class="python"><code>success = bankingDF[(bankingDF[&#39;y&#39;] == &quot;yes&quot;) &amp; (bankingDF[&#39;pdays&#39;]!=999)]
 fail = bankingDF[(bankingDF[&#39;y&#39;] == &quot;no&quot;) &amp; (bankingDF[&#39;pdays&#39;]!=999)]
 
-fig, ax = plt.subplots(figsize = (12,4))
+fig, ax = plt.subplots(figsize = (12,8))
 for a in [success, fail]:
-    sns.distplot(a[&quot;duration&quot;], bins=range(1, 3600, 20), ax=ax, kde=False)
-ax.set_xlim([0, 4000])</code></pre>
-<pre><code>(0.0, 4000.0)</code></pre>
-<pre class="python"><code>fig.legend(labels = [&quot;Subscribed&quot;,&quot;Rejected&quot;])
-plt.xlabel(&quot;Duration of Last Phone Call (Seconds)&quot;)
-plt.grid(False)
-plt.show()</code></pre>
+    _=sns.distplot(a[&quot;duration&quot;], bins=range(1, 3600, 20), ax=ax, kde=False)
+_=ax.set_xlim([0, 4000])
+_=fig.legend(labels = [&quot;Subscribed&quot;,&quot;Rejected&quot;], fontsize=12)
+_=plt.xlabel(&quot;Duration of Last Phone Call (Seconds)&quot;, fontsize=14)
+_=plt.grid(False)
+_=plt.tick_params(labelsize=13)
+_=plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-19-1.png" width="1152" /></p>
 <p><a href="https://archive.ics.uci.edu/ml/datasets/bank+marketing">As is pointed out</a> call duration isn’t known before the bank makes a call, and the outcome of the call is known immediately after a call. So <code>duration</code> can’t be used as a predictor when building a model. Nevertheless, for those who’ve been contacted before, bank-rejecters spend on average less time engaging with the bank agent. The distribution of talk time is right-skewed regardless of call outcome. When analyzing the response and <code>duration</code> it needs to be done in a retrospective manner.</p>
 </div>
 <div id="day-of-week-and-subscriptions" class="section level4">
 <h4>Day of Week and Subscriptions</h4>
 <pre class="python"><code>fig, ax = plt.subplots(figsize=(5,5)) 
-sns.heatmap(pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[bankingDF[&#39;y&#39;] == &quot;yes&quot;][&quot;y&quot;]).reindex([&quot;mon&quot;,&quot;tue&quot;,&quot;wed&quot;,&quot;thu&quot;,&quot;fri&quot;]),
+_=sns.heatmap(pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[bankingDF[&#39;y&#39;] == &quot;yes&quot;][&quot;y&quot;]).reindex([&quot;mon&quot;,&quot;tue&quot;,&quot;wed&quot;,&quot;thu&quot;,&quot;fri&quot;]),
             annot=True,ax=ax, fmt=&quot;g&quot;)
 
-ax.set_xlabel(&quot;&quot;)
-ax.set_ylabel(&quot;&quot;)</code></pre>
+_=ax.set_xlabel(&quot;&quot;)
+_=ax.set_ylabel(&quot;&quot;)
+plt.rcParams.update({&#39;font.size&#39;: 18})
+plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-20-1.png" width="480" /></p>
 <p>The most successes come on Thursdays, followed by a near tie between Tuesday and Wednesday. It seems like the beginning and end of the week are the least favorable days to call.</p>
 </div>
 <div id="job-profession-of-those-who-subscribe" class="section level4">
 <h4>Job Profession of those who Subscribe</h4>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(10,6)) 
 # all those who subscribed, grouped by education
 accepted = bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;].groupby(&quot;job&quot;).agg({&quot;y&quot;:&quot;count&quot;}).reset_index()
 accepted = accepted.sort_values(&#39;y&#39;)
@@ -756,20 +756,20 @@ accepted = accepted.sort_values(&#39;y&#39;)
 # lollipop plot
 my_range=range(1,len(accepted.index)+1)
 sns.set_style(&#39;dark&#39;)
-plt.hlines(y=my_range, xmin=0, xmax=accepted[&#39;y&#39;])
-plt.plot(accepted[&#39;y&#39;], my_range, &quot;o&quot;, color=&quot;black&quot;)
-
-plt.yticks(my_range, accepted[&#39;job&#39;])</code></pre>
-<pre><code>([&lt;matplotlib.axis.YTick object at 0x12c1db1d0&gt;, &lt;matplotlib.axis.YTick object at 0x12c1d2ac8&gt;, &lt;matplotlib.axis.YTick object at 0x130889e10&gt;, &lt;matplotlib.axis.YTick object at 0x12c2f99b0&gt;, &lt;matplotlib.axis.YTick object at 0x12c2f9e10&gt;, &lt;matplotlib.axis.YTick object at 0x12c302320&gt;, &lt;matplotlib.axis.YTick object at 0x12c302780&gt;, &lt;matplotlib.axis.YTick object at 0x12c302c18&gt;, &lt;matplotlib.axis.YTick object at 0x12c302438&gt;, &lt;matplotlib.axis.YTick object at 0x12c30b588&gt;, &lt;matplotlib.axis.YTick object at 0x12c30ba20&gt;, &lt;matplotlib.axis.YTick object at 0x12c30beb8&gt;], [Text(0, 0, &#39;unknown&#39;), Text(0, 0, &#39;housemaid&#39;), Text(0, 0, &#39;entrepreneur&#39;), Text(0, 0, &#39;unemployed&#39;), Text(0, 0, &#39;self-employed&#39;), Text(0, 0, &#39;student&#39;), Text(0, 0, &#39;services&#39;), Text(0, 0, &#39;management&#39;), Text(0, 0, &#39;retired&#39;), Text(0, 0, &#39;blue-collar&#39;), Text(0, 0, &#39;technician&#39;), Text(0, 0, &#39;admin.&#39;)])</code></pre>
-<pre class="python"><code>plt.xlabel(&#39;Contacts who accepted bank offer&#39;)
-plt.ylabel(&#39;Job Type&#39;)</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-21-1.png" width="1440" /></p>
+_=plt.hlines(y=my_range, xmin=0, xmax=accepted[&#39;y&#39;])
+_=plt.plot(accepted[&#39;y&#39;], my_range, &quot;o&quot;, color=&quot;black&quot;)
+_=plt.yticks(my_range, accepted[&#39;job&#39;])
+_=plt.tick_params(axis=&quot;y&quot;, labelsize=8, rotation=30)
+_=plt.tick_params(axis=&quot;x&quot;, labelsize=11)
+_=plt.xlabel(&#39;Contacts who accepted bank offer&#39;, fontsize=12)
+_=plt.ylabel(&#39;Job Type&#39;, fontsize=12)</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-21-1.png" width="960" /></p>
 <p>Interestingly, <code>retired</code> folks were one of the least targeted groups (look back at the <code>age</code> histogram) that ended up subscribing quite often.</p>
 </div>
 <div id="prevalance-rates-by-job-category" class="section level4">
 <h4>Prevalance Rates by Job Category</h4>
 <p>The plot immediately above gives the raw values of subscribers by job type. We also know the overall prevalence rate is ~ 11%. Perhaps there’s quite a bit of imbalance between education or job positions so we’ll see if prevalence rates differ by category.</p>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
+<pre class="python"><code>_=plt.subplots(figsize=(8,6)) 
 # those who accept by job category
 job_yes = (bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;]
     .groupby(&#39;job&#39;)
@@ -791,19 +791,16 @@ job_yes[&quot;Prevalence Rate&quot;] = job_yes[&quot;Subscribed&quot;]/job_yes[&
 job_yes = job_yes.sort_values(&quot;Prevalence Rate&quot;, ascending=False)
 
 
-chart = sns.barplot(job_yes[&quot;job&quot;], job_yes[&quot;Prevalence Rate&quot;],
-           palette=sns.cubehelix_palette(12, reverse=True))
+_= sns.barplot(job_yes[&quot;job&quot;], job_yes[&quot;Prevalence Rate&quot;],
+           palette=sns.cubehelix_palette(12, reverse=True),
+          )
 
-chart.set_xticklabels(
-    chart.get_xticklabels(), 
-    rotation=45, 
-    horizontalalignment=&#39;right&#39;,
-    fontweight=&#39;light&#39;,
-    fontsize=&#39;large&#39;
-)</code></pre>
-<pre><code>[Text(0, 0, &#39;student&#39;), Text(0, 0, &#39;retired&#39;), Text(0, 0, &#39;unemployed&#39;), Text(0, 0, &#39;admin.&#39;), Text(0, 0, &#39;management&#39;), Text(0, 0, &#39;unknown&#39;), Text(0, 0, &#39;technician&#39;), Text(0, 0, &#39;self-employed&#39;), Text(0, 0, &#39;housemaid&#39;), Text(0, 0, &#39;entrepreneur&#39;), Text(0, 0, &#39;services&#39;), Text(0, 0, &#39;blue-collar&#39;)]</code></pre>
-<pre class="python"><code>chart</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-22-1.png" width="1440" /></p>
+_=plt.xlabel(&quot;&quot;)
+_=plt.tick_params(axis=&quot;x&quot;, labelsize=8, rotation=30)
+_=plt.tick_params(axis=&quot;y&quot;, labelsize = 11)
+_=plt.ylabel(&quot;Prevalence Rate&quot;, fontsize = 12)
+plt.show()</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-22-1.png" width="768" /></p>
 <pre class="python"><code>job_yes.set_index(&quot;job&quot;)</code></pre>
 <pre><code>               Subscribed  Job Total  Prevalence Rate
 job                                                  
@@ -820,26 +817,26 @@ entrepreneur          124       1456         0.085165
 services              323       3969         0.081381
 blue-collar           638       9254         0.068943</code></pre>
 <p>Perhaps surprisingly, <code>student</code>s have the highest prevalence (~31.4%) albeit being one of the least targeted demographics. By contrast <code>blue-collar</code> prospects were second most called (see “Education Levels” section) yet had the lowest conversion rate at ~ 6.9%. This plot confirms raw values give an incomplete picture of conversion. We can summarize the first fact with this simple text graphic below.</p>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(6,8)) 
-plt.text(0.29, 0.6, &quot;31%&quot;, size=40,
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(6,6)) 
+_=plt.text(0.29, 0.6, &quot;31%&quot;, size=40,
          va=&quot;baseline&quot;, ha=&quot;right&quot;, multialignment=&quot;left&quot;,
          color = &quot;green&quot;
         )
 
-plt.text(0.8, 0.6, &quot;of students converted...&quot;, size=16,
+_=plt.text(0.8, 0.6, &quot;of students converted...&quot;, size=16,
          va=&quot;baseline&quot;, ha=&quot;right&quot;, multialignment=&quot;left&quot;
          )
 
-plt.text(0.15, 0.4, &quot;...yet made up only&quot;, size=16,
+_=plt.text(0.15, 0.4, &quot;...yet made up only&quot;, size=16,
          va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;
          )
 
-plt.text(0.57, 0.4, &quot;2%&quot;, size=20,
+_=plt.text(0.57, 0.4, &quot;2%&quot;, size=20,
          va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;,
          color=&quot;red&quot;
          )
 
-plt.text(0.67, 0.4, &quot;of contacts&quot;, size=16,
+_=plt.text(0.67, 0.4, &quot;of contacts&quot;, size=16,
          va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;
          )
 
@@ -847,13 +844,12 @@ plt.gca().axes.get_yaxis().set_visible(False)
 plt.gca().axes.get_xaxis().set_visible(False)
 plt.show()</code></pre>
 <p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-24-1.png" width="576" /></p>
-<p>The bank should consider reaching out to students more.</p>
+<p>The bank should consider reaching out to students more often.</p>
 </div>
 <div id="prevalence-rates-by-education-level" class="section level4">
 <h4>Prevalence Rates by Education Level</h4>
 <p>We now do the same analysis for education.</p>
-<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,14)) 
-educ_yes = (bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;]
+<pre class="python"><code>educ_yes = (bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;]
     .groupby(&#39;education&#39;)
     .agg({&#39;y&#39;:&#39;count&#39;})
     .rename(columns = {&#39;y&#39;:&#39;Subscribed&#39;})
@@ -873,19 +869,14 @@ educ_yes[&quot;Prevalence Rate&quot;] = educ_yes[&quot;Subscribed&quot;]/educ_ye
 educ_yes = educ_yes.sort_values(&quot;Prevalence Rate&quot;, ascending=False)
 
 
-chart = sns.barplot(educ_yes[&quot;education&quot;], educ_yes[&quot;Prevalence Rate&quot;],
+_=sns.barplot(educ_yes[&quot;education&quot;], educ_yes[&quot;Prevalence Rate&quot;],
            color=&quot;skyblue&quot;)
 
-chart.set_xticklabels(
-    chart.get_xticklabels(), 
-    rotation=45, 
-    horizontalalignment=&#39;right&#39;,
-    fontweight=&#39;light&#39;,
-    fontsize=&#39;large&#39;
-)</code></pre>
-<pre><code>[Text(0, 0, &#39;illiterate&#39;), Text(0, 0, &#39;unknown&#39;), Text(0, 0, &#39;university.degree&#39;), Text(0, 0, &#39;professional.course&#39;), Text(0, 0, &#39;high.school&#39;), Text(0, 0, &#39;basic.4y&#39;), Text(0, 0, &#39;basic.6y&#39;), Text(0, 0, &#39;basic.9y&#39;)]</code></pre>
-<pre class="python"><code>chart</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-25-1.png" width="1440" /></p>
+_=plt.tick_params(axis=&quot;x&quot;, labelsize=8, rotation=30)
+_=plt.tick_params(axis=&quot;y&quot;, labelsize = 11)
+_=plt.ylabel(&quot;Prevalence Rate&quot;, fontsize = 12)
+plt.show()</code></pre>
+<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-25-1.png" width="576" /></p>
 <pre class="python"><code>educ_yes.set_index(&quot;education&quot;)</code></pre>
 <pre><code>                     Subscribed  Education Total  Prevalence Rate
 education                                                        
@@ -919,7 +910,7 @@ basic.9y                    473             6045         0.078246</code></pre>
 <div id="rejecting-the-bank-what-are-the-odds" class="section level3">
 <h3>Rejecting the bank: what are the odds?</h3>
 <p>For individuals with similar age, education, job, and marital status, what are the odds someone <em>with</em> a personal loan rejecting the bank’s offer compared to that of someone <em>without</em> a personal loan rejecting the bank’s offer? We’ll look at single college graduates in the age range 30-40 who work in administrative positions. These characteristics comprise one of the largest demographics targed by the bank.</p>
-<pre class="python"><code># getting the desired sample
+<pre class="python"><code># getting the desired sample (retrospectively)
 bank_retro = bankingDF[(bankingDF[&quot;age&quot;].between(30,40)) &amp; 
           (bankingDF[&quot;education&quot;] == &quot;university.degree&quot;) &amp; 
           (bankingDF[&quot;job&quot;]==&quot;admin.&quot;) &amp;
@@ -945,307 +936,6 @@ Total           1202  177   1379</code></pre>
 <p>Equivalently, the odds of someone with a personal loan rejecting the bank is 55% higher than the odds of someone without a personal loan rejecting the bank. This (again) applies only to those with the prescribed characterisitcs just mentioned.</p>
 <p>If the banking agency chose its contacts based off of random sampling, then these inferences are applicable to those in the general public in the same demographic. Said differently, the scope of inference wouldn’t be restricted to just those in the current dataset. We’ll assume for simplicity that random sampling was used.</p>
 <p>The upshot would then be this: the bank runs a higher risk of rejection if people in the aforementioned demographics have personal loans, which is pretty intuitive - people in debt are less likely to fork out money.</p>
-</div>
-</div>
-</div>
-<div id="part-ii---customer-conversion-modeling-with-logistic-regression" class="section level1">
-<h1>Part II - Customer Conversion Modeling with Logistic Regression</h1>
-<p>Part 1 dealt with exploratory analysis of the data. Now we use use logistic regression (LR) to build a customer conversion model that predicts the likelihood a customer converts after seeing a bank term deposit offer. We consider LR first since the model is highly interpretable and can serve as baseline for model performance before moving to non-parametric models (considered in Part III).</p>
-<pre class="python"><code>bankingDF[[&#39;job&#39;, &#39;marital&#39;, &#39;education&#39;, &#39;default&#39;, &#39;housing&#39;, &#39;loan&#39;, &#39;contact&#39;, 
-           &#39;month&#39;, &#39;day_of_week&#39;, &#39;poutcome&#39;]].describe().transpose()</code></pre>
-<pre><code>             count unique                top   freq
-job          41188     12             admin.  10422
-marital      41188      4            married  24928
-education    41188      8  university.degree  12168
-default      41188      3                 no  32588
-housing      41188      3                yes  21576
-loan         41188      3                 no  33950
-contact      41188      2           cellular  26144
-month        41188     10                may  13769
-day_of_week  41188      5                thu   8623
-poutcome     41188      3        nonexistent  35563</code></pre>
-<div id="data-cleaning-and-perform-1-hot-encoding-on-categorical-data" class="section level3">
-<h3>Data Cleaning and Perform 1 hot encoding on categorical data</h3>
-<p>Because the contact variable is binary, there is no need to encode it using OneHotEncoding. We can just convert it to an integer. The rest of the categorical variables will be OneHotEncoded.</p>
-<p>We also get rid of the <code>duration</code> attribute since that cannot be known before the call is made. We get rid of <code>nr.employed</code> and <code>euribor3m</code> due to high correlation as mentioned earlier. We also get rid of <code>default</code> and <code>pdays</code> due to insufficient numbers of instances for different values of those classes. Then, we clean up the data by removing the columns that were OneHotEncoded, and the <code>unknown</code> values from the categorical data. The only exception will be for education, since in Part 1 we saw those with unknown education had the highest prevalence.</p>
-<pre class="python"><code># we&#39;ll be using this new dataframe moving forward
-bankingDF_working = bankingDF 
-del bankingDF_working[&#39;duration&#39;] # removed because it is not known before the call, so it is not predictive
-del bankingDF_working[&#39;nr.employed&#39;] #removed due to high correlation
-del bankingDF_working[&#39;euribor3m&#39;] #removed due to high correlation
-del bankingDF_working[&#39;default&#39;] # default is removed because there are only 3 instances of yes
-del bankingDF_working[&#39;pdays&#39;] # 97% are uncontacted.  The rest are too spread out for meaning.  Maybe later change to boolean (wasContacted)
-
-# function for inserting dummy variables into dataframe
-# and removing the associated original column 
-def banking_encoding(df, c_name):
-    tmp_df = pd.get_dummies(df[c_name],prefix=c_name)
-    df = pd.concat((df,tmp_df),axis=1)
-    del df[c_name]
-    return df
-    
-for c in [&#39;job&#39;,&#39;marital&#39;,&#39;education&#39;,&#39;housing&#39;,&#39;loan&#39;,&#39;month&#39;,&#39;day_of_week&#39;,&#39;poutcome&#39;,&#39;contact&#39;]:
-    bankingDF_working = banking_encoding(bankingDF_working, c)
-
-# Remove Unknown Categoricals from one hot encoding
-del bankingDF_working[&#39;job_unknown&#39;]
-del bankingDF_working[&#39;housing_unknown&#39;]
-del bankingDF_working[&#39;loan_unknown&#39;]
-del bankingDF_working[&#39;marital_unknown&#39;]</code></pre>
-</div>
-<div id="training-and-testing-split" class="section level3">
-<h3>Training and Testing Split</h3>
-<p>We use 80% of the instances for training and the remaining 20% for testing, utiliing 5 fold cross validation. Because of the imbalance of our response variable (y), we begin with StratifiedShuffleSplit.</p>
-<pre class="python"><code>from sklearn.model_selection import StratifiedShuffleSplit
-bankingDF_working.rename({&#39;y&#39;: &#39;result&#39;}, axis=&#39;columns&#39;, inplace=True)
-
-# convert y to 1 for yes, 0 for no for precision, recall and F1 calculation
-bankingDF_working[&#39;result&#39;] = bankingDF_working[&#39;result&#39;].map({&#39;yes&#39;: 1, &#39;no&#39;: 0})
-
-y = bankingDF_working[&#39;result&#39;].values # get the labels we want
-X = bankingDF_working.drop(&#39;result&#39;, axis=1).values # use everything else to predict!
-
-num_cv_iterations = 5
-#num_instances = len(y)
-cv_object = StratifiedShuffleSplit(n_splits=num_cv_iterations,
-                                  test_size=0.2)
-                         
-print(cv_object)</code></pre>
-<pre><code>StratifiedShuffleSplit(n_splits=5, random_state=None, test_size=0.2,
-            train_size=None)</code></pre>
-<pre class="python"><code># run logistic regression and vary some parameters
-from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
-from sklearn import metrics as mt
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import precision_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import f1_score
-
-iter_num=0
-# the indices are the rows used for training and testing in each iteration
-for train_indices, test_indices in cv_object.split(X,y): 
-    
-    X_train = X[train_indices]
-    y_train = y[train_indices]
-    
-    X_test = X[test_indices]
-    y_test = y[test_indices]
-    
-    scl_obj = StandardScaler()
-    scl_obj.fit(X_train) # find scalings for each column that make this zero mean and unit std
-    # the line of code above only looks at training data to get mean and std and we can use it 
-    # to transform new feature data
-
-    X_train_scaled = scl_obj.transform(X_train) # apply to training
-    X_test_scaled = scl_obj.transform(X_test) # apply those means and std to the test set (without snooping at the test set values)
-
-    # train the model just as before
-    lr_clf = LogisticRegression(penalty=&#39;l2&#39;, C=1.0, solver=&#39;newton-cg&#39;) # get object, the &#39;C&#39; value is less (can you guess why??)
-    lr_clf.fit(X_train_scaled,y_train)  # train object
-
-    y_hat = lr_clf.predict(X_test_scaled) # get test set precitions
-
-    # now let&#39;s get the accuracy and confusion matrix for this iterations of training/testing
-    acc = mt.accuracy_score(y_test,y_hat)
-    conf = mt.confusion_matrix(y_test,y_hat)
-    print(&quot;====Iteration&quot;,iter_num,&quot; ====&quot;)
-    print(&quot;accuracy&quot;, acc )
-    print(&quot;confusion matrix\n&quot;,conf)
-    
-    # precision tp / (tp + fp)
-    precision = precision_score(y_test, y_hat)
-    print(&#39;Precision: %f&#39; % precision)
-    # recall: tp / (tp + fn)
-    recall = recall_score(y_test, y_hat)
-    print(&#39;Recall: %f&#39; % recall)
-    # f1: 2 tp / (2 tp + fp + fn)
-    f1 = f1_score(y_test, y_hat)
-    print(&#39;F1 score: %f\n\n&#39; % f1)
-    
-    iter_num+=1</code></pre>
-<pre><code>StandardScaler(copy=True, with_mean=True, with_std=True)
-LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=100,
-                   multi_class=&#39;auto&#39;, n_jobs=None, penalty=&#39;l2&#39;,
-                   random_state=None, solver=&#39;newton-cg&#39;, tol=0.0001, verbose=0,
-                   warm_start=False)
-====Iteration 0  ====
-accuracy 0.9030104394270454
-confusion matrix
- [[7190  120]
- [ 679  249]]
-Precision: 0.674797
-Recall: 0.268319
-F1 score: 0.383963
-
-
-StandardScaler(copy=True, with_mean=True, with_std=True)
-LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=100,
-                   multi_class=&#39;auto&#39;, n_jobs=None, penalty=&#39;l2&#39;,
-                   random_state=None, solver=&#39;newton-cg&#39;, tol=0.0001, verbose=0,
-                   warm_start=False)
-====Iteration 1  ====
-accuracy 0.8990046127700898
-confusion matrix
- [[7194  116]
- [ 716  212]]
-Precision: 0.646341
-Recall: 0.228448
-F1 score: 0.337580
-
-
-StandardScaler(copy=True, with_mean=True, with_std=True)
-LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=100,
-                   multi_class=&#39;auto&#39;, n_jobs=None, penalty=&#39;l2&#39;,
-                   random_state=None, solver=&#39;newton-cg&#39;, tol=0.0001, verbose=0,
-                   warm_start=False)
-====Iteration 2  ====
-accuracy 0.8996115562029618
-confusion matrix
- [[7210  100]
- [ 727  201]]
-Precision: 0.667774
-Recall: 0.216595
-F1 score: 0.327095
-
-
-StandardScaler(copy=True, with_mean=True, with_std=True)
-LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=100,
-                   multi_class=&#39;auto&#39;, n_jobs=None, penalty=&#39;l2&#39;,
-                   random_state=None, solver=&#39;newton-cg&#39;, tol=0.0001, verbose=0,
-                   warm_start=False)
-====Iteration 3  ====
-accuracy 0.8986404467103666
-confusion matrix
- [[7194  116]
- [ 719  209]]
-Precision: 0.643077
-Recall: 0.225216
-F1 score: 0.333599
-
-
-StandardScaler(copy=True, with_mean=True, with_std=True)
-LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=100,
-                   multi_class=&#39;auto&#39;, n_jobs=None, penalty=&#39;l2&#39;,
-                   random_state=None, solver=&#39;newton-cg&#39;, tol=0.0001, verbose=0,
-                   warm_start=False)
-====Iteration 4  ====
-accuracy 0.8996115562029618
-confusion matrix
- [[7201  109]
- [ 718  210]]
-Precision: 0.658307
-Recall: 0.226293
-F1 score: 0.336808</code></pre>
-<p>The accuracy hovers around 90% but the recall is abysmal! Again, this is a consequence of imbalanced classes. From the bank’s point of view it’s worse to have false negatives than false positives - that is, it’s worse to incorrectly predict that a customer rejects the bank. We try to remedy the model using upsampling of the minority class (<code>No</code>).</p>
-</div>
-<div id="logistic-regression-model-improvement---upsampling" class="section level3">
-<h3>Logistic Regression Model Improvement - Upsampling</h3>
-<p>Now we look at upsampling to see if imbalance issues is remedied.</p>
-</div>
-<div id="test-train-split-and-upsampling" class="section level3">
-<h3>Test Train Split and Upsampling</h3>
-<p>Here we simply use an 80/20 train-test split. In the future .this method can be extended with 5 fold CV. We make sure to upsample and scale only the training data in the process.</p>
-<pre class="python"><code>from sklearn.utils import resample
-from sklearn.model_selection import train_test_split
-
-banking_train, banking_test = train_test_split(bankingDF_working, test_size=0.2)
-
-# Separate majority and minority classes
-majority = banking_train[banking_train[&#39;result&#39;]==0]
-minority = banking_train[banking_train[&#39;result&#39;]==1]
-
-minority_upsampled = resample(minority, 
-                              replace=True,     # sample with replacement
-                              n_samples=majority.shape[0],    # to match majority class
-                              random_state=123) # reproducible results
- 
-# combine majority class with upsampled minority class
-df_upsampled = pd.concat([majority, minority_upsampled])
-
-# verify
-print(&quot;Target variable counts:\n&quot;, df_upsampled[&#39;result&#39;].value_counts(), &quot;\n&quot;)
-
-## ------ scale data</code></pre>
-<pre><code>Target variable counts:
- 1    29256
-0    29256
-Name: result, dtype: int64 </code></pre>
-<pre class="python"><code>scl_obj = StandardScaler()
-
-# training data
-y_train = df_upsampled[&quot;result&quot;]
-X_train = df_upsampled.drop(&#39;result&#39;, axis=1)
-
-# test data
-y_test = banking_test[&quot;result&quot;]
-X_test = banking_test.drop(&#39;result&#39;, axis=1)
-
-# scaling the training and test X values
-scl_obj.fit(X_train)</code></pre>
-<pre><code>StandardScaler(copy=True, with_mean=True, with_std=True)</code></pre>
-<pre class="python"><code>X_train_scaled = scl_obj.transform(X_train)
-X_test_scaled = scl_obj.transform(X_test)
-
-## ------ fit and evaluate model
-lr_clf = LogisticRegression(penalty=&#39;l2&#39;, C=1.0, class_weight=None, solver=&#39;liblinear&#39;)
-lr_clf.fit(X_train_scaled,y_train)  # train object</code></pre>
-<pre><code>LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
-                   intercept_scaling=1, l1_ratio=None, max_iter=100,
-                   multi_class=&#39;auto&#39;, n_jobs=None, penalty=&#39;l2&#39;,
-                   random_state=None, solver=&#39;liblinear&#39;, tol=0.0001, verbose=0,
-                   warm_start=False)</code></pre>
-<pre class="python"><code>y_hat = lr_clf.predict(X_test_scaled) # get test set precitions
-
-# print the accuracy and confusion matrix 
-print(&#39;-- Results --\n&#39;)</code></pre>
-<pre><code>-- Results --</code></pre>
-<pre class="python"><code>print(&quot;accuracy&quot;, mt.accuracy_score(y_test,y_hat)) </code></pre>
-<pre><code>accuracy 0.8199805778101481</code></pre>
-<pre class="python"><code>print(&quot;confusion matrix\n&quot;,mt.confusion_matrix(y_test,y_hat))
-# precision tp / (tp + fp)</code></pre>
-<pre><code>confusion matrix
- [[6160 1132]
- [ 351  595]]</code></pre>
-<pre class="python"><code>precision = precision_score(y_test, y_hat)
-print(&#39;Precision: %f&#39; % precision)
-# recall: tp / (tp + fn)</code></pre>
-<pre><code>Precision: 0.344528</code></pre>
-<pre class="python"><code>recall = recall_score(y_test, y_hat)
-print(&#39;Recall: %f&#39; % recall)
-# f1: 2 tp / (2 tp + fp + fn)</code></pre>
-<pre><code>Recall: 0.628964</code></pre>
-<pre class="python"><code>f1 = f1_score(y_test, y_hat)
-print(&#39;F1 score: %f&#39; % f1)</code></pre>
-<pre><code>F1 score: 0.445193</code></pre>
-</div>
-<div id="results" class="section level3">
-<h3>Results</h3>
-<p>This produces an accuracy of approximately 82%. Although this is less than the earlier models, this model would be preferred given the increase in F1 score (from 0.33 to 0.45) and dramatic increase in the recall (from ~0.2 to ~0.65). This is still overall unsatisfactory, so we’ll consider SVMs later and other algorithms in Part 3. For now we look at the regression output and a corresponding plot (which is easier to read).</p>
-<pre class="python"><code>weights = pd.Series(lr_clf.coef_[0], index=df_upsampled.drop(&#39;result&#39;, axis=1).columns)
-weights.plot(kind=&#39;bar&#39;, figsize=(16,20))
-#plt.show()</code></pre>
-<p><img src="/project/2020-04-21-customer-conversion-modeling-for-portuguese-bank_files/figure-html/unnamed-chunk-33-1.png" width="1536" /></p>
-</div>
-<div id="interpretation-of-the-parameters-with-the-highest-weights-on-the-final-model" class="section level3">
-<h3>Interpretation of the parameters with the highest weights on the final model:</h3>
-<p>Features with the highest weights were interpreted by taking the exponential of the weight to determine the odds ratio. Interpretations of the parameters with the highest weights are as follows:</p>
-<p>A decrease in the Employment variation rate (emp.var.rate) changes (decreases) the odds of a customer to subscribe compared to a customer who won’t subscribe to the bank term deposit by a factor of 0.26 given all other features stay the same.</p>
-<p>An increase in the Consumer price index (cons.price.idx) changes (increases) the odds of a customer to subscribe compared to one who won’t subscribe to the bank term deposit by a factor of 2.03 given all other features stay the same.</p>
-<p>For customers who subscribed to a bank product previously due to a marketing campaign (poutcome_success), the odds for subscribing versus not subscribing to the bank term deposit are by a factor of 1.4 higher given all other features stay the same.</p>
-<p>For customers who did not subscribe to a bank product due to a previous marketing campaign (poutcome_failure) the odds for subscribing versus not subscribing to the bank term deposit are lower by a factor of 0.8 given all other features stay the same.</p>
-<p>For customers who were communicated to by cellular phone (isCellular), the odds for subscribing versus not subscribing to the bank term deposit are higher by a factor of 1.2 given that all other factors remain the same.</p>
-<p>For customers who were last contacted in the month of March, the odds for subscribing compared to not subscribing to the bank term deposit are higher by a factor of 1.26, given that all other factors remain the same.</p>
-<p>For customers who were last contacted in the month of May, the odds for subscribing compared to not subscribing to the bank term deposit are lower by a factor of 0.79, given that all other factors remain the same.</p>
-</div>
-<div id="conclusion" class="section level3">
-<h3>Conclusion</h3>
-<p>We need a model that can detect higher complexity and nonlinearities in the data, seeing logistic regression has proved fruitless (even with upsampling) in achieving good predictions. In Part 3 we build and tune a random forest model. As will be seen, it performs significantly better.</p>
 </div>
 </div>
 </div>

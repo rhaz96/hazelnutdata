@@ -33,12 +33,7 @@
   </url>
   
   <url>
-    <loc>/project/conversion-portuguese-bank/</loc>
-    <lastmod>2020-04-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/machine-learning/</loc>
+    <loc>/tags/data-visualization/</loc>
     <lastmod>2020-04-21T00:00:00+00:00</lastmod>
   </url>
   
@@ -54,6 +49,11 @@
   
   <url>
     <loc>/tags/python/</loc>
+    <lastmod>2020-04-21T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/project/conversion-portuguese-bank/</loc>
     <lastmod>2020-04-21T00:00:00+00:00</lastmod>
   </url>
   
@@ -79,6 +79,11 @@
   
   <url>
     <loc>/project/forecasting-capital-bikeshare-ridership/</loc>
+    <lastmod>2020-04-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/machine-learning/</loc>
     <lastmod>2020-04-02T00:00:00+00:00</lastmod>
   </url>
   

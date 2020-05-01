@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>graphicstest</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Georgia', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: purple;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Georgia">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/foundation.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.67.1" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#">graphicstest</a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/about/">About</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/rhaz96/statisticalmusings"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/robertmhazell"><i class="fa fa-linkedin"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+
+    <div>
+        <h2>graphicstest</h2>
+        <h5>April 27, 2020</h5>
+        
+
+    </div>
+
+    <div align="start" class="content">
+
+
+<center>
+Authors: Robert Hazell, <a href="https://www.linkedin.com/in/gavin-hudgeons-2b61388/">Gavin Hudgeons</a>, <a href="https://www.linkedin.com/in/bruce-lee-38227019/">Bruce Lee</a>
+</center>
+<pre class="python"><code>import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+sns.set_style(&#39;dark&#39;)
+#plt.rcParams.update({&#39;font.size&#39;: 18})
+bankingDF = pd.read_csv(&quot;/Users/roberthazell/Desktop/SMU/ML1/bank-additional-full.csv&quot;)</code></pre>
+<div id="part-i---exploratory-data-analysis" class="section level1">
+<h1>Part I - Exploratory Data Analysis</h1>
+<pre class="python"><code># histogram of age
+ax = sns.distplot(bankingDF[&quot;age&quot;])
+ax.grid(False)
+plt.tick_params(labelsize=12)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>There is some right skew in terms of the age range the bank targets, with the majority of customers targeted in their 30s-40s. This makes sense as those in that age bracket would more likely have money to spend on long-term deposits given a stable income. Individuals past 60 years old are not considered, most likely since such are already retired; they should have made long-term deposits decades before!</p>
+<div id="job-categories" class="section level4">
+<h4>Job Categories</h4>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(20,10)) 
+job_totals = bankingDF[&quot;job&quot;].value_counts()
+job_totals = pd.DataFrame({&quot;Job Type&quot;: job_totals.index,
+                         &quot;Total&quot;: job_totals.values})
+
+ax = sns.barplot(x = &quot;Total&quot;, y=&quot;Job Type&quot;, data=job_totals,
+                 palette=&quot;Blues_d&quot;)
+ax.grid(False)
+plt.tick_params(labelsize=20)
+_=plt.xlabel(&quot;Total Prospects&quot;, fontsize = 22)
+_=plt.ylabel(&quot;Job Type&quot;, fontsize = 22)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-4-1.png" width="1920" /></p>
+<p>The bank tends to heavily profile blue-collar workers in that three of the top four job types are in the blue-collar sector. The number one category – <code>admin</code> – is white-collar.</p>
+</div>
+<div id="how-frequent-a-prospect-is-called-current-campaign" class="section level4">
+<h4>How frequent a prospect is called (current campaign)</h4>
+<pre class="python"><code>_=plt.boxplot(bankingDF[&quot;campaign&quot;], vert=False)
+_=plt.xlabel(&quot;Number of times contacted&quot;, fontsize=20)
+plt.grid(False)
+fig = plt.gcf()
+a = plt.gca()
+_=a.axes.get_yaxis().set_ticks([])
+fig.set_size_inches(18.5, 8)
+plt.tick_params(labelsize=18)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-5-1.png" width="1776" /></p>
+<p>On average the bank has been in contact less than 5 times for any given customer, but several were constantly targeted. Perhaps these are highly promising but wavering customers.</p>
+</div>
+<div id="when-are-calls-made" class="section level4">
+<h4>When are calls made?</h4>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
+# count number of calls by day
+call_day = bankingDF[&quot;day_of_week&quot;].value_counts()
+# convert to dataframe
+call_day = pd.DataFrame({&quot;Day&quot;: call_day.index,
+                         &quot;Total&quot;: call_day.values})
+# plot barplot of counts
+ax = sns.barplot(call_day[&quot;Day&quot;], call_day[&quot;Total&quot;],
+           palette=&quot;Purples_d&quot;)
+ax.grid(False)
+_=plt.xlabel(&#39;&#39;)
+_=plt.ylabel(&quot;Calls Made&quot;, fontsize=20)
+plt.tick_params(labelsize=18)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-6-1.png" width="1440" /></p>
+<p>In terms of follow-up call days, bankers show some preference, most following up on Thursday and least on Fridays, but these differences don’t seem significant.</p>
+</div>
+<div id="time-elapsed-since-a-prospect-was-previously-called" class="section level4">
+<h4>Time elapsed since a prospect was previously called</h4>
+<pre class="python"><code># plotting how long it took for a prospect to receive
+# another campaign call
+
+# remove people who were contacted for the first time
+bank_pdays_filtered = bankingDF[bankingDF[&quot;pdays&quot;] != 999]
+# plot data this way to change x-axis label from default
+ax = sns.violinplot(x=&quot;pdays&quot;,
+                   data = bank_pdays_filtered,
+                   color=&quot;turquoise&quot;)
+#_=ax.set(xlabel = &quot;Days since last contact&quot;)
+ax.grid(False)
+plt.tick_params(labelsize = 18)
+_=plt.xlabel(&quot;Days since last contact&quot;, fontsize=19)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-7-1.png" width="1440" /></p>
+<p>We see evidence of bimodality and right-skew from this violinplot, aspects not clearly seen in the inscribed boxplot.</p>
+<p>Bankers followed up with them roughly between 3 and 6 days after their latest call for most people in this data. The two peaks are perhaps indicative of early stage sale-pitching by the banks where communication is frequent. For those in late-stage or completed negotiations, or people who constantly ignore campaign calls, the right skew probably reflects such cases.</p>
+</div>
+<div id="education-level-of-prospects" class="section level4">
+<h4>Education level of prospects</h4>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(10,6)) 
+education_totals = bankingDF[&quot;education&quot;].value_counts()
+education_totals = pd.DataFrame({&quot;Education Type&quot;: education_totals.index,
+                         &quot;Total&quot;: education_totals.values})
+
+my_range=range(1,len(education_totals.index)+1)
+_=plt.hlines(y=my_range, xmin=0, xmax=education_totals[&#39;Total&#39;], color=&#39;skyblue&#39;)
+_=plt.plot(education_totals[&#39;Total&#39;], my_range, &quot;o&quot;)
+
+_=plt.yticks(my_range, education_totals[&#39;Education Type&#39;])
+#_=plt.xlabel(&#39;People Called by Bank&#39;, fontsize=12)
+#_=plt.ylabel(&#39;Education&#39;, fontsize=12)
+_=plt.grid(False)
+_=plt.tick_params(labelsize=&quot;small&quot;)
+#_=ax.set_yticklabels(education_totals[&#39;Education Type&#39;],rotation=20)
+_=plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-8-1.png" width="960" /></p>
+<p>Code for lollipop chart adapted from <a href="https://python-graph-gallery.com/182-vertical-lollipop-plot/">here</a>. As you’d expect the bank tends to target those who have, at the very least, completed high school. Greatest preference is shown towards college educated individuals. Again, this makes sense since they tend to earn more money relative to other education groups, making them likelier to deposit money.</p>
+</div>
+<div id="explore-joint-attributes" class="section level3">
+<h3>Explore Joint Attributes</h3>
+<div id="job-and-education" class="section level4">
+<h4>Job and Education</h4>
+<pre class="python"><code>_=plt.subplots(figsize=(10,8)) 
+_=sns.heatmap(pd.crosstab(bankingDF[&quot;education&quot;],bankingDF[&quot;job&quot;]),
+            annot=True, fmt=&quot;g&quot;)
+plt.tick_params(rotation=45, labelsize=7)
+_=plt.ylabel(&quot;Education&quot;)
+_=plt.xlabel(&quot;Job&quot;)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-9-1.png" width="960" /></p>
+<p>We can visualize a cross tabulation between education level and job status. There isn’t much to be said for <code>illiterate</code> folks, but for those with <code>unknown</code> education tend to work blue-collar, admin, and technician type jobs. The most blue collar employees are those with <code>basic.4y</code>, <code>basic.6y</code>, and <code>basic.9y</code> educations. It’s not clear what these categories represent. College educated individuals work predominantly as admins, in management, or as technicians. High school grads also work in large proportion within admin, but also in the services industry.</p>
+</div>
+<div id="consumer-confidence-and-consumer-price-indexes" class="section level4">
+<h4>Consumer Confidence and Consumer Price Indexes</h4>
+<pre class="python"><code>ax = sns.lmplot( x=&quot;cons.price.idx&quot;, y=&quot;cons.conf.idx&quot;, 
+               data=bankingDF, fit_reg=True, line_kws={&#39;color&#39;: &#39;red&#39;})
+plt.grid(False)
+_=plt.xlabel(&quot;Price Index&quot;)
+_=plt.ylabel(&quot;Confidence Index&quot;)
+plt.rcParams.update({&#39;font.size&#39;: 12})
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-10-1.png" width="480" /></p>
+<p>Almost no correlation is present between consumer confidence and the price index. That being said, the price index is relatively consistent in this data, ranging from ~ 92 to ~ 95, so it’s unsurprising to see a flat relationship between these variables (the correlation is ~ 0.06). Consumer confidence was negative in Portugal throughout 2014 (when this data was taken) and has been that way for nearly the past decade, as can be seen <a href="https://tradingeconomics.com/portugal/consumer-confidence">here</a>. As an aside, that the correlation between price index and consumer confidence is slightly <em>positive</em> is mildly interesting.</p>
+</div>
+<div id="month-and-day-of-week-of-contact" class="section level4">
+<h4>Month and Day of Week of Contact</h4>
+<pre class="python"><code>pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[&quot;month&quot;])</code></pre>
+<pre><code>month        apr   aug  dec   jul   jun  mar   may  nov  oct  sep
+day_of_week                                                      
+fri          610  1070   24  1012  1147   94  2858  755  142  115
+mon          702  1222   53  1516  1251  143  2642  766  129   90
+thu          768  1347   45  1672   967   99  2537  903  163  122
+tue          252  1296   25  1517   970  140  2809  814  149  118
+wed          300  1243   35  1457   983   70  2923  863  135  125</code></pre>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(15,10)) 
+day_and_month = pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[&quot;month&quot;])
+day_and_month = day_and_month.reindex([&#39;mar&#39;, &#39;apr&#39;, &#39;may&#39;, &#39;jun&#39;, &#39;jul&#39;, &#39;aug&#39;, &#39;sep&#39;,&#39;oct&#39;, &#39;nov&#39;, &#39;dec&#39;], axis=1).reindex([&quot;mon&quot;,&quot;tue&quot;,&quot;wed&quot;,&quot;thu&quot;,&quot;fri&quot;])
+_=sns.heatmap(day_and_month, annot=True, fmt=&quot;d&quot;, cmap=&quot;YlGnBu&quot;, ax=ax,annot_kws={&quot;size&quot;:16})
+_=plt.xlabel(&quot;&quot;)
+_=plt.ylabel(&quot;&quot;)
+_=plt.tick_params(labelsize=15)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-12-1.png" width="1440" /></p>
+<p>The most popular months for calling are the late spring and summer months: May through August. The least popular months were in the fall and winter (September, October, and December), although November marks an uptick in campaign calling. There is no data for January or February, implying the latest campaign began in March.</p>
+</div>
+<div id="timing-of-return-call-depending-on-previous-campaign-outcome" class="section level4">
+<h4>Timing of return call depending on previous campaign outcome</h4>
+<pre class="python"><code># filter out the first-time calls
+outcome = bankingDF.loc[bankingDF[&quot;poutcome&quot;].isin([&quot;failure&quot;, &quot;success&quot;])]
+# find mean time elpased from previous campaign call
+outcome_tab = outcome[outcome[&quot;pdays&quot;] != 999].groupby(&quot;poutcome&quot;).agg({&quot;pdays&quot;:&quot;mean&quot;})
+outcome_tab.index.names = [&quot;Prev. Call Outcome&quot;]
+outcome_tab.rename(columns = {&quot;pdays&quot;: &quot;Avg. Days Until Next Call&quot;})</code></pre>
+<pre><code>                    Avg. Days Until Next Call
+Prev. Call Outcome                           
+failure                             10.140845
+success                              5.587764</code></pre>
+<p>On average, if a previous campaign call failed, the bank would wait about twice as long to recall the prospect compared to recall time for previous campaign calls that succeeded.</p>
+</div>
+</div>
+<div id="explore-attributes-and-prediction-class" class="section level3">
+<h3>Explore Attributes and Prediction Class</h3>
+<p>#As is often the case, this class is imbalanced. People tend to reject the bank’s #offers, so oversampling those who didn’t reject (those who do subscribe to a term #deposit) is needed in the future.</p>
+<div id="education-and-subscribers" class="section level4">
+<h4>Education and Subscribers</h4>
+<pre class="python"><code># all those who subscribed, grouped by education
+accepted = bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;].groupby(&quot;education&quot;).agg({&quot;y&quot;:&quot;count&quot;}).reset_index()
+accepted = accepted.sort_values(&#39;y&#39;)
+
+# lollipop plot
+my_range=range(1,len(accepted.index)+1)
+sns.set_style(&#39;dark&#39;)
+fig, ax = plt.subplots(figsize=(8,6)) 
+_=plt.hlines(y=my_range, xmin=0, xmax=accepted[&#39;y&#39;], color=&#39;maroon&#39;)
+_=plt.plot(accepted[&#39;y&#39;], my_range, &quot;o&quot;, color = &#39;maroon&#39;)
+_=plt.yticks(my_range, accepted[&#39;education&#39;], rotation=45)
+_=plt.xlabel(&#39;Contacts who accepted bank offer&#39;)
+_=plt.tick_params(labelsize=10)
+_=plt.ylabel(&#39;Education Level&#39;)</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-14-1.png" width="768" /></p>
+<p>The majority who sign up with the bank are college educated, but the pattern above is almost identical for those who reject the bank. This suggests the need to examine prevalence rates across education levels, as will be seen later.</p>
+</div>
+<div id="call-duration-and-outcome-non-first-time-calls" class="section level4">
+<h4>Call Duration and Outcome (Non First time calls)</h4>
+<p>The vast majority of bank calls are to first time contacts, so we’ll like to see the call distributions for non-first timers.</p>
+<pre class="python"><code>first_timers = len(bankingDF[bankingDF[&quot;pdays&quot;] == 999]) / bankingDF.shape[0]
+print(&quot;Proportion of first time calls: &quot;, round(first_timers, 3))</code></pre>
+<pre><code>Proportion of first time calls:  0.963</code></pre>
+<pre class="python"><code>success = bankingDF[(bankingDF[&#39;y&#39;] == &quot;yes&quot;) &amp; (bankingDF[&#39;pdays&#39;]!=999)]
+fail = bankingDF[(bankingDF[&#39;y&#39;] == &quot;no&quot;) &amp; (bankingDF[&#39;pdays&#39;]!=999)]
+
+fig, ax = plt.subplots(figsize = (12,8))
+for a in [success, fail]:
+    _=sns.distplot(a[&quot;duration&quot;], bins=range(1, 3600, 20), ax=ax, kde=False)
+_=ax.set_xlim([0, 4000])
+_=fig.legend(labels = [&quot;Subscribed&quot;,&quot;Rejected&quot;], fontsize=12)
+_=plt.xlabel(&quot;Duration of Last Phone Call (Seconds)&quot;, fontsize=14)
+_=plt.grid(False)
+_=plt.tick_params(labelsize=13)
+#plt.rcParams.update({&#39;font.size&#39;: 18})
+_=plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-16-1.png" width="1152" /></p>
+<p><a href="https://archive.ics.uci.edu/ml/datasets/bank+marketing">As is pointed out</a> call duration isn’t known before the bank makes a call, and the outcome of the call is known immediately after a call. So <code>duration</code> can’t be used as a predictor when building a model. Nevertheless, for those who’ve been contacted before, bank-rejecters spend on average less time engaging with the bank agent. The distribution of talk time is right-skewed regardless of call outcome. When analyzing the response and <code>duration</code> it needs to be done in a retrospective manner.</p>
+</div>
+<div id="day-of-week-and-subscriptions" class="section level4">
+<h4>Day of Week and Subscriptions</h4>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(5,5)) 
+_=sns.heatmap(pd.crosstab(bankingDF[&quot;day_of_week&quot;],bankingDF[bankingDF[&#39;y&#39;] == &quot;yes&quot;][&quot;y&quot;]).reindex([&quot;mon&quot;,&quot;tue&quot;,&quot;wed&quot;,&quot;thu&quot;,&quot;fri&quot;]),
+            annot=True,ax=ax, fmt=&quot;g&quot;)
+
+_=ax.set_xlabel(&quot;&quot;)
+_=ax.set_ylabel(&quot;&quot;)
+plt.rcParams.update({&#39;font.size&#39;: 18})
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-17-1.png" width="480" /></p>
+<p>The most successes come on Thursdays, followed by a near tie between Tuesday and Wednesday. It seems like the beginning and end of the week are the least favorable days to call.</p>
+</div>
+<div id="job-profession-of-those-who-subscribe" class="section level4">
+<h4>Job Profession of those who Subscribe</h4>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(10,6)) 
+# all those who subscribed, grouped by education
+accepted = bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;].groupby(&quot;job&quot;).agg({&quot;y&quot;:&quot;count&quot;}).reset_index()
+accepted = accepted.sort_values(&#39;y&#39;)
+
+# lollipop plot
+my_range=range(1,len(accepted.index)+1)
+sns.set_style(&#39;dark&#39;)
+_=plt.hlines(y=my_range, xmin=0, xmax=accepted[&#39;y&#39;])
+_=plt.plot(accepted[&#39;y&#39;], my_range, &quot;o&quot;, color=&quot;black&quot;)
+_=plt.yticks(my_range, accepted[&#39;job&#39;])
+_=plt.tick_params(axis=&quot;y&quot;, labelsize=8, rotation=30)
+_=plt.tick_params(axis=&quot;x&quot;, labelsize=11)
+_=plt.xlabel(&#39;Contacts who accepted bank offer&#39;, fontsize=12)
+_=plt.ylabel(&#39;Job Type&#39;, fontsize=12)</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-18-1.png" width="960" /></p>
+<p>Interestingly, <code>retired</code> folks were one of the least targeted groups (look back at the <code>age</code> histogram) that ended up subscribing quite often.</p>
+</div>
+<div id="prevalance-rates-by-job-category" class="section level4">
+<h4>Prevalance Rates by Job Category</h4>
+<p>The plot immediately above gives the raw values of subscribers by job type. We also know the overall prevalence rate is ~ 11%. Perhaps there’s quite a bit of imbalance between education or job positions so we’ll see if prevalence rates differ by category.</p>
+<pre class="python"><code>_=plt.subplots(figsize=(8,6)) 
+# those who accept by job category
+job_yes = (bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;]
+    .groupby(&#39;job&#39;)
+    .agg({&#39;y&#39;:&#39;count&#39;})
+    .rename(columns = {&#39;y&#39;:&#39;Subscribed&#39;})
+    .reset_index())
+
+# total number of people in each job category
+# regardless of subscription status
+all_job = (bankingDF
+    .groupby(&#39;job&#39;)
+    .agg({&#39;y&#39;:&#39;count&#39;})
+    .rename(columns = {&#39;y&#39;:&#39;Job Total&#39;})
+    .reset_index())
+
+# calculate prevalence rates
+job_yes[&#39;Job Total&#39;] = all_job[&quot;Job Total&quot;]
+job_yes[&quot;Prevalence Rate&quot;] = job_yes[&quot;Subscribed&quot;]/job_yes[&quot;Job Total&quot;]
+job_yes = job_yes.sort_values(&quot;Prevalence Rate&quot;, ascending=False)
+
+
+_= sns.barplot(job_yes[&quot;job&quot;], job_yes[&quot;Prevalence Rate&quot;],
+           palette=sns.cubehelix_palette(12, reverse=True),
+          )
+
+_=plt.xlabel(&quot;&quot;)
+_=plt.tick_params(axis=&quot;x&quot;, labelsize=8, rotation=30)
+_=plt.tick_params(axis=&quot;y&quot;, labelsize = 11)
+_=plt.ylabel(&quot;Prevalence Rate&quot;, fontsize = 12)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-19-1.png" width="768" /></p>
+<pre class="python"><code>job_yes.set_index(&quot;job&quot;)</code></pre>
+<pre><code>               Subscribed  Job Total  Prevalence Rate
+job                                                  
+student               275        875         0.314286
+retired               434       1720         0.252326
+unemployed            144       1014         0.142012
+admin.               1352      10422         0.129726
+management            328       2924         0.112175
+unknown                37        330         0.112121
+technician            730       6743         0.108260
+self-employed         149       1421         0.104856
+housemaid             106       1060         0.100000
+entrepreneur          124       1456         0.085165
+services              323       3969         0.081381
+blue-collar           638       9254         0.068943</code></pre>
+<p>Perhaps surprisingly, <code>student</code>s have the highest prevalence (~31.4%) albeit being one of the least targeted demographics. By contrast <code>blue-collar</code> prospects were second most called (see “Education Levels” section) yet had the lowest conversion rate at ~ 6.9%. This plot confirms raw values give an incomplete picture of conversion. We can summarize the first fact with this simple text graphic below.</p>
+<pre class="python"><code>fig, ax = plt.subplots(figsize=(6,6)) 
+_=plt.text(0.29, 0.6, &quot;31%&quot;, size=40,
+         va=&quot;baseline&quot;, ha=&quot;right&quot;, multialignment=&quot;left&quot;,
+         color = &quot;green&quot;
+        )
+
+_=plt.text(0.8, 0.6, &quot;of students converted...&quot;, size=16,
+         va=&quot;baseline&quot;, ha=&quot;right&quot;, multialignment=&quot;left&quot;
+         )
+
+_=plt.text(0.15, 0.4, &quot;...yet made up only&quot;, size=16,
+         va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;
+         )
+
+_=plt.text(0.57, 0.4, &quot;2%&quot;, size=20,
+         va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;,
+         color=&quot;red&quot;
+         )
+
+_=plt.text(0.67, 0.4, &quot;of contacts&quot;, size=16,
+         va=&quot;baseline&quot;, ha=&quot;left&quot;, multialignment=&quot;left&quot;
+         )
+
+plt.gca().axes.get_yaxis().set_visible(False)
+plt.gca().axes.get_xaxis().set_visible(False)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-21-1.png" width="576" /></p>
+<p>The bank should consider reaching out to students more.</p>
+</div>
+<div id="prevalence-rates-by-education-level" class="section level4">
+<h4>Prevalence Rates by Education Level</h4>
+<p>We now do the same analysis for education.</p>
+<pre class="python"><code>educ_yes = (bankingDF[bankingDF[&quot;y&quot;] == &quot;yes&quot;]
+    .groupby(&#39;education&#39;)
+    .agg({&#39;y&#39;:&#39;count&#39;})
+    .rename(columns = {&#39;y&#39;:&#39;Subscribed&#39;})
+    .reset_index())
+
+# total number of people in each job category
+# regardless of subscription status
+all_educ = (bankingDF
+    .groupby(&#39;education&#39;)
+    .agg({&#39;y&#39;:&#39;count&#39;})
+    .rename(columns = {&#39;y&#39;:&#39;Education Total&#39;})
+    .reset_index())
+
+# calculate prevalence rates
+educ_yes[&#39;Education Total&#39;] = all_educ[&quot;Education Total&quot;]
+educ_yes[&quot;Prevalence Rate&quot;] = educ_yes[&quot;Subscribed&quot;]/educ_yes[&quot;Education Total&quot;]
+educ_yes = educ_yes.sort_values(&quot;Prevalence Rate&quot;, ascending=False)
+
+
+_=sns.barplot(educ_yes[&quot;education&quot;], educ_yes[&quot;Prevalence Rate&quot;],
+           color=&quot;skyblue&quot;)
+
+_=plt.tick_params(axis=&quot;x&quot;, labelsize=8, rotation=30)
+_=plt.tick_params(axis=&quot;y&quot;, labelsize = 11)
+_=plt.ylabel(&quot;Prevalence Rate&quot;, fontsize = 12)
+plt.show()</code></pre>
+<p><img src="/post/2020-04-27-graphicstest_files/figure-html/unnamed-chunk-22-1.png" width="576" /></p>
+</div>
+</div>
+</div>
+</div>
+
+    
+    
+    
+
+    
+    
+        <h4 class="page-header">Comments</h4>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "username" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+</main>
+
+        <footer>
+            <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>
+        </footer>
+
+        
+
+        
+    </body>
+
+</html>
+
