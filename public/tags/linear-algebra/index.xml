@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linear algebra on Statistical Musings</title>
+    <link>/tags/linear-algebra/</link>
+    <description>Recent content in linear algebra on Statistical Musings</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/linear-algebra/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Lines are NOT linear functions !?!</title>
+      <link>/post/lines-not-linear-functions/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/lines-not-linear-functions/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

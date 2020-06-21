@@ -6,10 +6,19 @@
     <description>Recent content on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Lines are NOT linear functions !?!</title>
+      <link>/post/lines-not-linear-functions/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/lines-not-linear-functions/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Comparing Interaction Terms in Log-Log Regression Models</title>
