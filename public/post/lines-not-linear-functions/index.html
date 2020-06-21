@@ -128,7 +128,58 @@
     <div align="start" class="content">
 
 
-
+<div id="wait-what" class="section level2">
+<h2>Wait, what?</h2>
+<p>I know, you most likely had a double take on the title. After all, we were all probably taught in algebra or geometry class that lines <em>are</em> linear functions. So presumably <span class="math inline">\(y = 2x+3\)</span> is supposed to be a linear function…except that it’s not. In fact equations of the form <span class="math inline">\(y = mx+b\)</span> are not considered linear functions except under special conditions, which will be explained a bit later. All this raises the question: <em>what are linear functions?</em></p>
+</div>
+<div id="linear-functions-defined" class="section level2">
+<h2>Linear functions, defined</h2>
+<p>At the heart of linear algebra are linear transformations, like matrix-vector products. Such transformations are really just linear functions - we use the word <em>function</em> in algebra and <em>transformation</em> in linear algebra, but they’re all one and the same concept. Ivan Savov’s excellent and humorous book on linear algebra (which you can find <a href="https://minireference.com/">here</a>) provides the definition:</p>
+<blockquote>
+<p>A function <em>f</em> is linear if it satisfies the equation
+<span class="math display">\[f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)\]</span></p>
+</blockquote>
+<p>whera <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are both scalar constants. MIT <a href="http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html">provides the definition</a> albeit with slightly different notation.</p>
+<p>The definition implies that evaluating a linear function with some linear combination of inputs is the same as the linear combination of the inputs taken separately.</p>
+<p>evaluating each of the inputs separately and summing them.</p>
+</div>
+<div id="an-example-of-violation" class="section level2">
+<h2>An example of violation</h2>
+<p>We can show how a line like <span class="math inline">\(f(x) = \frac{1}{2}x+5\)</span>, absent certain limitations on <span class="math inline">\(\alpha\)</span> or <span class="math inline">\(\beta\)</span>, violates the definition of linearity. Let <span class="math inline">\(x_1\)</span> = 3 and <span class="math inline">\(x_2\)</span> = 6 be inputs, and let <span class="math inline">\(\alpha\)</span> = 4 and <span class="math inline">\(\beta\)</span> = 2 be scalar constants to form a linear combination of the inputs. Then <span class="math inline">\(f(x)\)</span> would be a linear function if <span class="math inline">\(f(4 x_1 + 2 x_2) = 4 f(x_1) + 2 f(x_2)\)</span>. Is it? Let’s see.</p>
+<p><span class="math inline">\(f(4 x_1 + 2 x_2) = \frac{1}{2}(4*3 + 2*6)+5 = 17\)</span></p>
+<p><span class="math inline">\(4 f(x_1) + 2 f(x_2) = 4[\frac{1}{2}(3) + 5] + 2[\frac{1}{2}(6) + 5] = 42\)</span></p>
+<p>Clearly 17 <span class="math inline">\(\neq\)</span> 42 so the function as it stands is not a linear function. But we’ll next consider under what circumstances such a line as this can be considered a linear function.</p>
+</div>
+<div id="when-lines-are-linear-functions" class="section level2">
+<h2>When lines are linear functions</h2>
+<p>Neither Savov nor the MIT page linked earlier show or derive the condition for when a generic line <span class="math inline">\(y = mx+b\)</span> can be considered a linear function. It turns out that when <span class="math inline">\(\beta\)</span> = <span class="math inline">\(1-\alpha\)</span> it’s indeed a linear function.</p>
+<blockquote>
+<p>If <span class="math inline">\(\beta\)</span> = <span class="math inline">\(1-\alpha\)</span>, then a function of the form <span class="math inline">\(f(x) = mx+b\)</span> is a <em>linear</em> function</p>
+</blockquote>
+<p>To prove this we need to show <span class="math inline">\(f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)\)</span>. Let’s take the left hand side first:</p>
+<p><span class="math inline">\(f(\alpha x_1 + \beta x_2) = m(\alpha x_1 + \beta x_2) + b = \alpha m x_1 + \beta mx_2 + b\)</span></p>
+<p>Now the RHS:</p>
+<p><span class="math inline">\(\alpha f(x_1) = \alpha (mx_1+b) = \alpha mx_1 + \alpha b\)</span>
+<span class="math inline">\(\beta f(x_2) = \beta (mx_2+b) = \beta mx_2 + \beta b\)</span></p>
+<p>Putting it altogther:</p>
+<p><span class="math inline">\(\alpha m x_1 + \beta mx_2 + b = \alpha mx_1 + \alpha b + \beta mx_2 + \beta b\)</span></p>
+<p>After cancelling like terms we’re left with:</p>
+<p><span class="math inline">\(b = \alpha b + \beta b\)</span></p>
+<p>Factoring out b from the RHS above and simplifying we get:</p>
+<p><span class="math inline">\(b = b(\alpha + \beta)\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(1 = \alpha + \beta\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(\beta\ = 1-\alpha\)</span></p>
+<p>So we’ve just shown the limiting condition that ensures a line is a linear function.</p>
+</div>
+<div id="cancelling-the-violation" class="section level2">
+<h2>Cancelling the violation</h2>
+<p>Let’s return to the function we considered earlier: <span class="math inline">\(f(x)=\frac{1}{2}x + 5\)</span>. If we keep the original value <span class="math inline">\(\alpha\)</span> = 4 but modify <span class="math inline">\(\beta\)</span> to be <span class="math inline">\(1-4 = -3\)</span>, we’ll see the function now qualifies as a linear function.</p>
+<p><span class="math inline">\(f(4 x_1 - 3 x_2) = \frac{1}{2}(4*3 - 3*6)+5 = 2\)</span></p>
+<p><span class="math inline">\(4 f(x_1) - 3 f(x_2) = 4[\frac{1}{2}(3) + 5] - 3[\frac{1}{2}(6) + 5] = 2\)</span></p>
+<p>Perfect!</p>
+</div>
+<div id="wrapping-up" class="section level2">
+<h2>Wrapping up</h2>
+<p>I was surprised to learn the generic equation of lines don’t actually qualify as linear functions. The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is <span class="math inline">\(f(x) = mx\)</span>. So <span class="math inline">\(b=0\)</span> — you can verify this by going back to the proof above and subsituting <span class="math inline">\(0\)</span> for <span class="math inline">\(b\)</span>. This ensures all values of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> meet the linear function requirements. If <span class="math inline">\(b\)</span> <span class="math inline">\(\neq\)</span> <span class="math inline">\(0\)</span> then we must restrict <span class="math inline">\(\beta\)</span> to be equal to <span class="math inline">\(1-\alpha\)</span>. That’s just one of the gems found from studying linear algebra. There’s much more that you and I can uncover by learning this fascinating subject!</p>
+</div>
 </div>
 
     

@@ -7,3 +7,75 @@ categories: []
 tags:
   - linear algebra
 ---
+
+## Wait, what?
+
+I know, you most likely had a double take on the title.  After all, we were all probably taught in algebra or geometry class that lines *are* linear functions.  So presumably $y = 2x+3$ is supposed to be a linear function...except that it's not.  In fact equations of the form $y = mx+b$ are not considered linear functions except under special conditions, which will be explained a bit later.  All this raises the question: *what are linear functions?*
+
+## Linear functions, defined
+
+At the heart of linear algebra are linear transformations, like matrix-vector products.  Such transformations are really just linear functions - we use the word *function* in algebra and *transformation* in linear algebra, but they're all one and the same concept.  Ivan Savov's excellent and humorous book on linear algebra (which you can find [here](https://minireference.com/)) provides the definition:
+
+> A function *f* is linear if it satisfies the equation
+$$f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)$$
+
+whera $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
+
+The definition implies that evaluating a linear function with some linear combination of inputs is the same as the linear combination of the inputs taken separately.
+
+evaluating each of the inputs separately and summing them. 
+
+## An example of violation
+
+We can show how a line like $f(x) = \frac{1}{2}x+5$, absent certain limitations on $\alpha$ or $\beta$, violates the definition of linearity.  Let $x_1$ = 3 and $x_2$ = 6 be inputs, and let $\alpha$ = 4 and $\beta$ = 2 be scalar constants to form a linear combination of the inputs.  Then $f(x)$ would be a linear function if $f(4 x_1 + 2 x_2) = 4 f(x_1) + 2 f(x_2)$.  Is it?  Let's see.
+
+$f(4 x_1 + 2 x_2) = \frac{1}{2}(4*3 + 2*6)+5 = 17$
+
+$4 f(x_1) + 2 f(x_2) = 4[\frac{1}{2}(3) + 5] + 2[\frac{1}{2}(6) + 5] = 42$
+
+Clearly 17 $\neq$ 42 so the function as it stands is not a linear function.  But we'll next consider under what circumstances such a line as this can be considered a linear function.
+
+## When lines are linear functions
+
+Neither Savov nor the MIT page linked earlier show or derive the condition for when a generic line $y = mx+b$ can be considered a linear function.  It turns out that when $\beta$ = $1-\alpha$ it's indeed a linear function.
+
+> If $\beta$ = $1-\alpha$, then a function of the form $f(x) = mx+b$ is a _linear_ function
+
+To prove this we need to show $f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)$.  Let's take the left hand side first:
+
+$f(\alpha x_1 + \beta x_2) = m(\alpha x_1 + \beta x_2) + b = \alpha m x_1 + \beta mx_2 + b$
+
+Now the RHS:
+
+$\alpha f(x_1) = \alpha (mx_1+b) = \alpha mx_1 + \alpha b$
+$\beta f(x_2) = \beta (mx_2+b) = \beta mx_2 + \beta b$
+
+Putting it altogther:
+
+$\alpha m x_1 + \beta mx_2 + b = \alpha mx_1 + \alpha b + \beta mx_2 + \beta b$
+
+After cancelling like terms we're left with:
+
+$b = \alpha b + \beta b$
+
+Factoring out b from the RHS above and simplifying we get:
+
+$b = b(\alpha + \beta)$ $\rightarrow$ $1 = \alpha + \beta$ $\rightarrow$ $\beta\ = 1-\alpha$
+
+So we've just shown the limiting condition that ensures a line is a linear function.
+
+## Cancelling the violation
+
+Let's return to the function we considered earlier: $f(x)=\frac{1}{2}x + 5$. If we keep the original value $\alpha$ = 4 but modify $\beta$ to be $1-4 = -3$, we'll see the function now qualifies as a linear function.
+
+$f(4 x_1 - 3 x_2) = \frac{1}{2}(4*3 - 3*6)+5 = 2$
+
+$4 f(x_1) - 3 f(x_2) = 4[\frac{1}{2}(3) + 5] - 3[\frac{1}{2}(6) + 5] = 2$
+
+Perfect!
+
+## Wrapping up
+
+I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$. This ensures all values of $\alpha$ and $\beta$ meet the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$. That's just one of the gems found from studying linear algebra.  There's much more that you and I can uncover by learning this fascinating subject!
+
+
