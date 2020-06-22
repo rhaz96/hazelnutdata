@@ -9,6 +9,11 @@ tags:
 
 ---
 
+<center>
+Last updated: Jun 22, 2020
+</center>
+
+
 ## Wait, what?
 
 I know, you most likely had a double take on the title.  After all, we were all probably taught in algebra or geometry class that lines *are* linear functions.  So presumably $y = 2x+3$ is supposed to be a linear function...except that it's not.  In fact equations of the form $y = mx+b$ are not considered linear functions except under special conditions, which will be explained a bit later.  All this raises the question: *what are linear functions?*
@@ -22,9 +27,7 @@ $$f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)$$
 
 whera $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the same definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
 
-The definition implies that evaluating a linear function with some linear combination of inputs is the same as the linear combination of the inputs taken separately.
-
-evaluating each of the inputs separately and summing them. 
+The definition implies that evaluating a linear function with some linear combination of inputs $x_1$ and $x_2$ is the same as taking a linear combination of the outputs $f(x_1)$ and $f(x_2)$
 
 ## An example of violation
 
@@ -78,6 +81,6 @@ Perfect!
 
 ## Wrapping up
 
-I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$. This ensures all values of $\alpha$ and $\beta$ meet the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$. 
+I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$. This ensures all values of $\alpha$ and $\beta$ meet the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$.  Equations of the form $f(x) = mx+b$ with $b > 0$ are best thought of as linear *equations* and not strictly as linear *functions*.
 
 This is just one of the nuggets from the gold mine of linear algebra.  There's much more that you and I can uncover by learning this fascinating subject!
