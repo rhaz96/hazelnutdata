@@ -20,7 +20,7 @@ At the heart of linear algebra are linear transformations, like matrix-vector pr
 > A function *f* is linear if it satisfies the equation
 $$f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)$$
 
-whera $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
+whera $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the same definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
 
 The definition implies that evaluating a linear function with some linear combination of inputs is the same as the linear combination of the inputs taken separately.
 
