@@ -41,7 +41,7 @@ Clearly 17 $\neq$ 42 so the function as it stands is not a linear function.  But
 
 ## When lines are linear functions
 
-Neither Savov nor the MIT page linked earlier show or derive the condition for when a generic line $y = mx+b$ can be considered a linear function.  It turns out that when $\beta$ = $1-\alpha$ it's indeed a linear function.
+Neither Savov nor the MIT page linked earlier show and/or derive the condition for when a generic line $y = mx+b$ can be considered a linear function.  It turns out that when $\beta$ = $1-\alpha$ it's indeed a linear function.
 
 > If $\beta$ = $1-\alpha$, then a function of the form $f(x) = mx+b$ is a _linear_ function
 
@@ -81,6 +81,6 @@ Perfect!
 
 ## Wrapping up
 
-I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$. This ensures all values of $\alpha$ and $\beta$ meet the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$.  Equations of the form $f(x) = mx+b$ with $b > 0$ are best thought of as linear *equations* and not strictly as linear *functions*.
+I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$.  All values of $\alpha$ and $\beta$ will satisfy the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$.  Equations of the form $f(x) = mx+b$ with $b > 0$ are best thought of as linear *equations* and not strictly as linear *functions*.
 
 This is just one of the nuggets from the gold mine of linear algebra.  There's much more that you and I can uncover by learning this fascinating subject!
