@@ -16,7 +16,7 @@ Last updated: Jun 22, 2020
 
 ## Wait, what?
 
-I know, you most likely had a double take on the title.  After all, we were all probably taught in algebra or geometry class that lines *are* linear functions.  So presumably $y = 2x+3$ is supposed to be a linear function...except that it's not.  In fact equations of the form $y = mx+b$ are not considered linear functions except under special conditions, which will be explained a bit later.  All this raises the question: *what are linear functions?*
+I know, you most likely did a double take on the title.  After all, we were all probably taught in algebra or geometry class that lines *are* linear functions.  So presumably $y = 2x+3$ is supposed to be a linear function...except that it's not.  In fact equations of the form $y = mx+b$ are not considered linear functions except under special conditions, which will be explained a bit later.  All this raises the question: *what are linear functions?*
 
 ## Linear functions, defined
 
@@ -27,7 +27,7 @@ $$f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)$$
 
 whera $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the same definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
 
-The definition implies that evaluating a linear function with some linear combination of inputs $x_1$ and $x_2$ is the same as taking a linear combination of the outputs $f(x_1)$ and $f(x_2)$
+The definition implies that evaluating a linear function with some linear combination of inputs $x_1$ and $x_2$ is the same as taking a linear combination of the outputs $f(x_1)$ and $f(x_2)$.
 
 ## An example of violation
 
