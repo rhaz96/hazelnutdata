@@ -78,4 +78,6 @@ Perfect!
 
 ## Wrapping up
 
-I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$. This ensures all values of $\alpha$ and $\beta$ meet the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$. That's just one of the gems found from studying linear algebra.  There's much more that you and I can uncover by learning this fascinating subject!
+I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$. This ensures all values of $\alpha$ and $\beta$ meet the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$. 
+
+This is just one of the nuggets from the gold mine of linear algebra.  There's much more that you and I can uncover by learning this fascinating subject!
