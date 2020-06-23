@@ -2,8 +2,11 @@
 title: "About"
 ---
 
-![](/./about_files/anotherone.png)
+<img align="center">
 
+![](/./about_files/anotherone_50.png)
+
+</img>
 
 Hello and welcome to my blog!  I'm Robert Hazell.  My inspiration for this comes from my work I began in January 2020 as a teaching assistant to a graduate-level applied statistics course at [SMU](https://datascience.smu.edu/), where I'm currently completing my Masters degree in data science (expected graduation: August 2020).  I received my undergrad degree from Rensselaer Polytechnic Institute.
 
