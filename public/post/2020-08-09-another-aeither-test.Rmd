@@ -1,0 +1,18 @@
+---
+title: another aeither test
+author: ''
+date: '2020-08-09'
+slug: another-aeither-test
+categories: ['tea']
+tags: []
+description: "Something to be done"
+dropCap: no
+displayInMenu: no
+displayInList: yes
+resources:
+- name: featuredImage
+  src: "~/Desktop/SMU/statisicalmusings/content/post/POWER Sketch in POWER Point (very meta).png"
+  params:
+    description: "Description for the featured image, used as the alt text"
+---
+What are we doing

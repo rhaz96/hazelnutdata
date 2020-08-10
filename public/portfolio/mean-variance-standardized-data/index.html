@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Proving the Properties of the Mean and Variance of Standardized Data</title>
+<meta name="description" content="Describe your website">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="all,follow">
+<meta name="googlebot" content="index,follow,snippet,archive">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,300,700,400italic">
+<link rel="stylesheet" href="/css/font-awesome.min.css">
+<link rel="stylesheet" href="/css/owl.carousel.css">
+<link rel="stylesheet" href="/css/owl.theme.css">
+
+
+  <link href="/css/style.sea.css" rel="stylesheet" id="theme-stylesheet">
+
+ 
+
+  
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+
+
+<link href="/css/custom.css" rel="stylesheet">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+</head>
+<body>
+  <div id="all">
+      <div class="container-fluid">
+          <div class="row row-offcanvas row-offcanvas-left">
+              <div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
+  <div class="sidebar-content">
+    <h1 class="sidebar-heading"><a href="/">Creative portfolio</a></h1>
+    
+      <p class="sidebar-p">I am a creative illustrator and graphic designer with more than 10 years of experience.</p>
+    
+      <p class="sidebar-p">Originally from Toronto, currently based in London.</p>
+    
+    <ul class="sidebar-menu">
+      
+        <li><a href="/portfolio/">Home</a></li>
+      
+        <li><a href="/about/">About</a></li>
+      
+        <li><a href="/contact/">Get in touch</a></li>
+      
+    </ul>
+    <p class="social">
+  
+  <a href="full%20page%20or%20profile%20url%20in%20facebook" data-animate-hover="pulse" class="external facebook">
+    <i class="fa fa-facebook"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20googleplus" data-animate-hover="pulse" class="external gplus">
+    <i class="fa fa-google-plus"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20twitter" data-animate-hover="pulse" class="external twitter">
+    <i class="fa fa-twitter"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20instagram" title="" class="external instagram">
+    <i class="fa fa-instagram"></i>
+  </a>
+  
+  
+  <a href="mailto:email@example.com" data-animate-hover="pulse" class="email">
+    <i class="fa fa-envelope"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20linkedin" data-animate-hover="pulse" class="external">
+    <i class="fa fa-linkedin"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20stackoverflow" data-animate-hover="pulse" class="external">
+    <i class="fa fa-stack-overflow"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20github" data-animate-hover="pulse" class="external">
+    <i class="fa fa-github"></i>
+  </a>
+  
+  
+  <a href="full%20profile%20url%20in%20youtube" data-animate-hover="pulse" class="external">
+    <i class="fa fa-youtube"></i>
+  </a>
+  
+  
+  <a href="wa.me%20service%20link" data-animate-hover="pulse" class="external">
+    <i class="fa fa-whatsapp"></i>
+  </a>
+  
+</p>
+
+
+    <div class="copyright">
+      <p class="credit">
+        
+          &copy;2016 Your name or company |
+        
+        Template by <a href="https://bootstrapious.com/free-templates" class="external">Bootstrapious.com</a>
+
+&amp; ported to Hugo by <a href="https://github.com/kishaningithub">Kishan B</a>
+
+      </p>
+    </div>
+  </div>
+</div>
+
+              
+<div class="col-xs-12 col-sm-8 col-md-9 content-column white-background">
+  <div class="small-navbar visible-xs">
+  <button type="button" data-toggle="offcanvas" class="btn btn-ghost pull-left"> <i class="fa fa-align-left"> </i>Menu</button>
+  <h1 class="small-navbar-heading"><a href="/">Creative portfolio</a></h1>
+</div>
+
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="content-column-content">
+         <h1>Proving the Properties of the Mean and Variance of Standardized Data</h1>
+         
+
+
+<div id="some-background" class="section level3">
+<h3>Some Background</h3>
+<p>There’s a lot of concepts we take for granted in applied statistics, like the <a href="https://statisticalmusings.netlify.com/post/clt_revisited/">CLT</a> or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.</p>
+<p>That being said, it’s a good idea whenever possible to understand why things are the way they are. For example, we’re familiar with transforming data by standaridizing (subtracting the mean of the data from each observation and dividing that difference by the standard deviation – shown in the below formula).</p>
+<p><span class="math display">\[\frac{X - \mu}{\sigma };X = {x_1, x_2, ..., x_n}\]</span></p>
+<p>It’s often the case we don’t know the true mean <span class="math inline">\(\mu\)</span> and true population variance <span class="math inline">\({\sigma}^2\)</span>, so we use the sample mean <span class="math inline">\(\overline{x}\)</span> and sample variance <span class="math inline">\(s^2\)</span>. So the above formula translates to</p>
+<p><span class="math display">\[\frac{X - \overline{x}}{s};X = {x_1, x_2, ..., x_n}\]</span></p>
+<p>Therefore, the standardized data looks like this</p>
+<p><span class="math display">\[\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\]</span></p>
+<p>This transformed data has a mean of 0 and standard deviation of 1 — and hence a variance of 1. I worked this out by hand to see why that’s the case. To do that, we need to reference the formulas for calculating the sample mean and sample variance of a dataset.</p>
+<div id="sample-mean-formula" class="section level4">
+<h4>Sample Mean Formula</h4>
+<p><span class="math display">\[\overline{x} = \sum_{i=1}^{n}x_i = \frac{1}{n}(x_1 + x_2 + ... + x_n)\]</span></p>
+</div>
+<div id="sample-variance-formula" class="section level4">
+<h4>Sample Variance Formula</h4>
+<p><span class="math display">\[s^2 = \sum_{i=1}^{n}\frac{(x_i - \overline{x})^{2}}{n-1} = \frac{1}{n-1}[(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... + (x_n - \overline{x})^2]\]</span></p>
+</div>
+</div>
+<div id="the-mean-of-the-standardized-data" class="section level3">
+<h3>The mean of the standardized data</h3>
+<p>We’re finding the mean of <span class="math inline">\(\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\)</span>, so this is</p>
+<p><span class="math inline">\(\frac{1}{n}\left ( \frac{x_1 - \overline{x}}{s} + \frac{x_2 - \overline{x}}{s}+ ... + \frac{x_n - \overline{x}}{s} \right )\)</span></p>
+<p>Factor out <span class="math inline">\(1/s\)</span></p>
+<p><span class="math inline">\(\frac{1}{ns}\left [(x_1 - \overline{x})+ (x_2 - \overline{x})+ ... +(x_n - \overline{x}) \right]\)</span></p>
+<p>There are <span class="math inline">\(n\)</span> terms of <span class="math inline">\(\overline{x}\)</span>, so we now have</p>
+<p><span class="math inline">\(\frac{1}{ns}\left [(x_1 + x_2 + ... +x_n) - nx \right]\)</span></p>
+<p>From the definition of the sample mean, we know the terms in the parenthesis is equivalent to <span class="math inline">\(n\overline{x}\)</span> (by multiplying both sides of the sample mean equation by <span class="math inline">\(n\)</span>), so we get</p>
+<p><span class="math inline">\(\frac{1}{ns}\left (n\overline{x} - n\overline{x} \right) = \frac{1}{ns}*0 = 0\)</span></p>
+<p>We’ve just shown the mean of the standardized data is equal to 0.</p>
+</div>
+<div id="the-variance-of-the-standardized-data" class="section level3">
+<h3>The variance of the standardized data</h3>
+<div class="tenor-gif-embed" data-postid="15961968" data-share-method="host" data-width="100%" data-aspect-ratio="0.9959839357429717">
+<a href="https://tenor.com/view/drink-yoda-coffee-baby-yoda-you-want-coffee-gif-15961968">Drink Yoda GIF</a> from <a href="https://tenor.com/search/drink-gifs">Drink GIFs</a>
+</div>
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<p>Take a break if you need one, because finding the variance is a bit more tricky!</p>
+<p>We want</p>
+<p><span class="math inline">\(Var\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\)</span></p>
+<p>This translates to</p>
+<p><span class="math inline">\(\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s} - \overline{x}^*)^2 + (\frac{x_2 - \overline{x}}{s} - \overline{x}^*)^2 + ... +(\frac{x_n - \overline{x}}{s} - \overline{x}^*)^2 \right ]\)</span></p>
+<p>where <span class="math inline">\(\overline{x}^*\)</span> is the mean of the <em>standardized data</em>, NOT the original sample data! Note that we now have <em>two</em> sample means. One of the sample means (<span class="math inline">\(\overline{x}\)</span>) is the mean of the original dataset used for standardizing each observation in that dataset. The second mean (<span class="math inline">\(\overline{x}^*\)</span>) is the mean of the standardized data, and we use this to calculate the variance of the standardized data.</p>
+<p>We just found the mean of the standardized data… it’s 0! So now the variance of the standardized data reduces to</p>
+<p><span class="math inline">\(\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s})^2 + (\frac{x_2 - \overline{x}}{s})^2 + ... +(\frac{x_n - \overline{x}}{s})^2 \right ]\)</span></p>
+<p>Let’s factor out the <span class="math inline">\(s^2\)</span> from each term.</p>
+<p><span class="math inline">\(\frac{1}{(n-1)s^2}\left [(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... +(x_n - \overline{x})^2 \right ]\)</span></p>
+<p>How do we deal with the terms in the square brackets? Look back at the sample variance formula – the terms inside are the same! Multiply both sides by <span class="math inline">\(n-1\)</span>: the terms in the bracket are equivalent to <span class="math inline">\((n-1)s^2\)</span></p>
+<p>So we’re left with</p>
+<p><span class="math inline">\(\frac{1}{(n-1)s^2}\left [(n-1)s^2\right] = 1\)</span></p>
+<p>We’ve shown the variance of the standardized data is indeed 1.</p>
+</div>
+<div id="wrapping-up" class="section level3">
+<h3>Wrapping up</h3>
+<p>Standardization is often used in machine learning applications like linear regression and KNN. I hope this post sheds some insight into how standardization works!</p>
+</div>
+
+         
+      </div>
+    </div>
+  </div>
+</div>
+
+          </div>
+      </div>
+  </div>
+  <script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.cookie.js"> </script>
+<script src="/js/ekko-lightbox.js"></script>
+<script src="/js/jquery.scrollTo.min.js"></script>
+<script src="/js/masonry.pkgd.min.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/owl.carousel.min.js"></script>
+<script src="/js/front.js"></script>
+
+
+
+</body>
+</html>

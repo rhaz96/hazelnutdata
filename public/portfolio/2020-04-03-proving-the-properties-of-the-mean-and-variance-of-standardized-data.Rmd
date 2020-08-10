@@ -1,0 +1,92 @@
+---
+title: Proving the Properties of the Mean and Variance of Standardized Data
+author: Robert Hazell
+date: '2020-04-03'
+slug: mean-variance-standardized-data
+categories: []
+tags:
+  - technical
+description: ''
+---
+
+### Some Background
+
+There's a lot of concepts we take for granted in applied statistics, like the [CLT](https://statisticalmusings.netlify.com/post/clt_revisited/) or properties of the mean and variance for standardized data.  And that's totally fine!  Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.
+
+That being said, it's a good idea whenever possible to understand why things are the way they are. For example, we're familiar with transforming data by standaridizing (subtracting the mean of the data from each observation and dividing that difference by the standard deviation -- shown in the below formula).
+
+$$\frac{X - \mu}{\sigma };X = {x_1, x_2, ..., x_n}$$
+
+It's often the case we don't know the true mean $\mu$ and true population variance ${\sigma}^2$, so we use the sample mean $\overline{x}$ and sample variance $s^2$.  So the above formula translates to
+
+$$\frac{X - \overline{x}}{s};X = {x_1, x_2, ..., x_n}$$
+
+Therefore, the standardized data looks like this 
+
+$$\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}$$
+
+This transformed data has a mean of 0 and standard deviation of 1 --- and hence a variance of 1.  I worked this out by hand to see why that's the case.  To do that, we need to reference the formulas for calculating the sample mean and sample variance of a dataset.
+
+#### Sample Mean Formula
+
+$$\overline{x} = \sum_{i=1}^{n}x_i = \frac{1}{n}(x_1 + x_2 + ... + x_n)$$
+
+#### Sample Variance Formula
+
+$$s^2 = \sum_{i=1}^{n}\frac{(x_i - \overline{x})^{2}}{n-1} = \frac{1}{n-1}[(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... + (x_n - \overline{x})^2]$$
+
+### The mean of the standardized data
+
+We're finding the mean of $\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}$, so this is
+
+$\frac{1}{n}\left ( \frac{x_1 - \overline{x}}{s} + \frac{x_2 - \overline{x}}{s}+ ... + \frac{x_n - \overline{x}}{s}  \right )$
+
+Factor out $1/s$
+
+$\frac{1}{ns}\left [(x_1 - \overline{x})+ (x_2 - \overline{x})+ ... +(x_n - \overline{x})  \right]$
+
+There are $n$ terms of $\overline{x}$, so we now have
+
+$\frac{1}{ns}\left [(x_1 + x_2 + ... +x_n) - nx  \right]$
+
+From the definition of the sample mean, we know the terms in the parenthesis is equivalent to $n\overline{x}$ (by multiplying both sides of the sample mean equation by $n$), so we get
+
+$\frac{1}{ns}\left (n\overline{x} - n\overline{x} \right) = \frac{1}{ns}*0 = 0$
+
+We've just shown the mean of the standardized data is equal to 0.
+
+### The variance of the standardized data
+
+<div class="tenor-gif-embed" data-postid="15961968" data-share-method="host" data-width="100%" data-aspect-ratio="0.9959839357429717"><a href="https://tenor.com/view/drink-yoda-coffee-baby-yoda-you-want-coffee-gif-15961968">Drink Yoda GIF</a> from <a href="https://tenor.com/search/drink-gifs">Drink GIFs</a></div><script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+
+Take a break if you need one, because finding the variance is a bit more tricky!
+
+We want 
+
+$Var\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}$
+
+This translates to
+
+$\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s} - \overline{x}^*)^2 + (\frac{x_2 - \overline{x}}{s} - \overline{x}^*)^2 + ... +(\frac{x_n - \overline{x}}{s} - \overline{x}^*)^2  \right ]$
+
+where $\overline{x}^*$ is the mean of the *standardized data*, NOT the original sample data!  Note that we now have *two* sample means.  One of the sample means ($\overline{x}$) is the mean of the original dataset used for standardizing each observation in that dataset.  The second mean ($\overline{x}^*$) is the mean of the standardized data, and we use this to calculate the variance of the standardized data.
+
+We just found the mean of the standardized data... it's 0!  So now the variance of the standardized data reduces to
+
+$\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s})^2 + (\frac{x_2 - \overline{x}}{s})^2 + ... +(\frac{x_n - \overline{x}}{s})^2  \right ]$
+
+Let's factor out the $s^2$ from each term.
+
+$\frac{1}{(n-1)s^2}\left [(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... +(x_n - \overline{x})^2  \right ]$
+
+How do we deal with the terms in the square brackets?  Look back at the sample variance formula -- the terms inside are the same!  Multiply both sides by $n-1$: the terms in the bracket are equivalent to $(n-1)s^2$
+
+So we're left with
+
+$\frac{1}{(n-1)s^2}\left [(n-1)s^2\right] = 1$
+
+We've shown the variance of the standardized data is indeed 1.
+
+### Wrapping up
+
+Standardization is often used in machine learning applications like linear regression and KNN. I hope this post sheds some insight into how standardization works!

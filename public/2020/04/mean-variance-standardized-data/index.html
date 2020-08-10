@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.1 with theme Tranquilpeak 0.4.8-BETA">
+<meta name="author" content="Firstname Lastname">
+<meta name="keywords" content="">
+<meta name="description" content="Some Background There’s a lot of concepts we take for granted in applied statistics, like the CLT or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.
+That being said, it’s a good idea whenever possible to understand why things are the way they are.">
+
+
+<meta property="og:description" content="Some Background There’s a lot of concepts we take for granted in applied statistics, like the CLT or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.
+That being said, it’s a good idea whenever possible to understand why things are the way they are.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Proving the Properties of the Mean and Variance of Standardized Data">
+<meta name="twitter:title" content="Proving the Properties of the Mean and Variance of Standardized Data">
+<meta property="og:url" content="/2020/04/mean-variance-standardized-data/">
+<meta property="twitter:url" content="/2020/04/mean-variance-standardized-data/">
+<meta property="og:site_name" content="Hugo tranquilpeak theme">
+<meta property="og:description" content="Some Background There’s a lot of concepts we take for granted in applied statistics, like the CLT or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.
+That being said, it’s a good idea whenever possible to understand why things are the way they are.">
+<meta name="twitter:description" content="Some Background There’s a lot of concepts we take for granted in applied statistics, like the CLT or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.
+That being said, it’s a good idea whenever possible to understand why things are the way they are.">
+<meta property="og:locale" content="en-us">
+
+  
+    <meta property="article:published_time" content="2020-04-03T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-04-03T00:00:00">
+  
+  
+  
+  
+    
+      <meta property="article:tag" content="technical">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=640">
+
+
+    <title>Proving the Properties of the Mean and Variance of Standardized Data</title>
+
+    <link rel="icon" href="/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="/2020/04/mean-variance-standardized-data/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="/">Hugo tranquilpeak theme</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=90" alt="Author&#39;s picture" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=110" alt="Author&#39;s picture" />
+        </a>
+        <h4 class="sidebar-profile-name">Firstname Lastname</h4>
+        
+          <h5 class="sidebar-profile-bio">I share my thoughts on statistical modeling and data science</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">Home</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">Categories</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">Tags</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">Archives</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">About</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/kakawait">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://stackoverflow.com/users/636472/kakawait">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-stack-overflow"></i>
+      
+      <span class="sidebar-button-desc">Stack Overflow</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      Proving the Properties of the Mean and Variance of Standardized Data
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-04-03T00:00:00Z">
+        
+  April 3, 2020
+
+      </time>
+    
+    
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              
+
+
+<div id="some-background" class="section level3">
+<h3>Some Background</h3>
+<p>There’s a lot of concepts we take for granted in applied statistics, like the <a href="https://statisticalmusings.netlify.com/post/clt_revisited/">CLT</a> or properties of the mean and variance for standardized data. And that’s totally fine! Our job as applied analysts is to properly understand and implement statistical methods to derive value for whomever our stakeholders are.</p>
+<p>That being said, it’s a good idea whenever possible to understand why things are the way they are. For example, we’re familiar with transforming data by standaridizing (subtracting the mean of the data from each observation and dividing that difference by the standard deviation – shown in the below formula).</p>
+<p><span class="math display">\[\frac{X - \mu}{\sigma };X = {x_1, x_2, ..., x_n}\]</span></p>
+<p>It’s often the case we don’t know the true mean <span class="math inline">\(\mu\)</span> and true population variance <span class="math inline">\({\sigma}^2\)</span>, so we use the sample mean <span class="math inline">\(\overline{x}\)</span> and sample variance <span class="math inline">\(s^2\)</span>. So the above formula translates to</p>
+<p><span class="math display">\[\frac{X - \overline{x}}{s};X = {x_1, x_2, ..., x_n}\]</span></p>
+<p>Therefore, the standardized data looks like this</p>
+<p><span class="math display">\[\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\]</span></p>
+<p>This transformed data has a mean of 0 and standard deviation of 1 — and hence a variance of 1. I worked this out by hand to see why that’s the case. To do that, we need to reference the formulas for calculating the sample mean and sample variance of a dataset.</p>
+<div id="sample-mean-formula" class="section level4">
+<h4>Sample Mean Formula</h4>
+<p><span class="math display">\[\overline{x} = \sum_{i=1}^{n}x_i = \frac{1}{n}(x_1 + x_2 + ... + x_n)\]</span></p>
+</div>
+<div id="sample-variance-formula" class="section level4">
+<h4>Sample Variance Formula</h4>
+<p><span class="math display">\[s^2 = \sum_{i=1}^{n}\frac{(x_i - \overline{x})^{2}}{n-1} = \frac{1}{n-1}[(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... + (x_n - \overline{x})^2]\]</span></p>
+</div>
+</div>
+<div id="the-mean-of-the-standardized-data" class="section level3">
+<h3>The mean of the standardized data</h3>
+<p>We’re finding the mean of <span class="math inline">\(\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\)</span>, so this is</p>
+<p><span class="math inline">\(\frac{1}{n}\left ( \frac{x_1 - \overline{x}}{s} + \frac{x_2 - \overline{x}}{s}+ ... + \frac{x_n - \overline{x}}{s} \right )\)</span></p>
+<p>Factor out <span class="math inline">\(1/s\)</span></p>
+<p><span class="math inline">\(\frac{1}{ns}\left [(x_1 - \overline{x})+ (x_2 - \overline{x})+ ... +(x_n - \overline{x}) \right]\)</span></p>
+<p>There are <span class="math inline">\(n\)</span> terms of <span class="math inline">\(\overline{x}\)</span>, so we now have</p>
+<p><span class="math inline">\(\frac{1}{ns}\left [(x_1 + x_2 + ... +x_n) - nx \right]\)</span></p>
+<p>From the definition of the sample mean, we know the terms in the parenthesis is equivalent to <span class="math inline">\(n\overline{x}\)</span> (by multiplying both sides of the sample mean equation by <span class="math inline">\(n\)</span>), so we get</p>
+<p><span class="math inline">\(\frac{1}{ns}\left (n\overline{x} - n\overline{x} \right) = \frac{1}{ns}*0 = 0\)</span></p>
+<p>We’ve just shown the mean of the standardized data is equal to 0.</p>
+</div>
+<div id="the-variance-of-the-standardized-data" class="section level3">
+<h3>The variance of the standardized data</h3>
+<div class="tenor-gif-embed" data-postid="15961968" data-share-method="host" data-width="100%" data-aspect-ratio="0.9959839357429717">
+<a href="https://tenor.com/view/drink-yoda-coffee-baby-yoda-you-want-coffee-gif-15961968">Drink Yoda GIF</a> from <a href="https://tenor.com/search/drink-gifs">Drink GIFs</a>
+</div>
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+<p>Take a break if you need one, because finding the variance is a bit more tricky!</p>
+<p>We want</p>
+<p><span class="math inline">\(Var\left \{ \frac{x_1 - \overline{x}}{s}, \frac{x_2 - \overline{x}}{s}, ... , \frac{x_n - \overline{x}}{s} \right \}\)</span></p>
+<p>This translates to</p>
+<p><span class="math inline">\(\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s} - \overline{x}^*)^2 + (\frac{x_2 - \overline{x}}{s} - \overline{x}^*)^2 + ... +(\frac{x_n - \overline{x}}{s} - \overline{x}^*)^2 \right ]\)</span></p>
+<p>where <span class="math inline">\(\overline{x}^*\)</span> is the mean of the <em>standardized data</em>, NOT the original sample data! Note that we now have <em>two</em> sample means. One of the sample means (<span class="math inline">\(\overline{x}\)</span>) is the mean of the original dataset used for standardizing each observation in that dataset. The second mean (<span class="math inline">\(\overline{x}^*\)</span>) is the mean of the standardized data, and we use this to calculate the variance of the standardized data.</p>
+<p>We just found the mean of the standardized data… it’s 0! So now the variance of the standardized data reduces to</p>
+<p><span class="math inline">\(\frac{1}{n-1}\left [(\frac{x_1 - \overline{x}}{s})^2 + (\frac{x_2 - \overline{x}}{s})^2 + ... +(\frac{x_n - \overline{x}}{s})^2 \right ]\)</span></p>
+<p>Let’s factor out the <span class="math inline">\(s^2\)</span> from each term.</p>
+<p><span class="math inline">\(\frac{1}{(n-1)s^2}\left [(x_1 - \overline{x})^2 + (x_2 - \overline{x})^2 + ... +(x_n - \overline{x})^2 \right ]\)</span></p>
+<p>How do we deal with the terms in the square brackets? Look back at the sample variance formula – the terms inside are the same! Multiply both sides by <span class="math inline">\(n-1\)</span>: the terms in the bracket are equivalent to <span class="math inline">\((n-1)s^2\)</span></p>
+<p>So we’re left with</p>
+<p><span class="math inline">\(\frac{1}{(n-1)s^2}\left [(n-1)s^2\right] = 1\)</span></p>
+<p>We’ve shown the variance of the standardized data is indeed 1.</p>
+</div>
+<div id="wrapping-up" class="section level3">
+<h3>Wrapping up</h3>
+<p>Standardization is often used in machine learning applications like linear regression and KNN. I hope this post sheds some insight into how standardization works!</p>
+</div>
+
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">TAGGED IN</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="/tags/technical/">technical</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/latex-plotly-issue-hugo-minimal/" data-tooltip="Working around LaTeX and Plotly issue in Hugo Minimal">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/03/an-intuitive-explanation-of-p-values/" data-tooltip="An Intuitive Explanation of p-values">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/04/mean-variance-standardized-data/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/04/mean-variance-standardized-data/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/04/mean-variance-standardized-data/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 Firstname Lastname. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/04/latex-plotly-issue-hugo-minimal/" data-tooltip="Working around LaTeX and Plotly issue in Hugo Minimal">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">NEXT</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="/2020/03/an-intuitive-explanation-of-p-values/" data-tooltip="An Intuitive Explanation of p-values">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">PREVIOUS</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=/2020/04/mean-variance-standardized-data/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=/2020/04/mean-variance-standardized-data/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=/2020/04/mean-variance-standardized-data/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=%2F2020%2F04%2Fmean-variance-standardized-data%2F">
+          <i class="fa fa-facebook-official"></i><span>Share on Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=%2F2020%2F04%2Fmean-variance-standardized-data%2F">
+          <i class="fa fa-twitter"></i><span>Share on Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=%2F2020%2F04%2Fmean-variance-standardized-data%2F">
+          <i class="fa fa-google-plus"></i><span>Share on Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/d09dc2d7aa5c467519e8af89f7b3d94c?s=110" alt="Author&#39;s picture" />
+    
+    <h4 id="about-card-name">Firstname Lastname</h4>
+    
+      <div id="about-card-bio">I share my thoughts on statistical modeling and data science</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Your job title
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        France
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('/images/cover.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = '\/2020\/04\/mean-variance-standardized-data\/';
+          
+            this.page.identifier = '\/2020\/04\/mean-variance-standardized-data\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tea on Statistical Musings</title>
+    <link>/categories/tea/</link>
+    <description>Recent content in tea on Statistical Musings</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 09 Aug 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/tea/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>another aeither test</title>
+      <link>/post/another-aeither-test/</link>
+      <pubDate>Sun, 09 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/another-aeither-test/</guid>
+      <description>What are we doing</description>
+    </item>
+    
+  </channel>
+</rss>
