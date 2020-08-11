@@ -8,9 +8,9 @@ tags:
   - linear algebra
 ---
 
-#<center>
-#Last updated: Jun 22, 2020
-#</center>
+<center>
+Last updated: Jun 22, 2020
+</center>
 
 
 ## Wait, what?

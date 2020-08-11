@@ -1,0 +1,75 @@
+---
+title: A Random Walk with Dice
+author: ''
+date: '2020-08-10'
+slug: a-random-walk-with-dice
+categories: []
+tags:
+  - simulation
+---
+
+
+
+<div class="figure">
+<img src="/post/2020-08-10-a-random-walk-with-dice_files/red_dice.jpg" alt="Photo by Jonathan Petersson on Unsplash" />
+<p class="caption"><span>Photo by <a href="https://unsplash.com/@grizzlybear?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jonathan Petersson</a> on <a href="https://unsplash.com/s/photos/dice?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+</div>
+<p>I recently came across an interesting probability question from Nate Rosidi, maintainer of the data science prep site <a href="https://www.stratascratch.com/">Strata Scratch</a>. This question was asked by FiveThirtyEight and goes like this:</p>
+<blockquote>
+<p>You start with a fair 6-sided die and roll it six times, recording the results of each roll. You then write these numbers on the six faces of another, unlabeled fair die.
+For example, if your six rolls were 3, 5, 3, 6, 1 and 2, then your second die wouldn’t have a 4 on it; instead, it would have two 3s.
+<br></br>
+Next, you roll this second die six times. You take those six numbers and write them on the faces of yet another fair die, and you continue this process of generating a new die from the previous one.
+<br></br>
+Eventually, you’ll have a die with the same number on all six faces.
+<br></br>
+What is the average number of rolls it will take to reach this state?&quot;</p>
+</blockquote>
+<p>Nathan attempted using a Markov Model defining all probability states that could occur between dice rolls. In his own words:</p>
+<blockquote>
+<p>I couldn’t figure out the trick to this problem, so I spent way too long calculating the whole 11 x 11 transition probability matrix (there are 11 unique states the die can be in, e.g. 1 number with 3 sides, and 3 numbers with one side) and then using python to solve the system of equations. The answer is ~9.66, but there must be a more elegant way.</p>
+</blockquote>
+<p>I thought how I would replicate it, but then remembered simulation would be a much better (and faster) idea. To that end, I made an R script that simulates 100,000 trials. Each trial consists of rolling the dice until arriving at the desired outcome of all six faces being equal.</p>
+<pre class="r"><code># reproducibility
+set.seed(42)
+# define number of trials to be 100,000
+num_trials &lt;- 1:100000
+# a vector that stores the number of rolls it takes for each trial to arrive at an equal number of faces
+rolls_to_eq_outcome &lt;- c()
+
+for (i in num_trials){ # for each trial
+  # initialze a counter that keeps track of how many rolls it took to get all equal faces for that trial
+  num_to_equal_faces &lt;- 0
+  # the default die faces
+  dice &lt;- 1:6
+  # start tracking if a roll has equal faces
+  while (TRUE) {
+    # roll the dice
+    roll_outcome &lt;- sample(dice, size=6, replace = T)
+    # increment counter
+    num_to_equal_faces &lt;- num_to_equal_faces + 1
+    # if the six faces are not all equal...
+    if (length(unique(roll_outcome)) != 1) {
+      # update faces of the die to the latest outcome and roll again
+      dice &lt;- roll_outcome
+    }
+    # if you do get a roll with all six faces being the same...
+    if (length(unique(roll_outcome)) == 1){
+      # append the number of rolls it took to the rolls_to_eq_outcome
+      rolls_to_eq_outcome &lt;- append(rolls_to_eq_outcome, num_to_equal_faces)
+      break
+    }
+  }
+}
+  
+paste0(&quot;Average number of rolls to get equal faces: &quot;, mean(rolls_to_eq_outcome))</code></pre>
+<pre><code>[1] &quot;Average number of rolls to get equal faces: 9.66755&quot;</code></pre>
+<p>Here’s a breakdown of the logic:</p>
+<ol style="list-style-type: decimal">
+<li><p>Define a <code>dice</code> variable to be a vector with values 1 through 6 like any standard die. This vector represents each of the six faces on the die.</p></li>
+<li><p>For each trial, have a counter variable <code>num_to_equal_faces</code> that keeps track of how many times the die is rolled</p></li>
+<li><p>Keep rolling the die (and updating <code>dice</code>) so long as each outcome doesn’t produce equal faces</p></li>
+<li><p>Once you get a roll with all equal faces, cease incrementing <code>num_to_equal_faces</code> and append it’s latest value to <code>rolls_to_equal_outcome</code>, which keeps track of how many rolls it took for each trial to achieve equal faces</p></li>
+</ol>
+<p>Notice my answer matches Nate’s. I’m satisfied 😀 It’s interesting that some of the trials took an unusually long time to yield equal faces - one of the them took nearly 80 rolls!</p>
+<p><img src="/post/2020-08-10-a-random-walk-with-dice_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>

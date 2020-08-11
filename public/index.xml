@@ -6,10 +6,21 @@
     <description>Recent content on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Random Walk with Dice</title>
+      <link>/post/a-random-walk-with-dice/</link>
+      <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/a-random-walk-with-dice/</guid>
+      <description>Photo by Jonathan Petersson on Unsplash
+ I recently came across an interesting probability question from Nate Rosidi, maintainer of the data science prep site Strata Scratch. This question was asked by FiveThirtyEight and goes like this:
+ You start with a fair 6-sided die and roll it six times, recording the results of each roll. You then write these numbers on the six faces of another, unlabeled fair die.</description>
+    </item>
     
     <item>
       <title>Lines are NOT linear functions !?!</title>
@@ -17,7 +28,7 @@
       <pubDate>Sun, 21 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/lines-not-linear-functions/</guid>
-      <description>#  #Last updated: Jun 22, 2020 #  Wait, what? I know, you most likely did a double take on the title. After all, we were all probably taught in algebra or geometry class that lines are linear functions. So presumably \(y = 2x+3\) is supposed to be a linear function…except that it’s not. In fact equations of the form \(y = mx+b\) are not considered linear functions except under special conditions, which will be explained a bit later.</description>
+      <description>Last updated: Jun 22, 2020  Wait, what? I know, you most likely did a double take on the title. After all, we were all probably taught in algebra or geometry class that lines are linear functions. So presumably \(y = 2x+3\) is supposed to be a linear function…except that it’s not. In fact equations of the form \(y = mx+b\) are not considered linear functions except under special conditions, which will be explained a bit later.</description>
     </item>
     
     <item>
