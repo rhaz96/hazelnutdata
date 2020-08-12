@@ -4,7 +4,7 @@ title: "About"
 
 <img align="center">
 
-![](/./about_files/anotherone_50.png)
+![](/./about_files/h1.jpg)
 
 </img>
 
