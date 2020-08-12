@@ -28,7 +28,7 @@ However I feel not enough emphasis was given on the logic of why the permutation
       <pubDate>Mon, 10 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/a-random-walk-with-dice/</guid>
-      <description>Photo by Jonathan Petersson on Unsplash
+      <description>p.caption { font-size: 0.8em; }  Photo by Jonathan Petersson on Unsplash
  I recently came across an interesting probability question from Nate Rosidi, maintainer of the data science prep site Strata Scratch. This question was asked by FiveThirtyEight and goes like this:
  You start with a fair 6-sided die and roll it six times, recording the results of each roll. You then write these numbers on the six faces of another, unlabeled fair die.</description>
     </item>
