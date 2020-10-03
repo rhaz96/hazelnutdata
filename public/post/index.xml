@@ -12,11 +12,11 @@
     
     
     <item>
-      <title>A Note on the Permutation Test</title>
-      <link>/post/a-note-on-the-permutation-test/</link>
+      <title>Grokking the Permutation Test</title>
+      <link>/post/grokking-the-permutation-test/</link>
       <pubDate>Tue, 11 Aug 2020 00:00:00 +0000</pubDate>
       
-      <guid>/post/a-note-on-the-permutation-test/</guid>
+      <guid>/post/grokking-the-permutation-test/</guid>
       <description>p.caption { font-size: 0.8em; }   Sheep wool experiment, taken from Jared Wilber  
 Jared Wilber has an amazing interactive visualization illustrating the permutation test. I highly recommend reading it to get a better visual intuition of how the test statistic of the permutation test is derived.
 However I feel not enough emphasis was given on the logic of why the permutation test works to begin with.</description>

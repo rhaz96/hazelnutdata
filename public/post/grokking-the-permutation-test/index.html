@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>An Intuitive Explanation of p-values</title>
+        <title>Grokking the Permutation Test</title>
         
         <style>
 
@@ -79,7 +79,7 @@
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
-                    <a class="navbar-brand visible-xs" href="#">An Intuitive Explanation of p-values</a>
+                    <a class="navbar-brand visible-xs" href="#">Grokking the Permutation Test</a>
                     <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -117,14 +117,10 @@
 <main>
 
     <div>
-        <h2>An Intuitive Explanation of p-values</h2>
-        <h5>March 28, 2020</h5>
+        <h2>Grokking the Permutation Test</h2>
+        <h5>August 11, 2020</h5>
         
 <a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
-
-<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
-
-<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
 
 
     </div>
@@ -132,59 +128,39 @@
     <div align="start" class="content">
 
 
-<div id="striving-for-p-value-enlightenment" class="section level3">
-<h3>Striving for p-value enlightenment</h3>
-<p>Trying to describe p-values is notoriously difficult, even for seasoned statistics professionals. This <a href="https://fivethirtyeight.com/features/not-even-scientists-can-easily-explain-p-values/">article</a> from FiveThirtyEight has been at the back of my head for the longest time. The author Christie Aschwanden is basically fishing around for a basic, intuitive definition of a p-value. Her conclusion?</p>
-<blockquote>
-<p>“What I learned by asking all these very smart people to explain p-values is that I was on a fool’s errand.”</p>
-</blockquote>
-<p>That’s disappointing! Any attempt to distill p-values to a pithy phrase or single sentence is bound to leave some wrong impressions, and this is a problem for educators trying to reach a general audience. However, I don’t think all hope is lost. Appealing to analogies or anecdotes often does a sufficient job. That is what I attempt to do here while minimizing the number of (statistical) spare parts left over. I’ll leave that for you to judge…</p>
-</div>
-<div id="mms-again" class="section level3">
-<h3>m&amp;m’s (again)</h3>
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+<img src="/post/2020-08-11-a-note-on-the-permutation-test_files/perm_sheep.png" />
 <center>
-<img src="/post/pvalues_intuitive_files/m&amp;m.png" />
+<p class="caption">
+<br>
+Sheep wool experiment, taken from <a href="https://www.jwilber.me/permutationtest/">Jared Wilber</a>
+</p>
 </center>
-<p>Suppose m&amp;m’s claimed that their Share Size bags (3.27 oz) contain around 42 m&amp;m’s. In my <a href="https://statisticalmusings.netlify.com/post/clt_revisited/">first blog post</a> we supposed you went out and bought fifty such share bags and found the average number of m&amp;m’s to be 29. Each package had a slightly different amount of m&amp;m’s per bag, and this difference was 5.</p>
-<p>You’d be justified in feeling suspicious about m&amp;m’s claim of 42 since 29 seems quite far off. To investigate this, you’d ask the following question:</p>
-<blockquote>
-<p><em>How likely is it to get an average of 29 m&amp;m’s if the company’s claim of 42 were true?</em></p>
-</blockquote>
-<p>Notice that if you think 29 m&amp;m’s is evidence that the company is packaging less m&amp;m’s than it claims, then so is 28, or 27, or 26…in fact, anything less than 29 would <em>also</em> count as evidence to you against m&amp;m’s claim of 42. Because of this, you’d revise your question to be:</p>
-<blockquote>
-<p><em>How likely is it to get an average of 29 m&amp;m’s <strong>or less</strong>, if the company’s claim of 42 were true?</em></p>
-</blockquote>
-<p>We have two competing claims: the mean number m&amp;m’s is 42 and the mean number of m&amp;m’s is less than 42.</p>
-<p>It turns out the likelihood of seeing an average of 29 m&amp;m’s or less, under the assumption the company is telling the truth, is <span class="math inline">\(8.69*10^{-76}\)</span>, which is a 0 followed by a decimal with 75 zeroes! That’s soooo close to 0 (the way the p-value was calculated isn’t essential to understanding p-values).</p>
-<pre class="r"><code>z_score &lt;- (29-42)/sqrt(25/50)
-pnorm(z_score)</code></pre>
-<pre><code>## [1] 8.697787e-76</code></pre>
-<p>That right there is your p-value!</p>
+<p><br></p>
+<p>Jared Wilber has an amazing <a href="https://www.jwilber.me/permutationtest/">interactive visualization</a> illustrating the permutation test. I highly recommend reading it to get a better visual intuition of how the test statistic of the permutation test is derived.</p>
+<p>However I feel not enough emphasis was given on the logic of why the permutation test works to begin with. One student in the stats class I’ve TA’ed brought up this self-same question. Why does it make sense. I’m reproducing the answer I gave to him and the rest of the class.</p>
+<div id="why-does-the-permutation-test-make-sense" class="section level3">
+<h3>Why does the permutation test make sense?</h3>
+<div class="figure">
+<img src="/post/2020-08-11-a-note-on-the-permutation-test_files/happy.jpg" alt="Photo by Jacqueline Munguía on Unsplash" />
+<p class="caption"><span>Photo by <a href="https://unsplash.com/@jacquiemunguia?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jacqueline Munguía</a> on <a href="https://unsplash.com/s/photos/happy?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 </div>
-<div id="what-should-we-say" class="section level3">
-<h3>What should we say?</h3>
-<p>At this point you have two possibilities. You can say</p>
-<ul>
-<li>We were incredibly (un)lucky and just so happened to buy fifty packages of m&amp;m’s that had far less than 42 m&amp;m’s.</li>
-</ul>
-<p>Or you can say</p>
-<ul>
-<li>This is strong evidence that m&amp;m’s claim of 42 is fishy!</li>
-</ul>
-<p>Given how small the p-value is, I think the second possibility makes more sense.</p>
-</div>
-<div id="conclusion" class="section level3">
-<h3>Conclusion</h3>
-<p>Hopefully this sheds insight on why the technical definition of a p-value is:</p>
+<p>Suppose you were designing an experiment to test the efficacy of a new (prescription) drug that’s supposed to make you happier. Some participants will be placed in the treatment group and others in the control group. If the null hypothesis (the drug has no positive effect on happiness) is true, it wouldn’t matter where each person were assigned as each would have gotten the same outcome anyway. On the other hand, if the alternative hypothesis is true, it really would matter where you were assigned – if the drug does in fact work, being in the treatment group could truly affect your before-and-after happiness level.</p>
+<p>But under the null there is no advantage of being in the treatment or control group. This means there’s nothing special about the particular arrangement and outcome of people that we observe. It’s just one of nC2 possible arrangements that could have arisen by chance (“n choose 2” in combinatorics, where n is the total number of participants and 2 since there’s 2 groups). For example, if there’s a total of 100 participants, then there’s 4950 possible assignments into treatment and control groups.</p>
 <blockquote>
-<p>the probability of observing our sample result, or results more extreme, if we assume the null hypothesis is true</p>
+<p><em><span style="color:blue">under the null there is no advantage of being in the treatment or control group. This means there’s nothing special about the particular arrangement and outcome of people that we observe. It’s just one of nC2 possible arrangements that could have arisen by chance</span></em></p>
 </blockquote>
-<p>In our example, m&amp;m’s claim of 42 is the <em>null hypothesis</em> since it describes the default claim assumed to be true. Our claim that the number of m&amp;m’s is less than 42 is considered the <em>alternative hypothesis</em> since it challenges the default claim.</p>
-<p>The “results more extreme” points back to the fact that in our m&amp;m’s example, we didn’t consider 29 to be the only result to challenge the null hypothesis. Values more extreme than 29 (like 28 or 27, or 14) would also in our minds count as evidence challenging the null hypothesis of 42. Therefore, p-values must take such values into account.</p>
+<p>Suppose that the average happiness in the control is 40 while it’s 85 in the treatment group. This means a happiness differential of 45. Let’s also suppose that out of the 4950 chance arrangments, we observe this difference or an even larger difference (see <a href="https://statisticalmusings.netlify.app/post/an-intuitive-explanation-of-p-values/">my article</a> for more on this) only 15 times. This implies if chance alone were responsible for the higher observed difference, there’d be only a <span class="math inline">\(15/4950 = 0.3\%\)</span> probability of seeing this or an even larger difference happen. We either were lucky to observe a very rare circumstance, or maybe the null is in fact false.</p>
+<div class="figure">
+<img src="/post/2020-08-11-a-note-on-the-permutation-test_files/coins.jpg" alt="Photo by Josh Appel on Unsplash" />
+<p class="caption"><span>Photo by <a href="https://unsplash.com/@joshappel?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Josh Appel</a> on <a href="https://unsplash.com/s/photos/coin?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
 </div>
-<div id="a-final-word" class="section level3">
-<h3>A Final Word</h3>
-<p>Here’s an important point: <strong>we did not prove that m&amp;m’s is lying</strong>. It entirely possible that all fifty bags we bought just so happened to have far less than 42 m&amp;m’s. Maybe all those m&amp;m’s packages came from a single production line that happened to be faulty. The only way to better test m&amp;m’s claim is to gather more data…which means buying more m&amp;m’s.</p>
+<p>To build off that idea, imagine flipping a coin 500 times and getting heads every time. You could either say “I was really lucky!” or “Hmmm something seems fishy.” It’s the same idea in the permutation test. Most would probably agree the coin scenario is fishy. Why? Because we’re working under the assumption that the coin is fair! Thinking in terms of hypothesis testing, if the null were true (if the coin were fair), it’d be highly unlikely to get 500 heads in a row. Because of its rarity, we’d conclude the coin is probably weighted.</p>
+<p>Tying this back to the drug study, if the null were true (that is, if the drug has no positive effect on happiness), it’d be highly unlikely just by pure luck to observe such a large difference in happiness (45) after taking the drug. So we conclude the drug actually makes people happier.</p>
 </div>
 </div>
 
@@ -201,10 +177,14 @@ pnorm(z_score)</code></pre>
     
     
 
-    <h4><a href="/post/grokking-the-permutation-test/">Grokking the Permutation Test</a></h4>
+    <h4><a href="/post/an-intuitive-explanation-of-p-values/">An Intuitive Explanation of p-values</a></h4>
     <h5></h5>
     
 <a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
+
+<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
+
+<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
 
 
 

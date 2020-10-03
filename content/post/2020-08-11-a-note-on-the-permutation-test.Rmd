@@ -1,8 +1,8 @@
 ---
-title: A Note on the Permutation Test
+title: Grokking the Permutation Test
 author: ''
 date: '2020-08-11'
-slug: a-note-on-the-permutation-test
+slug: grokking-the-permutation-test
 categories: []
 tags:
   - explanatory
