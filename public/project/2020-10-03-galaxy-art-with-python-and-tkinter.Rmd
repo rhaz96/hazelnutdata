@@ -247,7 +247,7 @@ within $\pm 10$ units, and if so plot these points in a larger shape with color 
 
 Any coordinates with even $x$ and $y$ values are colored red for the night sky, and all other points in the sky are white.
 
-Part 5: Implementing in tkinter 
+### Part 5: Implementing in tkinter 
 
 ```{python echo=T, eval=F}
 def main():
