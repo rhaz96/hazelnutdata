@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Galaxy Art with Python &amp; Tkinter</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Georgia', sans-serif;
+        background-color: #eee;
+    }
+
+    :root {
+        --accent: purple;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Georgia">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/foundation.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.67.1" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#">Galaxy Art with Python &amp; Tkinter</a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                                <li><a href="/about/">About</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/rhaz96/statisticalmusings"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/robertmhazell"><i class="fa fa-linkedin"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+
+    <div>
+        <h2>Galaxy Art with Python &amp; Tkinter</h2>
+        <h5>October 2, 2020</h5>
+        
+<a href="/tags/data-visualization"><kbd class="item-tag">data visualization</kbd></a>
+
+<a href="/tags/python"><kbd class="item-tag">python</kbd></a>
+
+<a href="/tags/projects"><kbd class="item-tag">projects</kbd></a>
+
+
+    </div>
+
+    <div align="start" class="content">
+
+
+<style>
+p.caption {
+  font-size: 0.8em;
+}
+</style>
+<div id="howd-you-do-that" class="section level3">
+<h3>How’d you do that?</h3>
+<p>I’d like to give a walkthrough on how I created the visual you see below. It took some pretty serious tinkering, but it’s not too shabby right?</p>
+<img src="/post/2020-10-02-galaxy-art-with-python-tkinter_files/barred_galaxy.png" />
+<p class="caption">
+Figure 1: The final output of my galaxy visualization
+</p>
+<p><br></p>
+</div>
+<div id="the-secret-life-of-galaxies" class="section level3">
+<h3>The secret life of galaxies</h3>
+<p>I’ve been working on Lee Vaughan’s excellent book <a href="https://nostarch.com/impracticalpythonprojects">Impractical Python Projects</a>, and Chapter 10 really caught my attention since I’ve always marveled at the heavens and its celestial bodies.</p>
+<p>Astronomers have traditionally modeled galaxies according to the logarithmic spiral equation given in polar coordinates:</p>
+<p><span class="math inline">\(\large r = ae^{b\theta}\)</span></p>
+<p>This corresponds to galaxies IRL that look like Figure 2:</p>
+<p><img src="/post/2020-10-02-galaxy-art-with-python-tkinter_files/messier.png" /></p>
+<p class="caption">
+Figure 2: The Messier 51 Galaxy. Source: <a href="https://www.nasa.gov/feature/goddard/2017/messier-51-the-whirlpool-galaxy">NASA</a>
+</p>
+<p><br></p>
+<p>This is how Vaughan models the Milky Way in Tkinter. One of the challenge projects at the end of the chapter involves implementing a “barred-shape” construction of galaxies according to the equation suggested by Harry I. Ringermacher and Lawrence R. Mead in their paper <a href="https://arxiv.org/abs/0908.0892#:~:text=A%20New%20Formula%20Describing%20the%20Scaffold%20Structure%20of%20Spiral%20Galaxies,-Harry%20I.&amp;text=Special%20shapes%20such%20as%20ring,tan(phi%2F2N)%5D.">A New Formula Describing the Scaffold Structure of Spiral Galaxies</a> (Ringermacher and Mead, 2009):</p>
+<p><span class="math inline">\(\large r = \frac{A}{ln[B*tan(\phi /2N)]}\)</span></p>
+<p><span class="math inline">\(N\)</span> controls how tightly wound the spirals are around the core (think of how you may wrap your arms when you hug somebody), while <span class="math inline">\(B\)</span> controls the length of the galaxy’s “bar” core. See the paper for more details. This model has the advantage of approximating both the traditional logarithmic spiral and more “barred” shaped spirals, illustrated in Figure 3.</p>
+<img src="/post/2020-10-02-galaxy-art-with-python-tkinter_files/barred_improve.png" />
+<p class="caption">
+Figure 3: Ringermacher &amp; Mead’s barred-spiral equation used to model traditional (left) and more elongated “bar” shaped spirals (right). Taken from their paper above.
+</p>
+<p><br></p>
+<p>I credit Vaughan for the idea of using a rotation factor and fuzz factor to create elegant spirals. His code for building the Milky Way was a good inspiration for how to approach the challenge project, but significant modification were made (as you would expect for a challenge project!).</p>
+<p>Please see his book for more details on galaxy modeling.</p>
+</div>
+<div id="part-1-preliminary-items" class="section level3">
+<h3>Part 1: Preliminary Items</h3>
+<pre class="python"><code>import numpy as np
+import math
+from random import randint, uniform, random
+import tkinter as tk
+
+root = tk.Tk()
+root.title(&quot;Barred Spiral Galaxy&quot;)
+c = tk.Canvas(root, width=1000, height=800, bg=&quot;black&quot;)
+c.grid()
+c.configure(scrollregion=(-500, -400, 500, 400))</code></pre>
+<p>Several libraries are used: <code>numpy</code> to ease some math with arrays, <code>math</code> to get access to trigonometric and log functions, <code>random</code> to generate random numbers and use distributions to add noise to the data, and finally <code>tkinter</code> to actually create and display the visualization. After importing, we set the plotting screen parameters to be large enough to view the final output, and of make the background black to mimic space.</p>
+</div>
+<div id="part-2-generating-coordinates-for-the-galaxy" class="section level3">
+<h3>Part 2: Generating coordinates for the galaxy</h3>
+<pre class="python"><code>def random_polar_coordinates(disc_radius_scaled):
+    &quot;&quot;&quot;Generate uniform random x,y point within a disc for 2-D display.&quot;&quot;&quot;
+    ##1##
+    r = random()
+    ##2##
+    theta = uniform(0, 2 * math.pi)
+    ##3##
+    x = round(math.sqrt(r) * math.cos(theta) * disc_radius_scaled)
+    y = round(math.sqrt(r) * math.sin(theta) * disc_radius_scaled)
+    return x, y</code></pre>
+<p>The function <code>random_polar_coordinates</code> generates points at random to populate a circular 2D disk. These coordinates will be used exclusively to model the surrounding starry sky and the galaxy core, not the spiral arms.
+Polar coordinates are well suited as the baseline for creating points since the spiral arms are formed by rotating around the central core of the galaxy at certain angles. These will then be converted to rectangular coordinates for tkinter’s plot window.</p>
+<p>This is accomplished by first creating a unit disc (i.e a disk of radius <span class="math inline">\(1\)</span>) and then scaling it by the <code>disc_radius_scaled</code> parameter to match the tkinter plot window size.</p>
+<p><code>##1##</code> generates a random number between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>, and <code>##2##</code> generates an angle at random between <span class="math inline">\(0\)</span> and <span class="math inline">\(2\pi\)</span>.</p>
+<p>The polar representation for creating points uniformly in a unit disk is <span class="math inline">\(x = \sqrt{r}cos(\theta)\)</span> and <span class="math inline">\(y = \sqrt{r}sin(\theta)\)</span>. See this explanation from <a href="https://mathworld.wolfram.com/DiskPointPicking.html">Wolfram</a>. These are then multiplied by <code>disc_radius_scaled</code> to scale up to the plotting window.</p>
+<p>With the points now defined, they’ll be later colored to give more definition to the night sky and color the galaxy core (bar).</p>
+</div>
+<div id="part-3-generating-spirals" class="section level3">
+<h3>Part 3: Generating spirals</h3>
+<pre class="python"><code>def spirals(A, B, N, rot_fac, fuz_fac, arm):
+    &quot;&quot;&quot;Generate spiral arms for galaxy that follow the barred-galaxy equation of Ringermacher &amp; Mead.
+    
+    A = scale/zoom parameter
+    B = parameter to control the middle &quot;bulge&quot; or &quot;bar&quot; of the galaxy core
+    N = parameter to control how tightly wound the spiral arms are
+    rot_fac = angle at which to rotate a spiral arm
+    fuzz_fac = parameter to add noise that spiral coordinates
+    arm = whether spiral arm is leading (arm=1) or trailing (arm=0)
+    &quot;&quot;&quot;
+
+    ##1##
+    spiral_stars = []
+    thetas = np.radians(np.arange(0.01, 90, 0.05))
+    fuzz = 0.030 * abs(A)
+
+    ##2##
+    for theta in thetas:
+        try:
+            denom = B * math.tan(theta / (2 * N))
+            x = (
+                A / math.log(denom) * math.cos(theta + math.pi * rot_fac)
+                + uniform(-fuzz, fuzz) * fuz_fac
+            )
+            y = (
+                A / math.log(denom) * math.sin(theta + math.pi * rot_fac)
+                + uniform(-fuzz, fuzz) * fuz_fac
+            )
+            spiral_stars.append((x, y))
+        except ValueError:
+            print(denom)
+            print(&quot;Cannot take the natural log of 0 or a negative number.  Try again.&quot;)
+
+    ##3##
+    for x, y in spiral_stars:
+        if arm == 0 and math.ceil(x) % 2 == 0:
+            c.create_oval(x - 1, y - 1, x + 1, y + 1, fill=&quot;#33D4FF&quot;, outline=&quot;&quot;)
+        elif arm == 0 and math.ceil(x) % 2 != 0:
+            c.create_oval(x - 1, y - 1, x + 1, y + 1, fill=&quot;white&quot;, outline=&quot;&quot;)
+        elif arm == 1:
+            c.create_oval(x, y, x, y, fill=&quot;white&quot;, outline=&quot;&quot;)
+    return spiral_stars</code></pre>
+<p>This is arguably the most important function in the program. <code>spirals</code> gives instructions for how to create spirals according to Ringermacher and Mead’s equation, but it also adds the artistic flair to produce the starry dust within the spiral arms.</p>
+<p>Their equation contains a tangent function, and tangent is defined between <span class="math inline">\((-\frac{\pi}{2}, \frac{\pi}{2})\)</span>, but since the equation also contains a natural logarithm, which is not defined for any values <span class="math inline">\(\leq 0\)</span>, we must restrict tangent to values between <span class="math inline">\(0\)</span> and <span class="math inline">\(\pi/2\)</span> exclusive.</p>
+<p>In <code>##1##</code> we initialize an empty list which will hold all the star coordinates for the spiral arms, the surrounding sky Use a step size of <span class="math inline">\(0.05\)</span> in to get a more dense cluster of stars in the galaxy arm, as we’re confined to angles only in quadrant 1.</p>
+<p>We then apply the barred spiral equation in <code>##2##</code>, defined first in polar coordinates and then converted to rectangular. To create a scattering stars that are spread out within the spiral, we add some noise using a fuzz factor <code>fuz_fac</code> determined by the value of <code>A</code>. Using a <code>rotation_fac</code> allows us to change the angular orientation of a spiral arm as we wish.</p>
+<p>Finally, we determine how to plot these coordinates in tkinter in <code>##3##</code>. The <code>arm</code> parameter determines whether the spiral is a leading (or primary) spiral – this is true if <code>arm = 0</code>. If so, then these stars will appear larger and brighter. Stars here will be blue (hexadecimal code #33D4FF) and white. For <code>arm = 1</code>, the stars in the galaxy spirals will be white but appear more dusty. See Figure 4 for an example.</p>
+<img src="/post/2020-10-02-galaxy-art-with-python-tkinter_files/galaxy_zoom.png" />
+<p class="caption">
+Figure 4: Galaxy stars within different spiral arms, cropped from Figure 1, using <code>arm</code> and <code>rotation_fac</code>. The stars in the orange box have <code>arm</code> value of <span class="math inline">\(1\)</span> and a greater rotation factor (<span class="math inline">\(0.20\)</span> vs <span class="math inline">\(0\)</span> for the stars in the green box).
+</p>
+<p><br></p>
+<p>The brighter blue and white dots contained in the green box were made with <code>arm = 0</code>, while the finer white points in the orange box were set with <code>arm = 1</code>. The rotation factor is higher for the points in the orange box to create a wider spread of stars along the fringe of the main spirals for artistic effect.</p>
+</div>
+<div id="part-4-defining-the-galaxy-core" class="section level3">
+<h3>Part 4: Defining the galaxy core</h3>
+<pre class="python"><code>def ellipse(x, y, theta, a, b):
+    &quot;&quot;&quot; Polar coordinate form of an ellipse to design galaxy core.
+    
+    x = x input
+    y = y input
+    theta = angle of rotation of ellipse
+    a = squared radius of major axis
+    b = squared radius of minor axis
+    &quot;&quot;&quot;
+
+    ##1##
+    axis_1 = (x * math.cos(theta) - y * math.sin(theta)) ** 2 / a
+    axis_2 = (x * math.sin(theta) - y * math.cos(theta)) ** 2 / b
+    return axis_1 + axis_2</code></pre>
+<p>Due to the log term in Ringermacher &amp; Mead’s equation, there is a discontinuity between opposing spiral arms, which is most pronounced in plot a) in Figure 5.</p>
+<p><img src="/post/2020-10-02-galaxy-art-with-python-tkinter_files/galaxy_discontinuity.png" /></p>
+<p class="caption">
+Figure 5: Various realizations of spirals using the equation from Ringermacher and Mead, 2009, and fixed values of <code>A</code>. The discontinuity at <span class="math inline">\(r = 0\)</span> is present but harder to see in plots b, c, d, and e.
+</p>
+<p><br></p>
+<p>There you can quickly see the break at <span class="math inline">\(r = 0\)</span>. Smaller values of <code>B</code> relative to <code>N</code> tend to obscure the break, but if you zoom in you can see it. We will fill in the galactic gap with an elliptic core.</p>
+<p>In <code>##1##</code>, we simply create a function that generates an ellipse that may be rotated using the <code>theta</code> parameter to match the orientation of the spiral arms. This way we aren’t confined to ellipses whose axes are solely parallel to the x- or y- axes.</p>
+</div>
+<div id="part-4-creating-haze-and-the-galactic-core" class="section level3">
+<h3>Part 4: Creating haze and the galactic core</h3>
+<pre class="python"><code>def star_haze(disc_radius_scaled, density):
+    &quot;&quot;&quot;Randomly distribute faint tkinter stars in galactic disc.
+    
+    disc_radius_scaled = radius of galaxy disc.  Larger values will obscure the edges
+    density = multiplier to vary number of stars posted
+    &quot;&quot;&quot;
+
+    ##1##
+    haze_coords = [
+        random_polar_coordinates(disc_radius_scaled)
+        for _ in range(disc_radius_scaled * density)
+    ]
+    ##2##
+    for x, y in haze_coords:
+        ellipse_haze = ellipse(x, y, -8, 4, 6)
+        if np.isclose(ellipse_haze, 300, 10):
+            c.create_oval(
+                x - 1.5, y - 1.5, x + 1.5, y + 1.5, fill=&quot;#F0D3CD&quot;, outline=&quot;&quot;
+            )
+        elif x % 2 == 0 and y % 2 == 0:
+            c.create_oval(x, y, x, y, fill=&quot;red&quot;, outline=&quot;&quot;)
+        else:
+            c.create_oval(x, y, x, y, fill=&quot;white&quot;, outline=&quot;&quot;)</code></pre>
+<p>Here we create the stars surrounding the galaxy and the galaxy core. In <code>##1##</code> we use the <code>random_polar_coordinates</code>function defined earlier to generate coordinates uniformly in a disc. Check if each pair of <span class="math inline">\((x,y)\)</span> coordinates falls within the bounds of the ellipse equation
+<span class="math display">\[\large \frac{(xcos(-8)-ysin(-8))^2}{4} + \frac{(xsin(-8)-ycos(-8))^2}{6} = 300\]</span></p>
+<p>within <span class="math inline">\(\pm 10\)</span> units, and if so plot these points in a larger shape with color #F0D3CD. The values <span class="math inline">\(-8\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(300\)</span>, and <span class="math inline">\(10\)</span> were chosen after a lot of fiddling around.</p>
+<p>Any coordinates with even <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values are colored red for the night sky, and all other points in the sky are white.</p>
+<p>Part 5: Implementing in tkinter</p>
+<pre class="python"><code>def main():
+    &quot;&quot;&quot; Create the spirals and elliptic core.&quot;&quot;&quot;
+    # clockwise spirals
+    spirals(A=650, B=10, N=50, rot_fac=0, fuz_fac=3, arm=0)
+    spirals(A=650, B=10, N=50, rot_fac=0.07, fuz_fac=1, arm=1)
+    spirals(A=650, B=10, N=50, rot_fac=0.20, fuz_fac=1, arm=1)
+    spirals(A=650, B=10, N=50, rot_fac=0.30, fuz_fac=2, arm=1)
+    # counterclockwise spirals
+    spirals(A=-650, B=10, N=50, rot_fac=0, fuz_fac=3, arm=0)
+    spirals(A=-650, B=10, N=50, rot_fac=0.07, fuz_fac=1, arm=1)
+    spirals(A=-650, B=10, N=50, rot_fac=0.20, fuz_fac=1, arm=1)
+    spirals(A=-650, B=10, N=50, rot_fac=0.30, fuz_fac=2, arm=1)
+    # elliptic core
+    star_haze(700, 40)
+    # don&#39;t turn off tk screen unless user clicks close
+    root.mainloop()
+
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre>
+<p>Finally, we plot the galaxy in tkinter. We have one main and three secondary arms for both clockwise and counterclockwise spiral arm directions. The parameters <code>A</code>, <code>B</code>, <code>N</code>, and the rotation factor <code>rot_fac</code> were all tweaked around until achieving something resembling a real galaxy.</p>
+</div>
+<div id="wrapping-up" class="section level3">
+<h3>Wrapping up</h3>
+<p>This project could have been done in matplotlib, but visual aesthetics are quite easy to acheive in Tkinter. Hopefully this inspires you to create your own art with Python!</p>
+<p>Thanks to Lee Vaughan, Harry Ringermacher, and Lawrence Mead for the inspiration.</p>
+</div>
+</div>
+
+    
+    
+    
+        <h4 class="page-header">Related</h4>
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/better-ways-to-visualize-power/">Better ways to Visualize Power</a></h4>
+    <h5></h5>
+    
+<a href="/tags/data-visualization"><kbd class="item-tag">data visualization</kbd></a>
+
+<a href="/tags/simulation"><kbd class="item-tag">simulation</kbd></a>
+
+
+
+</div>
+ 
+    
+
+    
+    
+        <h4 class="page-header">Comments</h4>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "statmusings" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+</main>
+
+        <footer>
+            <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>
+        </footer>
+
+        
+
+        
+    </body>
+
+</html>
+

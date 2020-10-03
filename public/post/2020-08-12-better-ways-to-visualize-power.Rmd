@@ -1,0 +1,11 @@
+---
+title: Better ways to Visualize Power
+author: ''
+date: '2020-08-12'
+slug: better-ways-to-visualize-power
+categories: []
+tags:
+  - data visualization
+  - simulation
+---
+

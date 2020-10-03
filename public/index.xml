@@ -6,10 +6,21 @@
     <description>Recent content on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Galaxy Art with Python and Tkinter</title>
+      <link>/project/galaxy-art-with-python-and-tkinter/</link>
+      <pubDate>Sat, 03 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/project/galaxy-art-with-python-and-tkinter/</guid>
+      <description>p.caption { font-size: 0.8em; }  How’d you do that? I’d like to give a walkthrough on how I created the visual you see below. It took some pretty serious tinkering, but it’s not too shabby right?
+Figure 1: The final output of my galaxy visualization 
+ The secret life of galaxies I’ve been working on Lee Vaughan’s excellent book Impractical Python Projects, and Chapter 10 really caught my attention since I’ve always marveled at the heavens and its celestial bodies.</description>
+    </item>
     
     <item>
       <title>A Note on the Permutation Test</title>
