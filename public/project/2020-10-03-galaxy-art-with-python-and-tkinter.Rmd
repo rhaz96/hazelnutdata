@@ -240,7 +240,7 @@ def star_haze(disc_radius_scaled, density):
             c.create_oval(x, y, x, y, fill="white", outline="")
 ```
 
-Here we create the stars surrounding the galaxy and the galaxy core.  In ``##1##`` we use the ```random_polar_coordinates```function defined earlier to generate coordinates uniformly in a disc. Check if each pair of $(x,y)$ coordinates falls within the bounds of the ellipse equation 
+Here we create the stars surrounding the galaxy and the galaxy core.  In ``##1##`` we use the ```random_polar_coordinates```function defined earlier to generate coordinates uniformly in a disc. Then in ``##2##``, check if each pair of $(x,y)$ coordinates falls within the bounds of the ellipse equation 
 $$\large \frac{(xcos(-8)-ysin(-8))^2}{4} + \frac{(xsin(-8)-ycos(-8))^2}{6} = 300$$
 
 within $\pm 10$ units, and if so plot these points in a larger shape with color #F0D3CD.  The values $-8$, $4$, $6$, $300$, and $10$ were chosen after a lot of fiddling around.  

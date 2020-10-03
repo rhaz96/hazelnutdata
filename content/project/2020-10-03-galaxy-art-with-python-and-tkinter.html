@@ -190,7 +190,7 @@ Figure 5: Various realizations of spirals using the equation from Ringermacher a
             c.create_oval(x, y, x, y, fill=&quot;red&quot;, outline=&quot;&quot;)
         else:
             c.create_oval(x, y, x, y, fill=&quot;white&quot;, outline=&quot;&quot;)</code></pre>
-<p>Here we create the stars surrounding the galaxy and the galaxy core. In <code>##1##</code> we use the <code>random_polar_coordinates</code>function defined earlier to generate coordinates uniformly in a disc. Check if each pair of <span class="math inline">\((x,y)\)</span> coordinates falls within the bounds of the ellipse equation
+<p>Here we create the stars surrounding the galaxy and the galaxy core. In <code>##1##</code> we use the <code>random_polar_coordinates</code>function defined earlier to generate coordinates uniformly in a disc. Then in <code>##2##</code>, check if each pair of <span class="math inline">\((x,y)\)</span> coordinates falls within the bounds of the ellipse equation
 <span class="math display">\[\large \frac{(xcos(-8)-ysin(-8))^2}{4} + \frac{(xsin(-8)-ycos(-8))^2}{6} = 300\]</span></p>
 <p>within <span class="math inline">\(\pm 10\)</span> units, and if so plot these points in a larger shape with color #F0D3CD. The values <span class="math inline">\(-8\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(300\)</span>, and <span class="math inline">\(10\)</span> were chosen after a lot of fiddling around.</p>
 <p>Any coordinates with even <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values are colored red for the night sky, and all other points in the sky are white.</p>
