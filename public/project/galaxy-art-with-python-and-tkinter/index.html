@@ -282,8 +282,8 @@ Figure 5: Various realizations of spirals using the equation from Ringermacher a
 <p>There you can quickly see the break at <span class="math inline">\(r = 0\)</span>. Smaller values of <code>B</code> relative to <code>N</code> tend to obscure the break, but if you zoom in you can see it. We will fill in the galactic gap with an elliptic core.</p>
 <p>In <code>##1##</code>, we simply create a function that generates an ellipse that may be rotated using the <code>theta</code> parameter to match the orientation of the spiral arms. This way we aren’t confined to ellipses whose axes are solely parallel to the x- or y- axes.</p>
 </div>
-<div id="part-4-creating-haze-and-the-galactic-core" class="section level3">
-<h3>Part 4: Creating haze and the galactic core</h3>
+<div id="part-5-creating-haze-and-the-galactic-core" class="section level3">
+<h3>Part 5: Creating haze and the galactic core</h3>
 <pre class="python"><code>def star_haze(disc_radius_scaled, density):
     &quot;&quot;&quot;Randomly distribute faint tkinter stars in galactic disc.
     
@@ -312,8 +312,8 @@ Figure 5: Various realizations of spirals using the equation from Ringermacher a
 <p>within <span class="math inline">\(\pm 10\)</span> units, and if so plot these points in a larger shape with color #F0D3CD. The values <span class="math inline">\(-8\)</span>, <span class="math inline">\(4\)</span>, <span class="math inline">\(6\)</span>, <span class="math inline">\(300\)</span>, and <span class="math inline">\(10\)</span> were chosen after a lot of fiddling around.</p>
 <p>Any coordinates with even <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> values are colored red for the night sky, and all other points in the sky are white.</p>
 </div>
-<div id="part-5-implementing-in-tkinter" class="section level3">
-<h3>Part 5: Implementing in tkinter</h3>
+<div id="part-6-implementing-in-tkinter" class="section level3">
+<h3>Part 6: Implementing in tkinter</h3>
 <pre class="python"><code>def main():
     &quot;&quot;&quot; Create the spirals and elliptic core.&quot;&quot;&quot;
     # clockwise spirals

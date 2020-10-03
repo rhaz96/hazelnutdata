@@ -212,7 +212,7 @@ There you can quickly see the break at $r = 0$.  Smaller values of ```B``` relat
 
 In ```##1##```, we simply create a function that generates an ellipse that may be rotated using the ```theta``` parameter to match the orientation of the spiral arms.  This way we aren't confined to ellipses whose axes are solely parallel to the x- or y- axes.
 
-### Part 4: Creating haze and the galactic core
+### Part 5: Creating haze and the galactic core
 
 ```{python echo=T, eval=F}
 def star_haze(disc_radius_scaled, density):
@@ -247,7 +247,7 @@ within $\pm 10$ units, and if so plot these points in a larger shape with color 
 
 Any coordinates with even $x$ and $y$ values are colored red for the night sky, and all other points in the sky are white.
 
-### Part 5: Implementing in tkinter 
+### Part 6: Implementing in tkinter 
 
 ```{python echo=T, eval=F}
 def main():
