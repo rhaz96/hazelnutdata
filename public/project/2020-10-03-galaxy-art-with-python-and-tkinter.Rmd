@@ -178,7 +178,7 @@ Figure 4: Galaxy stars within different spiral arms, cropped from Figure 1, usin
 </p>
 <br>
 
-The brighter blue and white dots contained in the green box were made with ```arm = 0```, while the finer white points in the orange box were set with ```arm = 1```.  The rotation factor is higher for the points in the orange box to create a wider spread of stars along the fringe of the main spirals for artistic effect.
+The brighter blue and white dots contained in the green region were made with ```arm = 0```, while the finer white points in the orange region were set with ```arm = 1```.  The rotation factor is higher for the points in the orange box to create a wider spread of stars along the fringe of the main spirals for artistic effect.
 
 ### Part 4: Defining the galaxy core
 
