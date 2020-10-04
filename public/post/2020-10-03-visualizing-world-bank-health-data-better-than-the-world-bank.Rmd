@@ -101,7 +101,7 @@ This looks a bit more pleasing to look at, I hope you would agree!  But equally 
 
 * Middle income and Upper middle income countries closely resemble each other in the upward trajectory of per capita expenditures
 
-* Middle income and Upper middle income countries both see government health per capita expenditures outpace private expenditures around 2006-2008
+* It took about three years longer for Middle income countries to see government spending outpace private spending, compared with Upper middle income countries (2011 vs 2008)
 
 * Only Lower middle income countries see health expenditures dominated by private sector spending
 
