@@ -25,8 +25,11 @@ Figure 1: WHO visualization on global health spending between 2000 and 2017. Sou
 <div id="background-on-the-data" class="section level3">
 <h3>Background on the data</h3>
 <p>The World Bank classifies countries into income brackets, including Upper Middle Income, Middle Income, and Lower Middle Income. Regardless of country bracket classification, most countries record data on health care expenditures per capita by the government, private entities, and out-of-pocket personal expenses. The data provides a snapshot on how spending is divided among those three categories.</p>
-<p>One of my SMU professors, William Bowser, kindly collected the raw data and you can download it here. This contains expenditures in U.S dollars rather than percent form, but that matters not since the content is the same.</p>
-<p>We’ll need to quite a bit of data cleaning as the format for data entry isn’t optimal for data analysis and visualization. The complete code for cleaning and plotting the data is provided below, but I won’t spend my time discussing the cleaning portion. I’d rather focus on the comparing the original WHO viz and mine.</p>
+<p>One of my SMU professors, William Bowser, kindly collected the raw data and you can download it here. This contains expenditures in U.S dollars rather than percent form, but that matters not since the content is the same. His aggregation excludes the High income category.</p>
+</div>
+<div id="recreating-the-viz" class="section level3">
+<h3>Recreating the viz</h3>
+<p>We’ll need to some data cleaning as the format for data entry isn’t optimal for data analysis and visualization. The complete code for cleaning and plotting the data is provided below, but I won’t spend time discussing the cleaning portion as I think focusing on comparing the original WHO viz and mine is more interesting!</p>
 <pre class="r"><code>library(tidyr)
 library(tidyverse)
 wb &lt;- read.csv(&quot;~/Desktop/SMU/Viz/world_bank_WDIhealth.csv&quot;)

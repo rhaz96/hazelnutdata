@@ -31,9 +31,12 @@ This hardly looks like an effective visualization by Cole Nussbaumer Knaflic's s
 
 The World Bank classifies countries into income brackets, including Upper Middle Income, Middle Income, and Lower Middle Income.  Regardless of country bracket classification, most countries record data on health care expenditures per capita by the government, private entities, and out-of-pocket personal expenses.  The data provides a snapshot on how spending is divided among those three categories.  
 
-One of my SMU professors, William Bowser, kindly collected the raw data and you can download it here.  This contains expenditures in U.S dollars rather than percent form, but that matters not since the content is the same.  
+One of my SMU professors, William Bowser, kindly collected the raw data and you can download it here.  This contains expenditures in U.S dollars rather than percent form, but that matters not since the content is the same.  His aggregation excludes the High income category.
 
-We'll need to quite a bit of data cleaning as the format for data entry isn't optimal for data analysis and visualization.  The complete code for cleaning and plotting the data is provided below, but I won't spend my time discussing the cleaning portion.  I'd rather focus on the comparing the original WHO viz and mine.
+
+### Recreating the viz
+
+We'll need to some data cleaning as the format for data entry isn't optimal for data analysis and visualization.  The complete code for cleaning and plotting the data is provided below, but I won't spend time discussing the cleaning portion as I think focusing on comparing the original WHO viz and mine is more interesting!
 
 ```{r fig.width = 10, fig.height = 6}
 library(tidyr)

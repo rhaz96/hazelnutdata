@@ -2,7 +2,7 @@ baseURL = "https://statisticalmusings.netlify.com/"
 languageCode = "en-us"
 title = "Statistical Musings"
 theme = "minimal"
-disqusShortname = "statmusings" # delete this to disable disqus comments
+#disqusShortname = "statmusings" # delete this to disable disqus comments
 googleAnalytics = ""
 
 [params]
