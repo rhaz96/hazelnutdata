@@ -1,0 +1,104 @@
+---
+title: Visualizing WHO health data better than the WHO
+author: ''
+date: '2020-10-03'
+slug: visualizing-world-bank-health-data-better-than-the-world-bank
+categories: []
+tags:
+  - data visualization
+  - R
+  - time series
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=F, warning=F, comment=NA)
+```
+
+
+### Can we do better than this?
+
+The World Health Organization (WHO), in coordination with the World Bank, maintains data on a variety of topics, including global health care expenditure.  They've recorded data between 2000 and 2017 on how the world spends its money on healthcare.  Here's their actual data viz.
+
+![](/post/2020-10-03-visualizing-world-bank-health-data-better-than-the-world-bank_files/who_health.png)
+<p class="caption">
+Figure 1: WHO visualization on global health spending between 2000 and 2017.  Source: [WHO](https://apps.who.int/nha/database)
+</p>
+<br>
+
+This hardly looks like an effective visualization by Cole Nussbaumer Knaflic's standards in her book [Storytelling with Data](https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257), so let's see how we can improve this to better align with her advice on effective visualizations.
+
+### Background on the data
+
+The World Bank classifies countries into income brackets, including Upper Middle Income, Middle Income, and Lower Middle Income.  Regardless of country bracket classification, most countries record data on health care expenditures per capita by the government, private entities, and out-of-pocket personal expenses.  The data provides a snapshot on how spending is divided among those three categories.  
+
+One of my SMU professors, William Bowser, kindly collected the raw data and you can download it here.  This contains expenditures in U.S dollars rather than percent form, but that matters not since the content is the same.  
+
+We'll need to quite a bit of data cleaning as the format for data entry isn't optimal for data analysis and visualization.  The complete code for cleaning and plotting the data is provided below, but I won't spend my time discussing the cleaning portion.  I'd rather focus on the comparing the original WHO viz and mine.
+
+```{r fig.width = 10, fig.height = 6}
+library(tidyr)
+library(tidyverse)
+wb <- read.csv("~/Desktop/SMU/Viz/world_bank_WDIhealth.csv")
+
+# eliminate redundant or empty columns
+wb2 <- wb[, -c(3,23,24)]
+
+# reformat yr columns
+cols_to_change <- colnames(wb2)[4:21]
+yr_cols <- sapply(cols_to_change, function(x) substring(x, 2, 5))
+colnames(wb2)[4:21] <- yr_cols
+
+# remove physician data from main data frame
+physician_rows <- which(wb2$Series.Code == "SH.MED.PHYS.ZS")
+physician_data <- wb2[physician_rows, ]
+
+# delete physician data from original data frame
+wb2 <- wb2[-physician_rows, ]
+# make rest of data numeric instead of columns
+wb2[, 4:21] <- apply(wb2[, 4:21], 2 , as.numeric)
+
+# make from wide to long by gathering all years into a single variable
+wb2_tidy <- wb2 %>% gather(Year, Value, "2000":"2017")
+
+# convert expenditure types to shorter names
+wb2_tidy <- wb2_tidy %>% mutate(`Expenditure Type` = 
+                      ifelse(Series.Code == "SH.XPD.PVTD.PC.CD", "Private", 
+                      ifelse(Series.Code == "SH.XPD.GHED.PC.CD", "Government", "Out-of-pocket")))
+
+# hat tip of interaction from https://stackoverflow.com/questions/9968976/group-by-two-columns-in-ggplot2
+ggplot(wb2_tidy, aes(Year, Value, color=Country.Name, shape = `Expenditure Type`,
+                     group=interaction(Country.Code, Series.Code))) + 
+  geom_line() + 
+  geom_point(size=3) + 
+  theme_minimal() +
+  xlab("") + 
+  ylab("Per Capita Expenditure (US$)") +
+  theme(text = element_text(size = 16),
+        panel.grid.major.x = element_blank(),
+        axis.text.x = element_text(angle = 45))+
+  scale_color_brewer(palette = "Dark2") + 
+  labs(color = "Country Income Bracket", shape = "Expenditure Type") + 
+  ggtitle("Global Spending on Health, 2000 - 2017")
+
+```
+
+<p class="caption">
+Figure 2: Revised WHO visualization.  This immediately looks more descriptive.
+</p>
+<br>
+
+This looks a bit more pleasing to look at, I hope you would agree!  But equally (or more) important is the insights this revised viz uncovers.  Here are my observations:
+
+* Middle income and Upper middle income countries closely resemble each other in the upward trajectory of per capita expenditures
+
+* Middle income and Upper middle income countries both see government health per capita expenditures outpace private expenditures around 2006-2008
+
+* Only Lower middle income countries see health expenditures dominated by private sector spending
+
+* Lower middle income is the only category of countries that feature consistently higher out-of-pocket spending on healthcare than government healthcare spending.  
+
+
+### Wrapping Up
+
+Data visualization done right can illuminate info that poor visualizations mask.  Even professional organizations can fail to adhere to Knaflic's standards of effective visualization. I hope this exercise encourages us to better consider how we approach data viz in the future.  And if you already make great viz, kudos to you!
+

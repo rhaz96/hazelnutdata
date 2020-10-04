@@ -6,10 +6,21 @@
     <description>Recent content in Posts on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Aug 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Visualizing WHO health data better than the WHO</title>
+      <link>/post/visualizing-world-bank-health-data-better-than-the-world-bank/</link>
+      <pubDate>Sat, 03 Oct 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/visualizing-world-bank-health-data-better-than-the-world-bank/</guid>
+      <description>Can we do better than this? The World Health Organization (WHO), in coordination with the World Bank, maintains data on a variety of topics, including global health care expenditure. They’ve recorded data between 2000 and 2017 on how the world spends its money on healthcare. Here’s their actual data viz.
+Figure 1: WHO visualization on global health spending between 2000 and 2017. Source: WHO 
+This hardly looks like an effective visualization by Cole Nussbaumer Knaflic’s standards in her book Storytelling with Data, so let’s see how we can improve this to better align with her advice on effective visualizations.</description>
+    </item>
     
     <item>
       <title>Grokking the Permutation Test</title>

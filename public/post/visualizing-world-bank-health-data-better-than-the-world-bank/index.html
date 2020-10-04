@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Visualizing WHO health data better than the WHO</title>
+        
+        <style>
+
+    html body {
+        font-family: 'Georgia', sans-serif;
+        background-color: #eee;
+    }
+
+    :root {
+        --accent: purple;
+        --border-width:  5px ;
+    }
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Georgia">
+
+
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/foundation.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/python.min.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+ <meta name="generator" content="Hugo 0.67.1" />
+        
+
+        
+
+        
+            <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        
+
+        
+
+    </head>
+
+    <body>
+        
+
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand visible-xs" href="#">Visualizing WHO health data better than the WHO</a>
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse">
+                    
+                        <ul class="nav navbar-nav">
+                            
+                                <li><a href="/">Home</a></li>
+                            
+                                <li><a href="/post/">Posts</a></li>
+                            
+                                <li><a href="/project/">Projects</a></li>
+                            
+                                <li><a href="/about/">About</a></li>
+                            
+                        </ul>
+                    
+                    
+                        <ul class="nav navbar-nav navbar-right">
+                            
+                                <li class="navbar-icon"><a href="https://github.com/rhaz96/statisticalmusings"><i class="fa fa-github"></i></a></li>
+                            
+                                <li class="navbar-icon"><a href="https://www.linkedin.com/in/robertmhazell"><i class="fa fa-linkedin"></i></a></li>
+                            
+                        </ul>
+                    
+                </div>
+            </div>
+        </nav>
+
+
+<main>
+
+    <div>
+        <h2>Visualizing WHO health data better than the WHO</h2>
+        <h5>October 3, 2020</h5>
+        
+<a href="/tags/data-visualization"><kbd class="item-tag">data visualization</kbd></a>
+
+<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
+
+<a href="/tags/time-series"><kbd class="item-tag">time series</kbd></a>
+
+
+    </div>
+
+    <div align="start" class="content">
+
+
+<div id="can-we-do-better-than-this" class="section level3">
+<h3>Can we do better than this?</h3>
+<p>The World Health Organization (WHO), in coordination with the World Bank, maintains data on a variety of topics, including global health care expenditure. They’ve recorded data between 2000 and 2017 on how the world spends its money on healthcare. Here’s their actual data viz.</p>
+<img src="/post/2020-10-03-visualizing-world-bank-health-data-better-than-the-world-bank_files/who_health.png" />
+<p class="caption">
+Figure 1: WHO visualization on global health spending between 2000 and 2017. Source: <a href="https://apps.who.int/nha/database">WHO</a>
+</p>
+<p><br></p>
+<p>This hardly looks like an effective visualization by Cole Nussbaumer Knaflic’s standards in her book <a href="https://www.amazon.com/Storytelling-Data-Visualization-Business-Professionals/dp/1119002257">Storytelling with Data</a>, so let’s see how we can improve this to better align with her advice on effective visualizations.</p>
+</div>
+<div id="background-on-the-data" class="section level3">
+<h3>Background on the data</h3>
+<p>The World Bank classifies countries into income brackets, including Upper Middle Income, Middle Income, and Lower Middle Income. Regardless of country bracket classification, most countries record data on health care expenditures per capita by the government, private entities, and out-of-pocket personal expenses. The data provides a snapshot on how spending is divided among those three categories.</p>
+<p>One of my SMU professors, William Bowser, kindly collected the raw data and you can download it here. This contains expenditures in U.S dollars rather than percent form, but that matters not since the content is the same.</p>
+<p>We’ll need to quite a bit of data cleaning as the format for data entry isn’t optimal for data analysis and visualization. The complete code for cleaning and plotting the data is provided below, but I won’t spend my time discussing the cleaning portion. I’d rather focus on the comparing the original WHO viz and mine.</p>
+<pre class="r"><code>library(tidyr)
+library(tidyverse)
+wb &lt;- read.csv(&quot;~/Desktop/SMU/Viz/world_bank_WDIhealth.csv&quot;)
+
+# eliminate redundant or empty columns
+wb2 &lt;- wb[, -c(3,23,24)]
+
+# reformat yr columns
+cols_to_change &lt;- colnames(wb2)[4:21]
+yr_cols &lt;- sapply(cols_to_change, function(x) substring(x, 2, 5))
+colnames(wb2)[4:21] &lt;- yr_cols
+
+# remove physician data from main data frame
+physician_rows &lt;- which(wb2$Series.Code == &quot;SH.MED.PHYS.ZS&quot;)
+physician_data &lt;- wb2[physician_rows, ]
+
+# delete physician data from original data frame
+wb2 &lt;- wb2[-physician_rows, ]
+# make rest of data numeric instead of columns
+wb2[, 4:21] &lt;- apply(wb2[, 4:21], 2 , as.numeric)
+
+# make from wide to long by gathering all years into a single variable
+wb2_tidy &lt;- wb2 %&gt;% gather(Year, Value, &quot;2000&quot;:&quot;2017&quot;)
+
+# convert expenditure types to shorter names
+wb2_tidy &lt;- wb2_tidy %&gt;% mutate(`Expenditure Type` = 
+                      ifelse(Series.Code == &quot;SH.XPD.PVTD.PC.CD&quot;, &quot;Private&quot;, 
+                      ifelse(Series.Code == &quot;SH.XPD.GHED.PC.CD&quot;, &quot;Government&quot;, &quot;Out-of-pocket&quot;)))
+
+# hat tip of interaction from https://stackoverflow.com/questions/9968976/group-by-two-columns-in-ggplot2
+ggplot(wb2_tidy, aes(Year, Value, color=Country.Name, shape = `Expenditure Type`,
+                     group=interaction(Country.Code, Series.Code))) + 
+  geom_line() + 
+  geom_point(size=3) + 
+  theme_minimal() +
+  xlab(&quot;&quot;) + 
+  ylab(&quot;Per Capita Expenditure (US$)&quot;) +
+  theme(text = element_text(size = 16),
+        panel.grid.major.x = element_blank(),
+        axis.text.x = element_text(angle = 45))+
+  scale_color_brewer(palette = &quot;Dark2&quot;) + 
+  labs(color = &quot;Country Income Bracket&quot;, shape = &quot;Expenditure Type&quot;) + 
+  ggtitle(&quot;Global Spending on Health, 2000 - 2017&quot;)</code></pre>
+<p><img src="/post/2020-10-03-visualizing-world-bank-health-data-better-than-the-world-bank_files/figure-html/unnamed-chunk-1-1.png" width="960" /></p>
+<p class="caption">
+Figure 2: Revised WHO visualization. This immediately looks more descriptive.
+</p>
+<p><br></p>
+<p>This looks a bit more pleasing to look at, I hope you would agree! But equally (or more) important is the insights this revised viz uncovers. Here are my observations:</p>
+<ul>
+<li><p>Middle income and Upper middle income countries closely resemble each other in the upward trajectory of per capita expenditures</p></li>
+<li><p>Middle income and Upper middle income countries both see government health per capita expenditures outpace private expenditures around 2006-2008</p></li>
+<li><p>Only Lower middle income countries see health expenditures dominated by private sector spending</p></li>
+<li><p>Lower middle income is the only category of countries that feature consistently higher out-of-pocket spending on healthcare than government healthcare spending.</p></li>
+</ul>
+</div>
+<div id="wrapping-up" class="section level3">
+<h3>Wrapping Up</h3>
+<p>Data visualization done right can illuminate info that poor visualizations mask. Even professional organizations can fail to adhere to Knaflic’s standards of effective visualization. I hope this exercise encourages us to better consider how we approach data viz in the future. And if you already make great viz, kudos to you!</p>
+</div>
+</div>
+
+    
+    
+    
+        <h4 class="page-header">Related</h4>
+         <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/an-intuitive-explanation-of-p-values/">An Intuitive Explanation of p-values</a></h4>
+    <h5></h5>
+    
+<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
+
+<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
+
+<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
+
+
+
+</div>
+  <div class="item">
+
+    
+    
+    
+
+    
+    
+
+    <h4><a href="/post/clt_revisited/">Clearing Some Confusion about the Central Limit Theorem</a></h4>
+    <h5></h5>
+    
+<a href="/tags/explanatory"><kbd class="item-tag">explanatory</kbd></a>
+
+<a href="/tags/statistics"><kbd class="item-tag">statistics</kbd></a>
+
+<a href="/tags/r"><kbd class="item-tag">R</kbd></a>
+
+
+
+</div>
+ 
+    
+
+    
+    
+        <h4 class="page-header">Comments</h4>
+        <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "statmusings" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+
+</main>
+
+        <footer>
+            <p class="copyright text-muted">© All rights reserved. Powered by <a href="https://gohugo.io">Hugo</a> and <a href="https://github.com/calintat/minimal">Minimal</a>.</p>
+        </footer>
+
+        
+
+        
+    </body>
+
+</html>
+
