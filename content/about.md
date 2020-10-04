@@ -12,4 +12,4 @@ Hello and welcome to my blog!  I'm Robert Hazell.  My inspiration for this comes
 
 I started this blog in March 2020 to capture and solidify my statistics and data science musings that I hope illuminates concepts in those fields for both you and me.
 
-I hope you find this blog useful!  All feedback is welcome.  Contact me via [LinkedIn](www.linkedin.com/in/robertmhazell) or by email: rmhazell@outlook.com
+I hope you find this blog useful!  All feedback is welcome.  Contact me via [LinkedIn](linkedin.com/in/robertmhazell) or by email: rmhazell@outlook.com
