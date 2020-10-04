@@ -171,10 +171,10 @@ We then apply the barred spiral equation in ``##2##``, defined first in polar co
 
 Finally, we determine how to plot these coordinates in tkinter in ``##3##``. The ```arm``` parameter determines whether the spiral is a leading (or primary) spiral -- this is true if ```arm = 0```.  If so, then these stars will appear larger and brighter. Stars here will be blue (hexadecimal code #33D4FF) and white. For ```arm = 1```, the stars in the galaxy spirals will be white but appear more dusty.  See Figure 4 for an example.
 
-![](/project/2020-10-03-galaxy-art-with-python-and-tkinter_files/galaxy_zoom.png)
+![](/project/2020-10-03-galaxy-art-with-python-and-tkinter_files/galaxyregions.png)
 
 <p class="caption">
-Figure 4: Galaxy stars within different spiral arms, cropped from Figure 1, using ```arm``` and ```rot_fac```. The stars in the orange box have ```arm``` value of $1$ and a greater rotation factor ($0.20$ vs $0$ for the stars in the green box). 
+Figure 4: Galaxy stars within different spiral arms, cropped from Figure 1, using ```arm``` and ```rot_fac```. The stars in the orange region have ```arm``` value of $1$ and a greater rotation factor ($0.20$ vs $0$ for the stars in the green region). 
 </p>
 <br>
 
