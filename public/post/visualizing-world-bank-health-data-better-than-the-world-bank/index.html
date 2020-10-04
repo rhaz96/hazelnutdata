@@ -187,7 +187,7 @@ wb2_tidy &lt;- wb2_tidy %&gt;% mutate(`Expenditure Type` =
 
 ggplot(wb2_tidy, aes(Year, Value)) + 
   geom_line(aes(color=Country.Name,
-            group=interaction(Country.Name, `Expenditure Type`))) + 
+            group=interaction(Country.Name, `Expenditure Type`)), size = 1.5) + 
   geom_point(aes(shape = `Expenditure Type`), size=2.5, color = &quot;gray17&quot;) + 
   theme_minimal() +
   xlab(&quot;&quot;) + 
