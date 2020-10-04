@@ -35,6 +35,7 @@ Figure 1: WHO visualization on global health spending between 2000 and 2017. Sou
 <p>We’ll need to do some data cleaning as the format for data entry isn’t optimal for data analysis and visualization. The complete code for cleaning and plotting the data is provided below, but I won’t spend time discussing the cleaning portion as I think focusing on comparing the original WHO viz and mine is more interesting!</p>
 <pre class="r"><code>library(tidyr)
 library(tidyverse)
+
 wb &lt;- read.csv(&quot;~/Desktop/SMU/Viz/world_bank_WDIhealth.csv&quot;)
 
 # eliminate redundant or empty columns
@@ -63,15 +64,16 @@ wb2_tidy &lt;- wb2_tidy %&gt;% mutate(`Expenditure Type` =
                       ifelse(Series.Code == &quot;SH.XPD.GHED.PC.CD&quot;, &quot;Government&quot;, &quot;Out-of-pocket&quot;)))
 
 # hat tip of interaction from https://stackoverflow.com/questions/9968976/group-by-two-columns-in-ggplot2
-ggplot(wb2_tidy, aes(Year, Value, color=Country.Name, shape = `Expenditure Type`,
-                     group=interaction(Country.Code, Series.Code))) + 
-  geom_line() + 
-  geom_point(size=3) + 
+
+ggplot(wb2_tidy, aes(Year, Value)) + 
+  geom_line(aes(color=Country.Name,
+            group=interaction(Country.Name, `Expenditure Type`))) + 
+  geom_point(aes(shape = `Expenditure Type`), size=2.5, color = &quot;gray17&quot;) + 
   theme_minimal() +
   xlab(&quot;&quot;) + 
-  ylab(&quot;Per Capita Expenditure (US$)&quot;) +
+  ylab(&quot;Per Capita Expenditure (US $)&quot;)+
   theme(text = element_text(size = 16),
-        panel.grid.major.x = element_blank(),
+        panel.grid.major.x = element_blank(), 
         axis.text.x = element_text(angle = 45))+
   scale_color_brewer(palette = &quot;Dark2&quot;) + 
   labs(color = &quot;Country Income Bracket&quot;, shape = &quot;Expenditure Type&quot;) + 

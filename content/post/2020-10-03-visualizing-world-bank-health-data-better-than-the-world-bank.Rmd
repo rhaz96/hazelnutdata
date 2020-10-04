@@ -47,6 +47,7 @@ We'll need to do some data cleaning as the format for data entry isn't optimal f
 ```{r fig.width = 10, fig.height = 6}
 library(tidyr)
 library(tidyverse)
+
 wb <- read.csv("~/Desktop/SMU/Viz/world_bank_WDIhealth.csv")
 
 # eliminate redundant or empty columns
@@ -75,20 +76,20 @@ wb2_tidy <- wb2_tidy %>% mutate(`Expenditure Type` =
                       ifelse(Series.Code == "SH.XPD.GHED.PC.CD", "Government", "Out-of-pocket")))
 
 # hat tip of interaction from https://stackoverflow.com/questions/9968976/group-by-two-columns-in-ggplot2
-ggplot(wb2_tidy, aes(Year, Value, color=Country.Name, shape = `Expenditure Type`,
-                     group=interaction(Country.Code, Series.Code))) + 
-  geom_line() + 
-  geom_point(size=3) + 
+
+ggplot(wb2_tidy, aes(Year, Value)) + 
+  geom_line(aes(color=Country.Name,
+            group=interaction(Country.Name, `Expenditure Type`))) + 
+  geom_point(aes(shape = `Expenditure Type`), size=2.5, color = "gray17") + 
   theme_minimal() +
   xlab("") + 
-  ylab("Per Capita Expenditure (US$)") +
+  ylab("Per Capita Expenditure (US $)")+
   theme(text = element_text(size = 16),
-        panel.grid.major.x = element_blank(),
+        panel.grid.major.x = element_blank(), 
         axis.text.x = element_text(angle = 45))+
   scale_color_brewer(palette = "Dark2") + 
   labs(color = "Country Income Bracket", shape = "Expenditure Type") + 
   ggtitle("Global Spending on Health, 2000 - 2017")
-
 ```
 
 <p class="caption">
