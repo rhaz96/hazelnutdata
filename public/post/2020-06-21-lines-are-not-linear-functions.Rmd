@@ -33,7 +33,7 @@ $4 f(x_1) + 2 f(x_2) = 4[\frac{1}{2}(3) + 5] + 2[\frac{1}{2}(6) + 5] = 42$
 
 Clearly 17 $\neq$ 42 so the function as it stands is not a linear function.  But we'll next consider under what circumstances such a line as this can be considered a linear function.
 
-## When lines are linear functions
+## When lines are linear functions (in linear algebra)
 
 Neither Savov nor the MIT page linked earlier show and/or derive the condition for when a generic line $y = mx+b$ can be considered a linear function.  It turns out that when $\beta$ = $1-\alpha$ it's indeed a linear function.
 
