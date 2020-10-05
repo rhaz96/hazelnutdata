@@ -1,5 +1,5 @@
 ---
-title: Lines are NOT linear functions !?!
+title: When are lines linear functions in linear algebra?
 author: ''
 date: '2020-06-21'
 slug: lines-not-linear-functions
@@ -15,7 +15,7 @@ Last updated: Jun 22, 2020
 
 ## Wait, what?
 
-I know, you most likely did a double take on the title.  After all, we were all probably taught in algebra or geometry class that lines *are* linear functions.  So presumably $y = 2x+3$ is supposed to be a linear function...except that it's not.  In fact equations of the form $y = mx+b$ are not considered linear functions except under special conditions, which will be explained a bit later.  All this raises the question: *what are linear functions?*
+We were all probably taught in algebra or geometry class that all lines are linear functions.  So presumably $y = 2x+3$ is supposed to be a linear function in algebra...except that it's not.  In fact equations of the form $y = mx+b$ are not considered linear functions, except under special conditions which will be explained a bit later.  All this raises the question: *what are linear functions?*
 
 ## Linear functions, defined
 
@@ -24,7 +24,7 @@ At the heart of linear algebra are linear transformations, like matrix-vector pr
 > A function *f* is linear if it satisfies the equation
 $$f(\alpha x_1 + \beta x_2) = \alpha f(x_1) + \beta f(x_2)$$
 
-whera $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the same definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
+where $\alpha$ and $\beta$ are both scalar constants.  MIT [provides the same definition](http://www-math.mit.edu/~djk/calculus_beginners/chapter03/section03.html) albeit with slightly different notation.  
 
 The definition implies that evaluating a linear function with some linear combination of inputs $x_1$ and $x_2$ is the same as taking a linear combination of the outputs $f(x_1)$ and $f(x_2)$.
 
@@ -54,7 +54,7 @@ $\alpha f(x_1) = \alpha (mx_1+b) = \alpha mx_1 + \alpha b$
 
 $\beta f(x_2) = \beta (mx_2+b) = \beta mx_2 + \beta b$
 
-Putting it altogther:
+Putting it altogether:
 
 $\alpha m x_1 + \beta mx_2 + b = \alpha mx_1 + \alpha b + \beta mx_2 + \beta b$
 
@@ -80,6 +80,7 @@ Perfect!
 
 ## Wrapping up
 
-I was surprised to learn the generic equation of lines don't actually qualify as linear functions.  The only lines that do qualify to be linear functions are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and subsituting $0$ for $b$.  All values of $\alpha$ and $\beta$ will satisfy the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$.  Equations of the form $f(x) = mx+b$ with $b$ $\neq$ $0$ are best thought of as linear *equations* and not strictly as linear *functions*.
+The only lines that do qualify to be linear functions in linear algebra are those that go through the origin; that is, their equation is $f(x) = mx$. So $b=0$ &mdash; you can verify this by going back to the proof above and substituting $0$ for $b$.  All values of $\alpha$ and $\beta$ will satisfy the linear function requirements.  If $b$ $\neq$ $0$ then we must restrict $\beta$ to be equal to $1-\alpha$.  
 
-This is just one of the nuggets from the gold mine of linear algebra.  There's much more that you and I can uncover by learning this fascinating subject!
+Outside of linear algebra, we can happily accept that any line of the form $y = mx+b$ qualifies as a linear function.  So long as we can compartmentalize we can avoid the shadow of cognitive dissonance.
+
