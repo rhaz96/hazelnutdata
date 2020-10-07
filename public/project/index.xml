@@ -17,7 +17,7 @@
       <pubDate>Mon, 05 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>/project/image-stacking-python/</guid>
-      <description></description>
+      <description>Background We’ve all probably at some point intended to take a picture of someone or something, only to have our shot photobombed by another object of person. Or maybe we’re recording a video and that happens. Fortunately we have Photoshop and an array of other tools at our disposal, but let’s use Python to see how image stacking can remove unwanted objects from a set of images to produce a single image with the desired object.</description>
     </item>
     
     <item>
