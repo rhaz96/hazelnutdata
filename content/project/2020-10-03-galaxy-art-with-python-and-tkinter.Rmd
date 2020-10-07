@@ -280,4 +280,6 @@ This project could have been done in matplotlib, but visual aesthetics are quite
 
 Thanks to Lee Vaughan, Harry Ringermacher, and Lawrence Mead for the inspiration.
 
+You can download the full code I wrote [here](https://github.com/rhaz96/Recreational-Python/tree/main/GalaxyArt).
+
 
