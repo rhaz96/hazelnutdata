@@ -63,11 +63,7 @@ In Figure 3 we have five images, and we're looking at the RGB for a particular p
 
 ### Part 1: Resizing Images
 
-The original images in Figure 1 can be downloaded below.
-
-```{r echo=F}
-xfun::embed_file("~/Desktop/SMU/ImpracticalPython/toy_train/train_pics.zip")
-```
+The original images in Figure 1 can be downloaded from ```train_pics.zip``` from my [Github](https://github.com/rhaz96/Recreational-Python/tree/main/ImageStacking), where you can also find the full image stacking code I wrote for this project.
 
 Since each image is 4640 x 3480 pixels, the image stacking process would be lengthy without first resizing the images.  They'll be scaled down to a $1/10$ their original size: 464 x 348.  The file name for each rescaled image will include "resized".  Make sure.  Here we're assuming the original images are stored in a directory (folder) named ```train_pics```.
 
@@ -107,7 +103,7 @@ In ```pillow```, we use the ```getdata``` method to extract pixel densities, wit
 
 After we can discard the resized images since we have all the pixel info necessary to create the stacked image.
 
-### Part 4: Getting the median pixel densities for the stacked image
+### Part 3: Getting the median pixel densities for the stacked image
 
 ```{python echo=T, eval=F}
 medians = {color: None for color in color_keys}
@@ -137,7 +133,7 @@ We think of the final stacked image as a grid of size 464 x 348, containing 161,
 
 To produce those tuples, we do ```*list(medians.values())``` do produce a list of lists of shape (3, 161472), and then zip it to capture corresponding elements, saving resultant list of tuples in ```merged_data```.  
 
-### Part 5: Creating the new image
+### Part 4: Creating the new image
 
 Finally, we build the new stacked image that has the toy train removed.  We call the ```new``` method to create a new image of size 464 x 368, and enter the RGB pixel data from ```merged_data``` using the ```putdata``` method.  The ```show``` method will display the new image output directly (see Figure 2 above), and you can save it as a .tif using the ```save``` method.
 
@@ -151,6 +147,7 @@ stacked.save("train_gone.tif", "TIFF")
 ### Wrapping up
 
 In real life, obviously I'd use to some image editing software to remove unwanted objects, but this was a good exercise to help me (and you I hope!) better understand how image stacking works under the hood. 
+
 
 
 
