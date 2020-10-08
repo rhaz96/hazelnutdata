@@ -165,9 +165,9 @@ This is arguably the most important function in the program.  ```spirals``` give
 
 Their equation contains a tangent function, and tangent is defined between $(-\frac{\pi}{2}, \frac{\pi}{2})$, but since the equation also contains a natural logarithm, which is not defined for any values $\leq 0$, we must restrict tangent to values between $0$ and $\pi/2$ exclusive.  
 
-In ``##1##`` we initialize an empty list which will hold all the star coordinates for the spiral arms, the surrounding sky Use a step size of $0.05$ in to get a more dense cluster of stars in the galaxy arm, as we're confined to angles only in quadrant 1.  
+In ``##1##`` we initialize an empty list which will hold all the star coordinates for the spiral arms.  Use a step size of $0.05$ to get a more dense cluster of stars in the galaxy arm, as we're confined to angles only in quadrant 1.  
 
-We then apply the barred spiral equation in ``##2##``, defined first in polar coordinates and then converted to rectangular.  To create a scattering stars that are spread out within the spiral, we add some noise using a fuzz factor (```fuz_fac```) determined by the value of ```A```.  Using a rotation factor (```rot_fac```) allows us to change the angular orientation of a spiral arm as we wish.
+We then apply the barred spiral equation in ``##2##``, defined first in polar coordinates and then converted to rectangular.  To create a scattering of stars that are spread out within the spiral, we add some noise using a fuzz factor (```fuz_fac```) determined by the value of ```A```.  Using a rotation factor (```rot_fac```) allows us to change the angular orientation of a spiral arm as we wish.
 
 Finally, we determine how to plot these coordinates in tkinter in ``##3##``. The ```arm``` parameter determines whether the spiral is a leading (or primary) spiral -- this is true if ```arm = 0```.  If so, then these stars will appear larger and brighter. Stars here will be blue (hexadecimal code #33D4FF) and white. For ```arm = 1```, the stars in the galaxy spirals will be white but appear more dusty.  See Figure 4 for an example.
 
@@ -240,7 +240,7 @@ def star_haze(disc_radius_scaled, density):
             c.create_oval(x, y, x, y, fill="white", outline="")
 ```
 
-Here we create the stars surrounding the galaxy and the galaxy core.  In ``##1##`` we use the ```random_polar_coordinates```function defined earlier to generate coordinates uniformly in a disc. Then in ``##2##``, check if each pair of $(x,y)$ coordinates falls within the bounds of the ellipse equation 
+Here we create the stars of the galaxy core and the starry sky surrounding the galaxy. In ``##1##`` we use the ```random_polar_coordinates```function defined earlier to generate coordinates uniformly in a disc. Then in ``##2##``, check if each pair of $(x,y)$ coordinates falls within the bounds of the ellipse equation 
 $$\large \frac{(xcos(-8)-ysin(-8))^2}{4} + \frac{(xsin(-8)-ycos(-8))^2}{6} = 300$$
 
 within $\pm 10$ units, and if so plot these points in a larger shape with color #F0D3CD.  The values $-8$, $4$, $6$, $300$, and $10$ were chosen after a lot of fiddling around.  
