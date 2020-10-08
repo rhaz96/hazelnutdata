@@ -209,7 +209,7 @@ merged_data = list(
     zip(*list(medians.values()))
 )  # list(medians.values()) has shape (8,161472)</code></pre>
 <p>We implement the method in Figure 3 with the following code. The <code>medians</code> dictionary will store the median pixel densities for each color. The keys will be the colors red, green, and blue. The values for each key will be a list of size
-161472. For each color <code>*color_dict[color]</code> will unpack the list of lists for that color in <code>color_dict</code>. <code>medians</code> will looks something like this:</p>
+161472. For each color <code>*color_dict[color]</code> will unpack the list of lists for that color in <code>color_dict</code>. <code>medians</code> will look something like this:</p>
 <pre class="python"><code># each list has 161,472 elements
 
 {&#39;red&#39;  : [34, 172, 48, 90, 173,...,143, 212, 105, 164], 

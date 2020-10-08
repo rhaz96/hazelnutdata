@@ -118,7 +118,7 @@ merged_data = list(
 ```
 
 We implement the method in Figure 3 with the following code.  The ```medians``` dictionary will store the median pixel densities for each color.  The keys will be the colors red, green, and blue.  The values for each key will be a list of size 
-161472.  For each color ```*color_dict[color]``` will unpack the list of lists for that color in ```color_dict```.  ```medians``` will looks something like this:
+161472.  For each color ```*color_dict[color]``` will unpack the list of lists for that color in ```color_dict```.  ```medians``` will look something like this:
 
 ```{python echo=T, eval=F}
 # each list has 161,472 elements
