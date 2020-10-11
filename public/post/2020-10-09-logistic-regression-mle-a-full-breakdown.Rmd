@@ -111,6 +111,8 @@ $\large LL = y\,ln(\pi) + (1-y)\,ln(1-\pi)$
 
 ### Part 4: Gradient ascent using the Chain Rule
 
+![<span>Photo by <a href="https://unsplash.com/@willianjusten?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Willian Justen de Vasconcellos</a> on <a href="https://unsplash.com/s/photos/gradient-descent?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>](/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/grad_asc_mountain.jpg)
+
 Now we're ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood $LL$ with respect to each theta for our single instance, all using the Chain Rule from calculus.
 
 

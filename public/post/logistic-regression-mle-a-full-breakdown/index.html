@@ -194,6 +194,10 @@ Logistic function. Source: <a href="https://en.wikipedia.org/wiki/Logistic_funct
 </div>
 <div id="part-4-gradient-ascent-using-the-chain-rule" class="section level3">
 <h3>Part 4: Gradient ascent using the Chain Rule</h3>
+<div class="figure">
+<img src="/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/grad_asc_mountain.jpg" alt="Photo by Willian Justen de Vasconcellos on Unsplash" />
+<p class="caption"><span>Photo by <a href="https://unsplash.com/@willianjusten?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Willian Justen de Vasconcellos</a> on <a href="https://unsplash.com/s/photos/gradient-descent?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span></p>
+</div>
 <p>Now we’re ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood <span class="math inline">\(LL\)</span> with respect to each theta for our single instance, all using the Chain Rule from calculus.</p>
 <p>To avoid overloading the letter y, we’ll use <span class="math inline">\(g\)</span> to denote the linear combination of inputs, so that</p>
 <p><span class="math inline">\(\large g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p\)</span></p>
