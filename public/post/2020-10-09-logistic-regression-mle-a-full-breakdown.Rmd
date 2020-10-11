@@ -11,13 +11,13 @@ tags:
 
 ### Prologue
 
-![](/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/Logistic-curve.svg)
+![](/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/Logistic-curve.jpg)
 <p class="caption">
 Logistic function.  Source: [Wikipedia](https://en.wikipedia.org/wiki/Logistic_function)
 </p>
 <br>
 
-It's a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details.  They'll sometimes show steps 1, 2, and 5 without steps 3 and 4.  And steps 1, 2, and 5 are sometimes better dealt with if the logic was fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.  After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the cost function for logistic regression is derived.
+It's a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details.  They'll sometimes show steps 1, 2, and 5 without steps 3 and 4.  And steps 1, 2, and 5 are sometimes better dealt with if the logic was fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.  After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.
 
 To be clear it's definitely not necessary to understand the mechanics behind the derivation in order to be a good ML practitioner, but since MLE with logistic regression tends to be the springboard by which neural networks are introduced, understanding it can lead to greater appreciation and comprehension of deep learning.
 
@@ -71,7 +71,7 @@ This implies $p(y = 0) = 1 - p(y = 1) = 1 - \pi$
 
 A way to reformulate this is by noting that 
 
-$\large p(Y = y) = \pi^y(1-y)^{1-y}$, with $y$ being binary, taking on values of $0$ or $1$.  So that 
+$\large p(Y = y) = \pi^y(1-y)^{1-y}$, with $Y$ being a random variable describing the values any particular instance can take on, which for binary classification is $0$ or $1$.  So:
 
 * if $y=1$, $p(Y = 1) = \pi^1(1-\pi)^{1-1} = \pi$
 
