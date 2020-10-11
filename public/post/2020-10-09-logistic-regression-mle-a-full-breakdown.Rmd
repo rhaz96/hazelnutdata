@@ -206,7 +206,7 @@ $\large {\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[y^{(i)}-\
 
 ### Part 7: Going from ascent to descent
 
-All along we worked with gradient *ascent*.  It's quite simple to write out the update rule for gradient *descent*.  We simply switch the order of the terms in the bracket and negate the sum.  In other words,
+All along we worked with gradient *ascent*.  It's quite simple to write out the update rule for gradient *descent*.  We simply switch the order of the terms in the bracket.  In other words,
 
 $\large \boxed{\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)}) - y^{(i)}] x_{j}^{(i)}}$
 
