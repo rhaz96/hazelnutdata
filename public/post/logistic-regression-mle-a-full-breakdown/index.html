@@ -141,8 +141,8 @@
 <p>We want to extend the linear regression model to handle classification. We all know the standard linear regression equation with <span class="math inline">\(p\)</span> predictors:</p>
 <p><span style="color:purple"><span class="math display">\[\large y = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p\]</span></span></p>
 <p>We want to modify this so that outputs fall between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> for classification purposes. This is classically done using the <em>logistic function</em>:</p>
-<p><span style="color:SlateBlue"><span class="math display">\[\large \sigma (m) = \frac{e^{m}}{1+e^m}\]</span></span></p>
-<p>where <span class="math inline">\(m\)</span> is some arbitrary scalar input.</p>
+<p><span style="color:SlateBlue"><span class="math display">\[\large \sigma (z) = \frac{e^{z}}{1+e^z}\]</span></span></p>
+<p>where <span class="math inline">\(z\)</span> is some arbitrary scalar input.</p>
 <p>Our new equation is now:</p>
 <p><span style="color:purple"><span class="math display">\[\large p(y) = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}} = \sigma(y)\]</span></span></p>
 <p>However, we’d like to work with a linear function, so instead of working with <span class="math inline">\(p(y)\)</span>, we use the odds of <span class="math inline">\(y\)</span> by dividing <span class="math inline">\(p(y)\)</span> by <span class="math inline">\(1-p(y)\)</span>. This is equivalent to saying divide <span class="math inline">\(\sigma(y)\)</span> by <span class="math inline">\(1-\sigma(y)\)</span></p>
@@ -168,9 +168,9 @@
 <li><p>if <span class="math inline">\(y=0\)</span>, <span class="math inline">\(p(Y = 0) = \pi^0(1-\pi)^{1-0} = 1-\pi\)</span></p></li>
 </ul>
 <p>as just stated above. We use this reformulation since it provides a <em>single equation</em> to calculate the probability of y taking on <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>.</p>
-<p>If we assume the probability that each instance in our data belongs to either <span class="math inline">\(Y = 0\)</span> or <span class="math inline">\(Y=1\)</span> is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of betas) is the <em>likelihood</em>, a simple application of the multiplication rule in probability for independent events:</p>
+<p>If we assume the probability that each instance in our data belongs to either <span class="math inline">\(Y = 0\)</span> or <span class="math inline">\(Y=1\)</span> is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of thetas) is the <em>likelihood</em>, a simple application of the multiplication rule in probability for independent events:</p>
 <p><span class="math inline">\(\large L = P(Y_1 = y_1, Y_2 = y_2, ..., Y_m = y_m) = \prod_{i=1}^{m}\pi^{y^{(i)}}(1-\pi)^{1-y^{(i)}}\)</span></p>
-<p>There are <span class="math inline">\(m\)</span> instances in our dataset. We’re trying to determine the betas that will maximize this likelihood function.</p>
+<p>There are <span class="math inline">\(m\)</span> instances in our dataset. We’re trying to determine the thetas that will maximize this likelihood function.</p>
 </div>
 <div id="part-3-prepping-for-gradient-ascent" class="section level3">
 <h3>Part 3: Prepping for gradient ascent</h3>
@@ -189,7 +189,7 @@
 </div>
 <div id="part-4-gradient-ascent-using-the-chain-rule" class="section level3">
 <h3>Part 4: Gradient ascent using the Chain Rule</h3>
-<p>Now we’re ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood <span class="math inline">\(LL\)</span> with respect to each beta for our single instance, all using the Chain Rule from calculus.</p>
+<p>Now we’re ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood <span class="math inline">\(LL\)</span> with respect to each theta for our single instance, all using the Chain Rule from calculus.</p>
 <p>To avoid overloading the letter y, we’ll use <span class="math inline">\(g\)</span> to denote the linear combination of inputs, so that</p>
 <p><span class="math inline">\(\large g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p\)</span></p>
 <p>and hence</p>

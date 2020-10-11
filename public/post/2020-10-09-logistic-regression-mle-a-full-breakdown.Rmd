@@ -26,9 +26,9 @@ We want to extend the linear regression model to handle classification.  We all 
 
 We want to modify this so that outputs fall between $0$ and $1$ for classification purposes.  This is classically done using the *logistic function*:
 
-<span style="color:SlateBlue">$$\large \sigma (m) = \frac{e^{m}}{1+e^m}$$</span>
+<span style="color:SlateBlue">$$\large \sigma (z) = \frac{e^{z}}{1+e^z}$$</span>
 
-where $m$ is some arbitrary scalar input.
+where $z$ is some arbitrary scalar input.
 
 Our new equation is now:
 
@@ -74,11 +74,11 @@ $\large p(Y = y) = \pi^y(1-y)^{1-y}$, with $y$ being binary, taking on values of
 
 as just stated above.  We use this reformulation since it provides a *single equation* to calculate the probability of y taking on $0$ or $1$. 
 
-If we assume the probability that each instance in our data belongs to either $Y = 0$ or $Y=1$ is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of betas) is the *likelihood*, a simple application of the multiplication rule in probability for independent events:
+If we assume the probability that each instance in our data belongs to either $Y = 0$ or $Y=1$ is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of thetas) is the *likelihood*, a simple application of the multiplication rule in probability for independent events:
 
 $\large L = P(Y_1 = y_1, Y_2 = y_2, ..., Y_m = y_m) = \prod_{i=1}^{m}\pi^{y^{(i)}}(1-\pi)^{1-y^{(i)}}$
 
-There are $m$ instances in our dataset.  We're trying to determine the betas that will maximize this likelihood function.
+There are $m$ instances in our dataset.  We're trying to determine the thetas that will maximize this likelihood function.
 
 ### Part 3: Prepping for gradient ascent
 
@@ -105,7 +105,7 @@ $\large LL = y\,ln(\pi) + (1-y)\,ln(1-\pi)$
 
 ### Part 4: Gradient ascent using the Chain Rule
 
-Now we're ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood $LL$ with respect to each beta for our single instance, all using the Chain Rule from calculus.
+Now we're ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood $LL$ with respect to each theta for our single instance, all using the Chain Rule from calculus.
 
 
 To avoid overloading the letter y, we'll use $g$ to denote the linear combination of inputs, so that 
