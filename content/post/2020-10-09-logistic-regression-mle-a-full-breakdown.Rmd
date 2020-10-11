@@ -11,7 +11,8 @@ tags:
 
 ### Prologue
 
-![](/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/Logistic-curve.jpg)
+![](/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/logistic_function.jpg)
+
 <p class="caption">
 Logistic function.  Source: [Wikipedia](https://en.wikipedia.org/wiki/Logistic_function)
 </p>
