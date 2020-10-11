@@ -210,7 +210,7 @@ All along we worked with gradient *ascent*.  It's quite simple to write out the 
 
 $\large \boxed{\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)}) - y^{(i)}] x_{j}^{(i)}}$
 
-To see why that makes sense, consider a simpler example.  Suppose I was interested in $\sum_{i=1}^{3}(3i^2 - 4i)$  Evaluating this summation gives $18$.  To get $-18$ instead (analogous of going from gradient ascent to descent), you can verify that $\sum_{i=1}^{3}(4i - 3i^2)$ does indeed give $-18$ 
+To see why that makes sense, consider a simpler example.  Suppose I was interested in $\sum_{i=1}^{3}(3i^2 - 4i)$  Evaluating this summation gives $18$.  To get $-18$ instead (analogous of going from gradient ascent to descent), you can verify that $\sum_{i=1}^{3}(4i - 3i^2)$ does indeed give $-18$. 
 
 ### Wrapping up
 
