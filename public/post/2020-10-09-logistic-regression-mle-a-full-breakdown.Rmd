@@ -1,0 +1,223 @@
+---
+title: 'Logistic Regression MLE: A Thorough Breakdown'
+author: ''
+date: '2020-10-11'
+slug: logistic-regression-mle-a-full-breakdown
+categories: []
+tags:
+  - technical
+  - machine learning
+---
+
+
+### Prologue
+
+It's a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details.  They'll sometimes show steps 1, 2, and 5 without steps 3 and 4.  And steps 1, 2, and 5 are sometimes better dealt with if the logic was fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.  After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the cost function for logistic regression is derived.
+
+To be clear it's definitely not necessary to understand the mechanics behind the derivation in order to be a good ML practitioner, but since MLE with logistic regression tends to be the springboard by which neural networks are introduced, understanding it can lead to greater appreciation and comprehension of deep learning.
+
+Get some caffeine - this will be long, but rewarding!
+
+### Part 1: Motivating Logistic Regression
+
+We want to extend the linear regression model to handle classification.  We all know the standard linear regression equation with $p$ predictors:
+
+<span style="color:purple">$$\large y = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$$</span>
+
+We want to modify this so that outputs fall between $0$ and $1$ for classification purposes.  This is classically done using the *logistic function*:
+
+<span style="color:SlateBlue">$$\large \sigma (m) = \frac{e^{m}}{1+e^m}$$</span>
+
+where $m$ is some arbitrary scalar input.
+
+Our new equation is now:
+
+<span style="color:purple">$$\large p(y) = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}} = \sigma(y)$$</span>
+
+However, we'd like to work with a linear function, so instead of working with $p(y)$, we use the odds of $y$ by dividing $p(y)$ by $1-p(y)$.  This is equivalent to saying divide $\sigma(y)$ by $1-\sigma(y)$
+
+
+$$\large 1 - p(y) = 1 - \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}} =\frac{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}} - \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}$$
+
+$$\large 1-p(y) = \frac{1}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}$$
+
+Carry out the division of $p(y)$ and $1-p(y)$ by multiplying the former by the reciprocal of the latter:
+
+$$\large \frac{p(y)}{1-p(y)} = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}} * \frac{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1} = e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}$$
+
+By taking the natural log of both sides, we get
+
+$$\large ln\left (\frac{p(y)}{1-p(y)} \right ) = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$$
+
+This says that the log-odds that $y=1$ is given by $\theta_{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$
+
+
+### Part 2: Introducing MLE
+
+We just derived the functional form of logistic regression, but when it comes to determining optimal values of $\theta_{0}, \theta_{1},..., \theta_{p}$, we usually use the formula for $p(y)$.  As a reminder
+
+$\large p(y = 1) = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}$
+
+To avoid the redundancy of the RHS, we'll substitute it with $\pi$, so that 
+
+$\large \pi = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}$
+
+This implies $p(y = 0) = 1 - p(y = 1) = 1 - \pi$
+
+A way to reformulate this is by noting that 
+
+$\large p(Y = y) = \pi^y(1-y)^{1-y}$, with $y$ being binary, taking on values of $0$ or $1$.  So that 
+
+* if $y=1$, $p(Y = 1) = \pi^1(1-\pi)^{1-1} = \pi$
+
+* if $y=0$, $p(Y = 0) = \pi^0(1-\pi)^{1-0} = 1-\pi$
+
+as just stated above.  We use this reformulation since it provides a *single equation* to calculate the probability of y taking on $0$ or $1$. 
+
+If we assume the probability that each instance in our data belongs to either $Y = 0$ or $Y=1$ is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of betas) is the *likelihood*, a simple application of the multiplication rule in probability for independent events:
+
+$\large L = P(Y_1 = y_1, Y_2 = y_2, ..., Y_m = y_m) = \prod_{i=1}^{m}\pi^{y^{(i)}}(1-\pi)^{1-y^{(i)}}$
+
+There are $m$ instances in our dataset.  We're trying to determine the betas that will maximize this likelihood function.
+
+### Part 3: Prepping for gradient ascent
+
+To make things easier, we'll do things:
+
+* convert the likelihood to the log likelihood, so that we can deal with sums instead of products
+
+* perform gradient ascent for just a single instance to motivate how to update the logistic regression loss function for all instances.
+
+Examining gradient ascent for a single instance will make notation easier. For a single instance the likelihood $L$ is:
+
+$\large L = \pi^y(1-\pi)^{1-y}$
+
+Taking the natural log on both sides to get the log-likelihood $LL$:
+
+$\large LL = ln\left [\pi^y \cdot (1-\pi)^{1-y}  \right ]$
+
+$\large LL = ln(\pi^y) + ln\left [ (1-\pi)^{1-y} \right ]$
+
+Using properties of logs, we can bring the exponents to the front:
+
+$\large LL = y\,ln(\pi) + (1-y)\,ln(1-\pi)$
+
+
+### Part 4: Gradient ascent using the Chain Rule
+
+Now we're ready to perform the biggest part of the whole derivation. We will take the partial derivative of the log-likelihood $LL$ with respect to each beta for our single instance, all using the Chain Rule from calculus.
+
+
+To avoid overloading the letter y, we'll use $g$ to denote the linear combination of inputs, so that 
+
+$\large g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$
+
+and hence 
+
+$\large \pi = \sigma(g)$
+
+Now observe that $LL$ is a function of $\pi$, and $\pi$ is a function of $g$, and $g$ is a function of the $\theta_j$'s, where $j = 1, ..., p$.
+
+Applying the Chain Rule, this implies
+
+$\boxed {\large \frac{\partial LL}{\partial \theta_j} = \frac{\partial LL}{\partial \pi}\,\frac{\partial \pi}{\partial g}\,\frac{\partial g}{\partial \theta_j}}$  
+<br>
+
+#### 4.1: Partial of $LL$ with respect to $\pi$
+
+Let's start with $\frac{\partial LL}{\partial \pi}$.  Since
+
+$\large LL = y\,ln(\pi) + (1-y)\,ln(1-\pi)$
+
+then by applying the Product Rule:
+
+$\large \frac{\partial LL}{\partial \pi}\ = y\,\cdot \frac{\partial}{\partial \pi}\,ln(\pi)\, + ln(\pi)\,\cdot \frac{\partial}{\partial \pi}\,y\ + (1-y)\,\cdot \frac{\partial}{\partial \pi}\,ln(1-\pi) + ln(1-\pi)\,\cdot \frac{\partial}{\partial \pi}\,(1-y)$
+
+The second and fourth summands equal $0$ since neither $y$ nor $1-y$ include $\pi$.  So this simplifies to 
+
+$\large \frac{\partial LL}{\partial \pi}\ = y\,\cdot \frac{1}{\pi} - (1-y)\cdot \left ( \frac{1}{1-\pi} \right ) = \boxed{\frac{y}{\pi} - \left ( \frac{1-y}{1-\pi} \right )}$
+
+<br>
+
+#### 4.2: Partial of $\pi$ with respect to $g$
+
+Now we move to the second portion of the partial of the log likelihood.
+
+$\large \frac{\partial \pi}{\partial g} =  \frac{\partial}{\partial g}\,\left ( \frac{e^g}{1+e^g} \right )$
+
+This is since $\pi = \sigma(g)$, and plugging $g$ into the logistic function, $\sigma(g) = \frac{e^g}{1+e^g}$
+
+Using the Quotient Rule
+
+$\large \frac{\partial \pi}{\partial g} = \frac{(1+e^g)\,\cdot\frac{\partial}{\partial g}(e^g)\, - (e^g)\left ( \frac{\partial}{\partial g}\,(1+e^g) \right )}{(1+e^g)^2} =\frac{(1+e^g)(e^g)\, - (e^g)(e^g)}{(1+e^g)^2} = \frac{e^g + (e^g)^2 - (e^g)^2}{(1+e^g)^2} = \boxed{\frac{e^g}{(1+e^g)^2}}$
+
+<br>
+
+#### 4.3: Partial of $g$ with respect to $\theta_j$
+
+Lastly we deal with perhaps the easiest part of the derivation.
+
+$\large \frac{\partial\,g}{\partial\,\theta_j} = \frac{\partial }{\partial \theta_j}(\theta_0 + \theta_1x_1 + \cdots+\theta_px_p) = \boxed{x_j}$
+
+Any terms that don't contain $\theta_j$ are considered constants, and taking the partial of those terms equals $0$, leaving us with just $x_j$
+
+<br>
+
+### Part 5: Putting it all together
+
+Whew!  Let's put all the components from 4.1 to 4.3 together.
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y}{\pi}-\frac{1-y}{1-\pi} \right )\left ( \frac{e^g}{(1+e^g)^2} \right )x_j$
+
+We can simplify the middle term by noting that $\frac{e^g}{(1+e^g)^2} = \sigma(g)[1-\sigma(g)] = \pi(1-\pi)$
+
+So then:
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y}{\pi}-\frac{1-y}{1-\pi} \right )\left ( \pi(1-\pi) \right )x_j$
+
+Bringing terms under a common denominator for the first term on the RHS:
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y(1-\pi)}{(1-\pi)\pi} - \frac{(1-y)\pi}{(1-\pi)\pi} \right )\left ( \pi(1-\pi) \right )x_j$
+
+Simplifying:
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y(1-\pi) - \pi(1-y)}{(1-\pi)\pi} \right )(\pi(1-\pi))x_j$
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = (y-y\pi-\pi+y\pi)x_j = (y-\pi)x_j = [y-\sigma(g)]x_j$
+
+### Part 6: Polishing up
+
+We've fleshed out the tough stuff.  But remember our derivation was just for a single instance.  As there are $m$ instances, we need to update $\theta_j$ by taking all those instances into account.  
+
+So instead of just
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = [y-\sigma(g)]x_j$, we make this:
+
+$\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(g)]x_{j}^{(i)}$
+
+What was $g$ again?  $g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$.  In matrix notation this would be expressed as $\boldsymbol{\theta}^T\mathbf{x}$.  So then:
+
+$\boxed{\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}$
+
+Now we know our update rule for any particular $\theta_j$ and learning rate $\eta$:
+
+$\large {\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}$
+
+
+### Part 7: Going from ascent to descent
+
+All along we worked with gradient *ascent*.  It's quite simple to write out the update rule for gradient *descent*.  We simply switch the order of the terms in the bracket and negate the sum.  In other words,
+
+$\large \boxed{\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)}) - y^{(i)}] x_{j}^{(i)}}$
+
+To see why that makes sense, consider a simpler example.  Suppose I was interested in $\sum_{i=1}^{3}(3i^2 - 4i)$  Evaluating this summation gives $18$.  To get $-18$ instead (analogous of going from gradient ascent to descent), you can verify that $\sum_{i=1}^{3}(4i - 3i^2)$ does indeed give $-18$ 
+
+### Wrapping up
+
+I hope this gives you a more clear understanding of the derivation of the logistic regression update rule.  I plan to write up detailed derivations for other machine learning algorithms in the future.
+
+
+
+
+
+

@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/post/logistic-regression-mle-a-full-breakdown/</loc>
+    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/machine-learning/</loc>
+    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/technical/</loc>
+    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/tags/image-processing/</loc>
     <lastmod>2020-10-05T00:00:00+00:00</lastmod>
   </url>
@@ -28,27 +58,12 @@
   </url>
   
   <url>
-    <loc>/</loc>
-    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
-    <lastmod>2020-10-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/tags/data-visualization/</loc>
     <lastmod>2020-10-03T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/project/galaxy-art-with-python-and-tkinter/</loc>
-    <lastmod>2020-10-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
     <lastmod>2020-10-03T00:00:00+00:00</lastmod>
   </url>
   
@@ -128,17 +143,7 @@
   </url>
   
   <url>
-    <loc>/tags/technical/</loc>
-    <lastmod>2020-04-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/project/forecasting-capital-bikeshare-ridership/</loc>
-    <lastmod>2020-04-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/machine-learning/</loc>
     <lastmod>2020-04-02T00:00:00+00:00</lastmod>
   </url>
   

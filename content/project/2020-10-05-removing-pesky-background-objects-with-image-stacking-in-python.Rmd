@@ -65,7 +65,7 @@ In Figure 3 we have five images, and we're looking at the RGB for a particular p
 
 The original images in Figure 1 can be downloaded from ```train_pics.zip``` from my [Github](https://github.com/rhaz96/Recreational-Python/tree/main/ImageStacking), where you can also find the full image stacking code I wrote for this project.
 
-Since each image is 4640 x 3480 pixels, the image stacking process would be lengthy without first resizing the images.  They'll be scaled down to a $1/10$ their original size: 464 x 348.  The file name for each rescaled image will include "resized".  Make sure.  Here we're assuming the original images are stored in a directory (folder) named ```train_pics```.
+Since each image is 4640 x 3480 pixels, the image stacking process would be lengthy without first resizing the images.  They'll be scaled down to a $1/10$ their original size: 464 x 348.  The file name for each rescaled image will include "resized". Here we're assuming the original images are stored in a directory (folder) named ```train_pics```.
 
 ```{python echo=T, eval=F}
 import os
@@ -130,7 +130,7 @@ We implement the method in Figure 3 with the following code.  The ```medians``` 
 
 We think of the final stacked image as a grid of size 464 x 348, containing 161,472 squares.  Each square will have a certain red, green, and blue density.  Reading the lists from top to bottom, the first square in the stacked image will have an RGB of (34, 106, 42). The second square will have an RGB of (172, 237, 213), and so on and so forth. 
 
-To produce those tuples, we do ```*list(medians.values())``` do produce a list of lists of shape (3, 161472), and then zip it to capture corresponding elements, saving resultant list of tuples in ```merged_data```.  
+To produce those tuples, we do ```*list(medians.values())``` do produce a list of lists of shape (3, 161472), and then zip it to capture corresponding elements, saving the resultant list of tuples in ```merged_data```.  
 
 ### Part 4: Creating the new image
 

@@ -167,7 +167,7 @@ Figure 3: Stacking images then taking the median across images to remove the bla
 <div id="part-1-resizing-images" class="section level3">
 <h3>Part 1: Resizing Images</h3>
 <p>The original images in Figure 1 can be downloaded from <code>train_pics.zip</code> from my <a href="https://github.com/rhaz96/Recreational-Python/tree/main/ImageStacking">Github</a>, where you can also find the full image stacking code I wrote for this project.</p>
-<p>Since each image is 4640 x 3480 pixels, the image stacking process would be lengthy without first resizing the images. They’ll be scaled down to a <span class="math inline">\(1/10\)</span> their original size: 464 x 348. The file name for each rescaled image will include “resized”. Make sure. Here we’re assuming the original images are stored in a directory (folder) named <code>train_pics</code>.</p>
+<p>Since each image is 4640 x 3480 pixels, the image stacking process would be lengthy without first resizing the images. They’ll be scaled down to a <span class="math inline">\(1/10\)</span> their original size: 464 x 348. The file name for each rescaled image will include “resized”. Here we’re assuming the original images are stored in a directory (folder) named <code>train_pics</code>.</p>
 <pre class="python"><code>import os
 from PIL import Image
 import numpy as np
@@ -216,7 +216,7 @@ merged_data = list(
 &#39;green&#39; : [106, 237, 156, 92, 249,...,229, 86, 238, 99], 
 &#39;blue&#39;  : [42, 213, 177, 73, 212, 212,...,111, 131, 134]}</code></pre>
 <p>We think of the final stacked image as a grid of size 464 x 348, containing 161,472 squares. Each square will have a certain red, green, and blue density. Reading the lists from top to bottom, the first square in the stacked image will have an RGB of (34, 106, 42). The second square will have an RGB of (172, 237, 213), and so on and so forth.</p>
-<p>To produce those tuples, we do <code>*list(medians.values())</code> do produce a list of lists of shape (3, 161472), and then zip it to capture corresponding elements, saving resultant list of tuples in <code>merged_data</code>.</p>
+<p>To produce those tuples, we do <code>*list(medians.values())</code> do produce a list of lists of shape (3, 161472), and then zip it to capture corresponding elements, saving the resultant list of tuples in <code>merged_data</code>.</p>
 </div>
 <div id="part-4-creating-the-new-image" class="section level3">
 <h3>Part 4: Creating the new image</h3>
