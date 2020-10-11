@@ -172,7 +172,7 @@ Logistic function. Source: <a href="https://en.wikipedia.org/wiki/Logistic_funct
 <li><p>if <span class="math inline">\(y=1\)</span>, <span class="math inline">\(p(Y = 1) = \pi^1(1-\pi)^{1-1} = \pi\)</span></p></li>
 <li><p>if <span class="math inline">\(y=0\)</span>, <span class="math inline">\(p(Y = 0) = \pi^0(1-\pi)^{1-0} = 1-\pi\)</span></p></li>
 </ul>
-<p>as just stated above. We use this reformulation since it provides a <em>single equation</em> to calculate the probability of y taking on <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>.</p>
+<p>as just stated above. We use this reformulation since it provides a <em>single equation</em> to calculate the probability of Y taking on <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>.</p>
 <p>If we assume the probability that each instance in our data belongs to either <span class="math inline">\(Y = 0\)</span> or <span class="math inline">\(Y=1\)</span> is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of thetas) is the <em>likelihood</em>, a simple application of the multiplication rule in probability for independent events:</p>
 <p><span class="math inline">\(\large L = P(Y_1 = y_1, Y_2 = y_2, ..., Y_m = y_m) = \prod_{i=1}^{m}\pi^{y^{(i)}}(1-\pi)^{1-y^{(i)}}\)</span></p>
 <p>There are <span class="math inline">\(m\)</span> instances in our dataset. We’re trying to determine the thetas that will maximize this likelihood function.</p>

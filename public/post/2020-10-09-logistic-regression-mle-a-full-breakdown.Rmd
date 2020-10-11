@@ -78,7 +78,7 @@ $\large p(Y = y) = \pi^y(1-y)^{1-y}$, with $Y$ being a random variable describin
 
 * if $y=0$, $p(Y = 0) = \pi^0(1-\pi)^{1-0} = 1-\pi$
 
-as just stated above.  We use this reformulation since it provides a *single equation* to calculate the probability of y taking on $0$ or $1$. 
+as just stated above.  We use this reformulation since it provides a *single equation* to calculate the probability of Y taking on $0$ or $1$. 
 
 If we assume the probability that each instance in our data belongs to either $Y = 0$ or $Y=1$ is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of thetas) is the *likelihood*, a simple application of the multiplication rule in probability for independent events:
 
