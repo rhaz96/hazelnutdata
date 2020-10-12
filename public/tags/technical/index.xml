@@ -17,7 +17,9 @@
       <pubDate>Sun, 11 Oct 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/logistic-regression-mle-a-full-breakdown/</guid>
-      <description>Prologue It’s a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details. They’ll sometimes show steps 1, 2, and 5 without steps 3 and 4. And steps 1, 2, and 5 are sometimes better dealt with if the logic was fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.</description>
+      <description>Prologue The Logistic function. Source: Wikipedia
+
+It’s a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details. They’ll sometimes show steps 1, 2, and 5 without steps 3 and 4. And steps 1, 2, and 5 are sometimes better dealt with if the logic was fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.</description>
     </item>
     
     <item>
