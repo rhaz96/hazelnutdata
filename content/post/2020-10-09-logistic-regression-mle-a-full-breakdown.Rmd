@@ -202,7 +202,7 @@ $\large \frac{\partial\,LL}{\partial\,\theta_j} = [y-\sigma(g)]x_j$, we make thi
 
 $\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(g)]x_{j}^{(i)}$
 
-It's additive because, as explained earlier, using the log likelihood ($LL$$) allows us to use sums instead of products.
+It's additive because, as explained in Part 4, the log likelihood ($LL$) allows us to use sums instead of products.
 
 What was $g$ again?  $g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$.  In matrix notation this would be expressed as $\boldsymbol{\theta}^T\mathbf{x}$.  So then:
 

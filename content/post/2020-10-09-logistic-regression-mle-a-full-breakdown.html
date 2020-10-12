@@ -132,7 +132,7 @@ tags:
 <p>So instead of just</p>
 <p><span class="math inline">\(\large \frac{\partial\,LL}{\partial\,\theta_j} = [y-\sigma(g)]x_j\)</span>, we make this:</p>
 <p><span class="math inline">\(\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(g)]x_{j}^{(i)}\)</span></p>
-<p>It’s additive because, as explained earlier, using the log likelihood (<span class="math inline">\(LL\)</span>$) allows us to use sums instead of products.</p>
+<p>It’s additive because, as explained in Part 4, the log likelihood (<span class="math inline">\(LL\)</span>) allows us to use sums instead of products.</p>
 <p>What was <span class="math inline">\(g\)</span> again? <span class="math inline">\(g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p\)</span>. In matrix notation this would be expressed as <span class="math inline">\(\boldsymbol{\theta}^T\mathbf{x}\)</span>. So then:</p>
 <p><span class="math inline">\(\boxed{\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}\)</span></p>
 <p>Now we know our update rule for any particular <span class="math inline">\(\theta_j\)</span> and learning rate <span class="math inline">\(\eta\)</span>:</p>
