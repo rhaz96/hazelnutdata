@@ -9,7 +9,7 @@ tags:
   - machine learning
 ---
 
-### Prologue
+### Please tell me more!
 
 ![](/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/logistic-function.png)
 
