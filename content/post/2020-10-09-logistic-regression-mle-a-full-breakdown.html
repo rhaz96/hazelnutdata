@@ -52,7 +52,7 @@ tags:
 <p><span class="math inline">\(\large \pi = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}\)</span></p>
 <p>This implies <span class="math inline">\(p(y = 0) = 1 - p(y = 1) = 1 - \pi\)</span></p>
 <p>A way to reformulate this is by noting that</p>
-<p><span class="math inline">\(\large p(Y = y) = \pi^y(1-y)^{1-y}\)</span>, with <span class="math inline">\(Y\)</span> being a random variable describing the values any particular instance can take on, which for binary classification is <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. So:</p>
+<p><span class="math inline">\(\large p(Y = y) = \pi^y(1-\pi)^{1-y}\)</span>, with <span class="math inline">\(Y\)</span> being a random variable describing the values any particular instance can take on, which for binary classification is <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>. So:</p>
 <ul>
 <li><p>if <span class="math inline">\(y=1\)</span>, <span class="math inline">\(p(Y = 1) = \pi^1(1-\pi)^{1-1} = \pi\)</span></p></li>
 <li><p>if <span class="math inline">\(y=0\)</span>, <span class="math inline">\(p(Y = 0) = \pi^0(1-\pi)^{1-0} = 1-\pi\)</span></p></li>
