@@ -17,7 +17,7 @@ The Logistic function.  Source: [Wikipedia](https://en.wikipedia.org/wiki/Logist
 
 <br>
 
-It's a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details.  They'll sometimes show steps 1, 2, and 5 without steps 3 and 4.  And steps 1, 2, and 5 are sometimes better dealt with if the logic was fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.  After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.
+It's a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details.  They'll sometimes show steps 1, 2, and 5 without steps 3 and 4.  And steps 1, 2, and 5 are sometimes better dealt with if the logic were fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent.  After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.
 
 To be clear it's definitely not necessary to understand the mechanics behind the derivation in order to be a good ML practitioner, but since MLE with logistic regression tends to be the springboard by which neural networks are introduced, understanding it can lead to greater appreciation and comprehension of deep learning.
 
