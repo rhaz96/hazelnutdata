@@ -87,7 +87,7 @@ There are $m$ instances in our dataset.  We're trying to determine the thetas th
 
 ### Part 3: Prepping for gradient ascent
 
-To make things easier, we'll do things:
+To make things easier, we'll do two things:
 
 * convert the likelihood to the log likelihood, so that we can deal with sums instead of products
 
@@ -202,6 +202,8 @@ $\large \frac{\partial\,LL}{\partial\,\theta_j} = [y-\sigma(g)]x_j$, we make thi
 
 $\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(g)]x_{j}^{(i)}$
 
+It's additive because, as explained earlier, using the log likelihood ($LL$$) allows us to use sums instead of products.
+
 What was $g$ again?  $g = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p$.  In matrix notation this would be expressed as $\boldsymbol{\theta}^T\mathbf{x}$.  So then:
 
 $\boxed{\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}$
@@ -217,7 +219,7 @@ All along we worked with gradient *ascent*.  It's quite simple to write out the 
 
 $\large \boxed{\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)}) - y^{(i)}] x_{j}^{(i)}}$
 
-To see why that makes sense, consider a simpler example.  Suppose I was interested in $\sum_{i=1}^{3}(3i^2 - 4i)$  Evaluating this summation gives $18$.  To get $-18$ instead (analogous of going from gradient ascent to descent), you can verify that $\sum_{i=1}^{3}(4i - 3i^2)$ does indeed give $-18$. 
+To see why that makes sense, consider a simpler example.  Suppose I was interested in $\sum_{i=1}^{3}(3i^2 - 4i)$ Evaluating this summation gives $18$.  To get $-18$ instead (analogous to going from gradient ascent to descent), you can verify that $\sum_{i=1}^{3}(4i - 3i^2)$ does indeed give $-18$. 
 
 ### Wrapping up
 
