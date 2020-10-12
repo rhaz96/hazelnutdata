@@ -12,9 +12,11 @@ tags:
 
 
 <div id="please-tell-me-more" class="section level3">
-<h3>Please tell me more!</h3>
-<p><img src="/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/logistic-function.png" /></p>
-<p>The Logistic function. Source: <a href="https://en.wikipedia.org/wiki/Logistic_function">Wikipedia</a></p>
+<h3>Please tell me more</h3>
+<div class="tenor-gif-embed" data-postid="14192086" data-share-method="host" data-width="100%" data-aspect-ratio="1.7054794520547942">
+<a href="https://tenor.com/view/tell-me-everything-in-detail-spill-the-tea-sips-tea-im-listening-gif-14192086">Tell Me Everything In Detail GIF</a> from <a href="https://tenor.com/search/tellmeeverything-gifs">Tellmeeverything GIFs</a>
+</div>
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 <p><br></p>
 <p>It’s a bit disconcerting when textbooks or online sources provide derivations without fully spelling out the details. They’ll sometimes show steps 1, 2, and 5 without steps 3 and 4. And steps 1, 2, and 5 are sometimes better dealt with if the logic were fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent. After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.</p>
 <p>To be clear it’s definitely not necessary to understand the mechanics behind the derivation in order to be a good ML practitioner, but since MLE with logistic regression tends to be the springboard by which neural networks are introduced, understanding it can lead to greater appreciation and comprehension of deep learning.</p>
@@ -27,6 +29,10 @@ tags:
 <p>We want to modify this so that outputs fall between <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> for classification purposes. This is classically done using the <em>logistic function</em>:</p>
 <p><span style="color:SlateBlue"><span class="math display">\[\large \sigma (z) = \frac{e^{z}}{1+e^z}\]</span></span></p>
 <p>where <span class="math inline">\(z\)</span> is some arbitrary scalar input.</p>
+<p><img src="/post/2020-10-09-logistic-regression-mle-a-full-breakdown_files/logistic-function.png" /></p>
+<p>The logistic function. Source: <a href="https://en.wikipedia.org/wiki/Logistic_function">Wikipedia</a>
+<br>
+<br></p>
 <p>Our new equation is now:</p>
 <p><span style="color:purple"><span class="math display">\[\large p(y) = \frac{e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}}{1 + e^{\theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p}} = \sigma(y)\]</span></span></p>
 <p>However, we’d like to work with a linear function, so instead of working with <span class="math inline">\(p(y)\)</span>, we use the odds of <span class="math inline">\(y\)</span> by dividing <span class="math inline">\(p(y)\)</span> by <span class="math inline">\(1-p(y)\)</span>. This is equivalent to saying divide <span class="math inline">\(\sigma(y)\)</span> by <span class="math inline">\(1-\sigma(y)\)</span></p>
