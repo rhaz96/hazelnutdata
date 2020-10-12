@@ -20,7 +20,8 @@ tags:
 <p><br></p>
 <p>Sometimes the details behind mathematical proofs are relatively easy to infer, but when they’re not don’t we wish the details were spelt out? Sometimes books or online sources show steps 1, 2, and 5 without steps 3 and 4. And steps 1, 2, and 5 are sometimes better dealt with if the logic were fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent. After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.</p>
 <p>To be clear it’s definitely not necessary to understand the mechanics behind the derivation in order to be a good ML practitioner, but since MLE with logistic regression tends to be the springboard by which neural networks are introduced, understanding it can lead to greater appreciation and comprehension of deep learning.</p>
-<p>Get some caffeine - this will be long, but rewarding!</p>
+<p>Get some caffeine - this will be long, but rewarding!
+<br></p>
 </div>
 <div id="part-1-motivating-logistic-regression" class="section level3">
 <h3>Part 1: Motivating Logistic Regression</h3>
@@ -43,6 +44,7 @@ tags:
 <p>By taking the natural log of both sides, we get</p>
 <p><span class="math display">\[\large ln\left (\frac{p(y)}{1-p(y)} \right ) = \theta _{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p\]</span></p>
 <p>This says that the log-odds that <span class="math inline">\(y=1\)</span> is given by <span class="math inline">\(\theta_{0} + \theta _{1}x_1 + \cdots + \theta _{p}x_p\)</span></p>
+<p><br></p>
 </div>
 <div id="part-2-introducing-mle" class="section level3">
 <h3>Part 2: Introducing MLE</h3>
@@ -61,6 +63,7 @@ tags:
 <p>If we assume the probability that each instance in our data belongs to either <span class="math inline">\(Y = 0\)</span> or <span class="math inline">\(Y=1\)</span> is independent, then the total probability of observing all our instances belonging to the classes we observe in our data (given our choice of thetas) is the <em>likelihood</em>, a simple application of the multiplication rule in probability for independent events:</p>
 <p><span class="math inline">\(\large L = P(Y_1 = y_1, Y_2 = y_2, ..., Y_m = y_m) = \prod_{i=1}^{m}\pi^{y^{(i)}}(1-\pi)^{1-y^{(i)}}\)</span></p>
 <p>There are <span class="math inline">\(m\)</span> instances in our dataset. We’re trying to determine the thetas that will maximize this likelihood function.</p>
+<p><br></p>
 </div>
 <div id="part-3-prepping-for-gradient-ascent" class="section level3">
 <h3>Part 3: Prepping for gradient ascent</h3>
@@ -76,6 +79,7 @@ tags:
 <p><span class="math inline">\(\large LL = ln(\pi^y) + ln\left [ (1-\pi)^{1-y} \right ]\)</span></p>
 <p>Using properties of logs, we can bring the exponents to the front:</p>
 <p><span class="math inline">\(\large LL = y\,ln(\pi) + (1-y)\,ln(1-\pi)\)</span></p>
+<p><br></p>
 </div>
 <div id="part-4-gradient-ascent-using-the-chain-rule" class="section level3">
 <h3>Part 4: Gradient ascent using the Chain Rule</h3>
@@ -131,6 +135,7 @@ tags:
 <p>Simplifying:</p>
 <p><span class="math inline">\(\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y(1-\pi) - \pi(1-y)}{(1-\pi)\pi} \right )(\pi(1-\pi))x_j\)</span></p>
 <p><span class="math inline">\(\large \frac{\partial\,LL}{\partial\,\theta_j} = (y-y\pi-\pi+y\pi)x_j = (y-\pi)x_j = [y-\sigma(g)]x_j\)</span></p>
+<p><br></p>
 </div>
 <div id="part-6-polishing-up" class="section level3">
 <h3>Part 6: Polishing up</h3>
@@ -143,12 +148,14 @@ tags:
 <p><span class="math inline">\(\boxed{\large \frac{\partial\,LL}{\partial\,\theta_j} = \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}\)</span></p>
 <p>Now we know our update rule for any particular <span class="math inline">\(\theta_j\)</span> and learning rate <span class="math inline">\(\eta\)</span>:</p>
 <p><span class="math inline">\(\large {\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}\)</span></p>
+<p><br></p>
 </div>
 <div id="part-7-going-from-ascent-to-descent" class="section level3">
 <h3>Part 7: Going from ascent to descent</h3>
 <p>All along we worked with gradient <em>ascent</em>. It’s quite simple to write out the update rule for gradient <em>descent</em>. We simply switch the order of the terms in the bracket. In other words,</p>
 <p><span class="math inline">\(\large \boxed{\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)}) - y^{(i)}] x_{j}^{(i)}}\)</span></p>
 <p>To see why that makes sense, consider a simpler example. Suppose I was interested in <span class="math inline">\(\sum_{i=1}^{3}(3i^2 - 4i)\)</span> Evaluating this summation gives <span class="math inline">\(18\)</span>. To get <span class="math inline">\(-18\)</span> instead (analogous to going from gradient ascent to descent), you can verify that <span class="math inline">\(\sum_{i=1}^{3}(4i - 3i^2)\)</span> does indeed give <span class="math inline">\(-18\)</span>.</p>
+<p><br></p>
 </div>
 <div id="wrapping-up" class="section level3">
 <h3>Wrapping up</h3>
