@@ -230,13 +230,12 @@ $\large {\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[y^{(i)}-\
 
 ### Part 7: Going from ascent to descent
 
-All along we worked with gradient *ascent*.  It's quite simple to write out the update rule for gradient *descent*.  We simply switch the order of the terms in the bracket.  In other words,
+All along we worked with gradient *ascent*.  It's quite simple to write out the update rule for gradient *descent*.  We simply add a minus sign to go in the opposite direction (down rather than up):
 
-$\large \boxed{\theta_{j}^{\,new} = \theta_{j}^{\,old} + \eta \sum_{i=1}^{m}[\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)}) - y^{(i)}] x_{j}^{(i)}}$
+$\boxed {\large {\theta_{j}^{\,new} = \theta_{j}^{\,old} - \eta \sum_{i=1}^{m}[y^{(i)}-\sigma(\boldsymbol{\theta}^T\mathbf{x}^{(i)})] x_{j}^{(i)}}}$
 
-To see why that makes sense, consider a simpler example.  Suppose I was interested in $\sum_{i=1}^{3}(3i^2 - 4i)$ Evaluating this summation gives $18$.  To get $-18$ instead (analogous to going from gradient ascent to descent), you can verify that $\sum_{i=1}^{3}(4i - 3i^2)$ does indeed give $-18$. 
+This accords with Sebastian Raschka's [derivation](http://rasbt.github.io/mlxtend/user_guide/classifier/LogisticRegression/) as well. 
 
-<br>
 
 ### Wrapping up
 
