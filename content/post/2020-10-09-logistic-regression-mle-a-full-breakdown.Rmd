@@ -116,6 +116,8 @@ Using properties of logs, we can bring the exponents to the front:
 
 $\large LL = y\,ln(\pi) + (1-y)\,ln(1-\pi)$
 
+This is our cost function.
+
 <br>
 
 ### Part 4: Gradient ascent using the Chain Rule
