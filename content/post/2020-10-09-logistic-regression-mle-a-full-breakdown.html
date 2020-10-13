@@ -18,7 +18,7 @@ tags:
 </div>
 <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 <p><br></p>
-<p>Sometimes the details behind mathematical proofs are relatively easy to infer, but when they’re not don’t we wish the details were spelt out? Sometimes books or online sources show steps 1, 2, and 5 without steps 3 and 4. And steps 1, 2, and 5 are sometimes better dealt with if the logic were fully fleshed out. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent. After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.</p>
+<p>Sometimes the details behind mathematical proofs are relatively easy to infer, but when they’re not don’t we wish the details were spelt out? Sometimes books or online sources show steps 1, 2, and 5 without steps 3 and 4. And steps 1, 2, and 5 are sometimes better dealt with if the logic were fully fleshed out. At other times, all the steps are shown but in a hasty or unclear way. Such is the case, in my opinion, when it comes to understanding maximum likelihood estimation (MLE) for logistic regression gradient descent. After working through the gory details by hand and different color inks, I felt the need to illustrate it to benefit anyone who may wish to see a full breakdown of how the gradient update function for logistic regression is derived.</p>
 <p>To be clear it’s definitely not necessary to understand the mechanics behind the derivation in order to be a good ML practitioner, but since MLE with logistic regression tends to be the springboard by which neural networks are introduced, understanding it can lead to greater appreciation and comprehension of deep learning.</p>
 <p>Get some caffeine - this will be long, but rewarding!
 <br></p>
@@ -127,7 +127,8 @@ tags:
 <h3>Part 5: Putting it all together</h3>
 <p>Whew! Let’s put all the components from 4.1 to 4.3 together.</p>
 <p><span class="math inline">\(\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y}{\pi}-\frac{1-y}{1-\pi} \right )\left ( \frac{e^g}{(1+e^g)^2} \right )x_j\)</span></p>
-<p>We can simplify the middle term by noting that <span class="math inline">\(\frac{e^g}{(1+e^g)^2} = \sigma(g)[1-\sigma(g)] = \pi(1-\pi)\)</span></p>
+<p>We can simplify the middle term by noting that</p>
+<p><span class="math inline">\(\frac{e^g}{(1+e^g)^2} = \frac{e^g}{1+e^g}\left ( \frac{1}{1+e^g} \right ) = \frac{e^g}{1+e^g}\left ( 1-\frac{e^g}{1+e^g} \right ) = \sigma(g)[1-\sigma(g)] = \pi(1-\pi)\)</span></p>
 <p>So then:</p>
 <p><span class="math inline">\(\large \frac{\partial\,LL}{\partial\,\theta_j} = \left ( \frac{y}{\pi}-\frac{1-y}{1-\pi} \right )\left ( \pi(1-\pi) \right )x_j\)</span></p>
 <p>Bringing terms under a common denominator for the first term on the RHS:</p>
