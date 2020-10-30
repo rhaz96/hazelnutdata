@@ -47,6 +47,7 @@ We'll need to do some data cleaning as the format for data entry isn't optimal f
 ```{r fig.width = 10, fig.height = 6}
 library(tidyr)
 library(tidyverse)
+library(plotly)
 
 wb <- read.csv("~/Desktop/SMU/Viz/world_bank_WDIhealth.csv")
 
@@ -74,13 +75,18 @@ wb2_tidy <- wb2 %>% gather(Year, Value, "2000":"2017")
 wb2_tidy <- wb2_tidy %>% mutate(`Expenditure Type` = 
                       ifelse(Series.Code == "SH.XPD.PVTD.PC.CD", "Private", 
                       ifelse(Series.Code == "SH.XPD.GHED.PC.CD", "Government", "Out-of-pocket")))
-
+  
 # hat tip of interaction from https://stackoverflow.com/questions/9968976/group-by-two-columns-in-ggplot2
 
 ggplot(wb2_tidy, aes(Year, Value)) + 
   geom_line(aes(color=Country.Name,
             group=interaction(Country.Name, `Expenditure Type`)), size = 1.5) + 
   geom_point(aes(shape = `Expenditure Type`), size=2.5, color = "gray17") + 
+  annotate("rect", xmin = 9 - 0.5, xmax = 9 + 0.5, ymin = 122, ymax = 155, alpha=0.2)+
+  annotate("rect", xmin = 12 - 0.5, xmax = 12 + 0.5, ymin = 95, ymax = 125, alpha = 0.2)+
+  annotate("segment", x = 7, xend = 9, y = 200, yend = 155, arrow = arrow(angle = 20))+
+  annotate("segment", x = 7, xend = 12, y = 200, yend = 120, arrow = arrow(angle = 20))+
+  annotate("text", x = 3.5, y = 215, label = "Middle income countries took 3 years\n longer than Upper income countries\n to see government spending outpace\n private spending", hjust = 0)+
   theme_minimal() +
   xlab("") + 
   ylab("Per Capita Expenditure (US $)")+
@@ -101,7 +107,7 @@ This looks a bit more pleasing to look at, I hope you would agree!  But equally 
 
 * Middle income and Upper middle income countries closely resemble each other in the upward trajectory of per capita expenditures
 
-* It took about three years longer for Middle income countries to see government spending outpace private spending, compared with Upper middle income countries (2011 vs 2008)
+* It took about three years longer for Middle income countries to see government spending outpace private spending, compared with Upper middle income countries (2011 vs 2008; see the grey boxed regions for comparison)
 
 * Only Lower middle income countries see health expenditures dominated by private sector spending
 

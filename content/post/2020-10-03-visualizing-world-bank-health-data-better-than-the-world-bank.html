@@ -35,6 +35,7 @@ Figure 1: WHO visualization on global health spending between 2000 and 2017. Sou
 <p>We’ll need to do some data cleaning as the format for data entry isn’t optimal for data analysis and visualization. The complete code for cleaning and plotting the data is provided below, but I won’t spend time discussing the cleaning portion as I think focusing on comparing the original WHO viz with mine is more interesting!</p>
 <pre class="r"><code>library(tidyr)
 library(tidyverse)
+library(plotly)
 
 wb &lt;- read.csv(&quot;~/Desktop/SMU/Viz/world_bank_WDIhealth.csv&quot;)
 
@@ -62,13 +63,18 @@ wb2_tidy &lt;- wb2 %&gt;% gather(Year, Value, &quot;2000&quot;:&quot;2017&quot;)
 wb2_tidy &lt;- wb2_tidy %&gt;% mutate(`Expenditure Type` = 
                       ifelse(Series.Code == &quot;SH.XPD.PVTD.PC.CD&quot;, &quot;Private&quot;, 
                       ifelse(Series.Code == &quot;SH.XPD.GHED.PC.CD&quot;, &quot;Government&quot;, &quot;Out-of-pocket&quot;)))
-
+  
 # hat tip of interaction from https://stackoverflow.com/questions/9968976/group-by-two-columns-in-ggplot2
 
 ggplot(wb2_tidy, aes(Year, Value)) + 
   geom_line(aes(color=Country.Name,
             group=interaction(Country.Name, `Expenditure Type`)), size = 1.5) + 
   geom_point(aes(shape = `Expenditure Type`), size=2.5, color = &quot;gray17&quot;) + 
+  annotate(&quot;rect&quot;, xmin = 9 - 0.5, xmax = 9 + 0.5, ymin = 122, ymax = 155, alpha=0.2)+
+  annotate(&quot;rect&quot;, xmin = 12 - 0.5, xmax = 12 + 0.5, ymin = 95, ymax = 125, alpha = 0.2)+
+  annotate(&quot;segment&quot;, x = 7, xend = 9, y = 200, yend = 155, arrow = arrow(angle = 20))+
+  annotate(&quot;segment&quot;, x = 7, xend = 12, y = 200, yend = 120, arrow = arrow(angle = 20))+
+  annotate(&quot;text&quot;, x = 3.5, y = 215, label = &quot;Middle income countries took 3 years\n longer than Upper income countries\n to see government spending outpace\n private spending&quot;, hjust = 0)+
   theme_minimal() +
   xlab(&quot;&quot;) + 
   ylab(&quot;Per Capita Expenditure (US $)&quot;)+
@@ -86,7 +92,7 @@ Figure 2: Revised WHO visualization. This immediately looks more descriptive.
 <p>This looks a bit more pleasing to look at, I hope you would agree! But equally (or more) important is the insights this revised viz uncovers. Here are my observations:</p>
 <ul>
 <li><p>Middle income and Upper middle income countries closely resemble each other in the upward trajectory of per capita expenditures</p></li>
-<li><p>It took about three years longer for Middle income countries to see government spending outpace private spending, compared with Upper middle income countries (2011 vs 2008)</p></li>
+<li><p>It took about three years longer for Middle income countries to see government spending outpace private spending, compared with Upper middle income countries (2011 vs 2008; see the grey boxed regions for comparison)</p></li>
 <li><p>Only Lower middle income countries see health expenditures dominated by private sector spending</p></li>
 <li><p>Lower middle income is the only category of countries that feature consistently higher out-of-pocket spending on healthcare than government healthcare spending.</p></li>
 </ul>
