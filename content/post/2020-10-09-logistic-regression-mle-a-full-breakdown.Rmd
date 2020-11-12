@@ -10,6 +10,9 @@ tags:
 
 ---
 
+**Shameless plug: ** I published this post in the [r/learnmachinelearning subreddit](https://www.reddit.com/r/learnmachinelearning/comments/jalxes/really_breaking_down_logistic_regression_gradient/) where it became a top post of the week in October 2020!
+
+
 ### Please tell me more
 
 <div class="tenor-gif-embed" data-postid="14192086" data-share-method="host" data-width="100%" data-aspect-ratio="1.7054794520547942"><a href="https://tenor.com/view/tell-me-everything-in-detail-spill-the-tea-sips-tea-im-listening-gif-14192086">Tell Me Everything In Detail GIF</a> from <a href="https://tenor.com/search/tellmeeverything-gifs">Tellmeeverything GIFs</a></div><script type="text/javascript" async src="https://tenor.com/embed.js"></script>
