@@ -72,7 +72,7 @@ This is a weighted average, where each outcome $0, 1, ..., 10$ is weighted by it
 
 The above data was for only five trials, so let's generalize this to $n$ trials using some notation.  
 
-* Define $\large K_{j,n}$ to be the number of times we observe $j$ heads after $n$ trials, with $j = 0, 1, ..., 10$ and $n = 1,2,3,...$
+* Define $\large K_{j,n}$ to be the number of times we observe $j$ heads after $n$ trials, with $j = 0, 1, ..., 10$ and $n$ being some real number.
 
 Tying this back to the above example, $n$ was $5$ and $K_{6,5} = 2$ (i.e, how many times did we get $6$ heads in the $5$ trials? $2$ times.)
 
