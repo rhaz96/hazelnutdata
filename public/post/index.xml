@@ -6,10 +6,19 @@
     <description>Recent content in Posts on Statistical Musings</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 11 Oct 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Feb 2021 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Taking A Step Back On Expected Values</title>
+      <link>/post/taking-a-step-back-on-expected-values/</link>
+      <pubDate>Sat, 20 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/taking-a-step-back-on-expected-values/</guid>
+      <description>What really is the Expected Value? I’ve been spending time reading statistician and professor Norman Matloff’s works, appreciating his skill of going “behind the scenes” on statistics concepts in Probability and Statistics for Data Science. His exposé on expected values in Chapter 3 was of particular interest. Unlike other sources that define expected value (a.k.a the mean) for a discrete random variable (say, \(X\)) using the well known formula</description>
+    </item>
     
     <item>
       <title>Logistic Regression MLE: A Thorough Breakdown</title>

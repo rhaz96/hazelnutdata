@@ -3,27 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/tags/explanatory/</loc>
+    <lastmod>2021-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/</loc>
+    <lastmod>2021-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+    <lastmod>2021-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <lastmod>2021-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/post/taking-a-step-back-on-expected-values/</loc>
+    <lastmod>2021-02-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/logistic-regression-mle-a-full-breakdown/</loc>
     <lastmod>2020-10-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/tags/machine-learning/</loc>
-    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/post/</loc>
-    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-10-11T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/</loc>
     <lastmod>2020-10-11T00:00:00+00:00</lastmod>
   </url>
   
@@ -80,11 +90,6 @@
   <url>
     <loc>/post/visualizing-world-bank-health-data-better-than-the-world-bank/</loc>
     <lastmod>2020-10-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/tags/explanatory/</loc>
-    <lastmod>2020-08-11T00:00:00+00:00</lastmod>
   </url>
   
   <url>
