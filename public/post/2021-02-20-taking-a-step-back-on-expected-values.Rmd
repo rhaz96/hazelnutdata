@@ -114,7 +114,7 @@ And then use a couple of properties of limits to make this:
   (\#eq:ev-general-3)
 \end{equation} 
 
-How do we simplify this?  By recognizing that $\large \lim_{n\rightarrow \infty}\frac{K_{j,n}}{n} = P(j)$! Each limit in $(5)$ is just the long-run proportion of observing $j\in (0, 1, ..., 10)$ &mdash; that is the very definition of probability.
+How do we simplify this?  By recognizing that $\large \lim_{n\rightarrow \infty}\frac{K_{j,n}}{n} = P(j)$! Each limit in $(5)$ is just the long-run proportion of observing $j\in (0, 1, ..., 10)$ heads &mdash; that is the very definition of probability.
 
 Therefore, 
 
