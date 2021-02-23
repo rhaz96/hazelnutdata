@@ -74,7 +74,7 @@ The above data was for only five trials, so let's generalize this to $n$ trials 
 
 * Define $\large K_{j,n}$ to be the number of times we observe $j$ heads after $n$ trials, with $j = 0, 1, ..., 10$ and $n = 1,2,3,...$
 
-Tying this back to the above example, $n$ was 5 and $K_{6,5} = 2$ (i.e, how many times did we get 6 heads in the 5 trials? 2 times.)
+Tying this back to the above example, $n$ was $5$ and $K_{6,5} = 2$ (i.e, how many times did we get $6$ heads in the $5$ trials? $2$ times.)
 
 ### Generalizing
 
