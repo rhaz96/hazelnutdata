@@ -123,7 +123,7 @@ Therefore,
   (\#eq:ev-general-4)
 \end{equation} 
 
-Remember that $j$ represents all the values the random variable $X$ can take on! This represents a slight change in notation from Equation \@ref(eq:ev) as I didn't want to overload the letter $x$ in the derivations above.
+Remember that $j$ represents all the values the random variable $X$ can take on! This is a slight change in notation from Equation \@ref(eq:ev) as I didn't want to overload the letter $x$ in the derivations above.
 
 To conclude,
 
